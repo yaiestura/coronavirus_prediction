@@ -4,6 +4,10 @@ Flask Web Project, using Flask, Bootstrap, Flask-SQLAlchemy
 
 Currently in Progress, working on Dashboard
 
+## Deployment
+
+Currently deployed on Heroku: [Coronavirus Flask App](https://coronavirus-prediction-hse.herokuapp.com/)
+
 ## Instructions to Setup :
 
 * Clone this repository.
