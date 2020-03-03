@@ -1,6 +1,8 @@
 from flask import render_template, request, Blueprint, jsonify
 from flask_login import login_required
-from app.data_parser.data_parser import CasesDataGrabber, DeathsDataGrabber, UpdatesDataGrabber
+
+from app.data_parser.data_parser import ( CasesDataParser, DeathsDataParser,
+    UpdatesDataParser, CountriesDataParser, DemographicsDataParser )
 
 main = Blueprint('main', __name__)
 
@@ -26,16 +28,29 @@ def test():
 @main.route("/test_deaths", methods=['GET', 'POST'])
 @login_required
 def test_deaths():
-    cases = CasesDataGrabber()
-    deaths = DeathsDataGrabber()
+    deaths = DeathsDataParser()
     return jsonify(deaths.get_deaths())
+
+
+@main.route("/test_countries", methods=['GET', 'POST'])
+@login_required
+def test_countries():
+    countries = CountriesDataParser()
+    return jsonify(countries.get_countries())
 
 
 @main.route("/test_news", methods=['GET', 'POST'])
 @login_required
 def test_news():
-    updates = UpdatesDataGrabber()
+    updates = UpdatesDataParser()
     return jsonify(updates.get_updates())
+
+
+@main.route("/test_demographics", methods=['GET', 'POST'])
+@login_required
+def test_demographics():
+    demographics = DemographicsDataParser()
+    return jsonify(demographics.get_demographics())
 
 
 @main.route("/about", methods=['GET', 'POST'])
