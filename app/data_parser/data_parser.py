@@ -9,10 +9,10 @@ import re
 
 
 class DataParser:
-
     BASE_URL = 'https://www.worldometers.info/coronavirus'
 
-    def save_data_to_file(self, filename, data):
+    @staticmethod
+    def save_data_to_file(filename, data):
         data_to_save = []
 
         for i in range(0, len(data)):
@@ -22,7 +22,8 @@ class DataParser:
             csv_writer = csv.writer(f, delimiter=',')
             csv_writer.writerows(data_to_save)
 
-    def get_dataset_file_name(self, dataset_prefix, dataset_date=''):
+    @staticmethod
+    def get_dataset_file_name(dataset_prefix, dataset_date=''):
         filename = dataset_prefix + '_dataset_'
         if dataset_date == '':
             filename += datetime.today().strftime('%Y-%m-%d')
@@ -33,7 +34,7 @@ class DataParser:
 
         return filename
 
-    def scrape_table():
+    def scrape_table(self):
         pass
         # rewrite method
 
@@ -43,7 +44,8 @@ class DeathsDataParser(DataParser):
     def __init__(self):
         super()
 
-    def get_deaths(self):
+    @staticmethod
+    def get_deaths():
 
         url = DataParser.BASE_URL + '/' + 'coronavirus-death-toll'
         r = requests.get(url)
@@ -68,7 +70,7 @@ class DeathsDataParser(DataParser):
         deaths_diff = int(deaths_today) - int(total_data[0][1])
         deaths_growth = f'{math.floor(deaths_diff * 100 / int(deaths_today))}%'
 
-        total_data.insert(0, [ today_date, deaths_today, str(deaths_diff), deaths_growth ])
+        total_data.insert(0, [today_date, deaths_today, str(deaths_diff), deaths_growth])
 
         table_daily = soup.select('.table-responsive')[1].find('table')
         table_body_daily = table_daily.find('tbody')
@@ -88,7 +90,8 @@ class CountriesDataParser(DataParser):
     def __init__(self):
         super()
 
-    def get_countries_minimal(self):
+    @staticmethod
+    def get_countries_minimal():
 
         url = DataParser.BASE_URL + '/' + 'countries-where-coronavirus-has-spread/'
         r = requests.get(url)
@@ -110,9 +113,10 @@ class CountriesDataParser(DataParser):
 
         return data_countries
 
-    def get_countries_advanced(self):
+    @staticmethod
+    def get_countries_advanced():
 
-        url= DataParser.BASE_URL + '/' + '#countries'
+        url = DataParser.BASE_URL + '/' + '#countries'
         r = requests.get(url)
         content = r.content
 
@@ -134,7 +138,7 @@ class CountriesDataParser(DataParser):
     def get_countries(self):
         return {'countries_minimal_table': self.get_countries_minimal(),
                 'countries_extended_table': self.get_countries_advanced(),
-                'countries_affected': len(self.get_countries_minimal()) }
+                'countries_affected': len(self.get_countries_minimal())}
 
 
 class UpdatesDataParser(DataParser):
@@ -142,8 +146,8 @@ class UpdatesDataParser(DataParser):
     def __init__(self):
         super()
 
-    def get_updates(self):
-
+    @staticmethod
+    def get_updates():
         url = DataParser.BASE_URL
         r = requests.get(url)
         content = r.content
@@ -153,7 +157,7 @@ class UpdatesDataParser(DataParser):
         updates_data, cases_data = [], []
 
         statistics = soup.select('.maincounter-number')
-        
+
         active_cases = soup.select('.panel-body')[0].find('div', {'class': 'panel_front'})
         closed_cases = soup.select('.panel-body')[1].find('div', {'class': 'panel_front'})
         active_conditions = soup.select('.panel-body')[0].find_all('span', {'class': 'number-table'})
@@ -166,7 +170,8 @@ class UpdatesDataParser(DataParser):
         x_axis_cl = list(json.loads(re.search(r'categories: (.+?) }, yAxis', closed_plot_data)[1]))
         y_axis_cl = re.findall(r'data: (.+?) }', closed_plot_data)
 
-        cases_plot_data = soup.find('div', {'id': 'coronavirus-cases-log'}).find_next('script', type="text/javascript").text
+        cases_plot_data = soup.find('div', {'id': 'coronavirus-cases-log'}).find_next('script',
+                                                                                      type="text/javascript").text
         x_axis_cases = list(json.loads(re.search(r'categories: (.+?) }, yAxis', cases_plot_data)[1]))
         y_axis_cases = list(json.loads(re.search(r'data: (.+?) }', cases_plot_data)[1]))
 
@@ -178,20 +183,20 @@ class UpdatesDataParser(DataParser):
         for item in soup.find('div', {'id': 'innercontent'}).find_next('ul').find_all('li'):
             updates_data.append([item.text.replace('[source]', "").strip(), item.find_next('a')['href']])
 
-        return { 'total_cases': statistics[0].text.strip().replace(',', ''),
+        return {'total_cases': statistics[0].text.strip().replace(',', ''),
                 'total_deaths': statistics[1].text.strip().replace(',', ''),
                 'total_recovered': statistics[2].text.strip().replace(',', ''),
                 'active_cases': active_cases.find('div', {'class': 'number-table-main'}).text.strip().replace(',', ''),
                 'closed_cases': closed_cases.find('div', {'class': 'number-table-main'}).text.strip().replace(',', ''),
                 'mild_condition': active_conditions[0].text.strip().replace(',', ''),
                 'critical_condition': active_conditions[1].text.strip().replace(',', ''),
-                'cases_plot': [ x_axis_cases, y_axis_cases ],
-                'active_cases_plot': [ x_axis_act, y_axis_act ],
-                'closed_cases_plot': [ x_axis_cl,  
-                                       list(json.loads(y_axis_cl[0])),  
-                                       list(json.loads(y_axis_cl[1])) 
-                                     ],
-                'updates_data': list(updates_data) }
+                'cases_plot': [x_axis_cases, y_axis_cases],
+                'active_cases_plot': [x_axis_act, y_axis_act],
+                'closed_cases_plot': [x_axis_cl,
+                                      list(json.loads(y_axis_cl[0])),
+                                      list(json.loads(y_axis_cl[1]))
+                                      ],
+                'updates_data': list(updates_data)}
 
 
 class DemographicsDataParser(DataParser):
@@ -199,7 +204,8 @@ class DemographicsDataParser(DataParser):
     def __init__(self):
         super()
 
-    def get_demographics(self):
+    @staticmethod
+    def get_demographics():
 
         url = DataParser.BASE_URL + '/' + 'coronavirus-age-sex-demographics/'
         r = requests.get(url)
@@ -239,5 +245,5 @@ class DemographicsDataParser(DataParser):
             columns = [value.text.strip() for value in columns]
             conditions_data.append([value.replace(',', '') for value in columns if value])
 
-        return { 'death_rate_by_age': age_data, 'death_rate_by_sex': sex_data,
-                 'pre_existing_conditions': conditions_data }
+        return {'death_rate_by_age': age_data, 'death_rate_by_sex': sex_data,
+                'pre_existing_conditions': conditions_data}
