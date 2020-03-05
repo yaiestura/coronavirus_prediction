@@ -75,8 +75,10 @@ def model_handler(training_set, train, days):
     return result
 
 
-def start(days, train=False):
-    cases = UpdatesDataParser().get_updates()['cases_plot']
+def start(dict, days, train=False):
+    if dict == 'cases':
+        cases = UpdatesDataParser().get_updates()['cases_plot']
+    deaths = DeathsDataParser().get_deaths()
     data = model_handler(cases, train, days)
     return data
 
