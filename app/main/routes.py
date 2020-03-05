@@ -1,8 +1,8 @@
 from flask import render_template, request, Blueprint, jsonify
 from flask_login import login_required
 
-from app.data_parser.data_parser import ( DeathsDataParser,
-    UpdatesDataParser, CountriesDataParser, DemographicsDataParser )
+from app.data_parser.data_parser import (DeathsDataParser,
+                                         UpdatesDataParser, CountriesDataParser, DemographicsDataParser)
 
 main = Blueprint('main', __name__)
 
