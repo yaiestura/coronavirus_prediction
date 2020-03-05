@@ -379,7 +379,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-yellow f-w-600">86033</h4>
+                                                                <h4 class="text-c-yellow f-w-600">{{data['total_cases']}}</h4>
                                                                 <h6 class="text-muted m-b-0">Coronavirus Cases</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -390,7 +390,7 @@
                                                     <div class="card-footer bg-c-yellow">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">% change</p>
+                                                                <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_cases'] | int - data['cases_plot'][1][-2] | int) * 100) / data['cases_plot'][1][-2] | int) }}% change</p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="feather icon-trending-up text-white f-16"></i>
@@ -405,7 +405,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-green f-w-600">2942</h4>
+                                                                <h4 class="text-c-green f-w-600">{{data['total_deaths']}}</h4>
                                                                 <h6 class="text-muted m-b-0">Deaths</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -430,7 +430,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-pink f-w-600">39820</h4>
+                                                                <h4 class="text-c-pink f-w-600">{{data['total_recovered']}}</h4>
                                                                 <h6 class="text-muted m-b-0">Recovered</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -455,7 +455,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-blue f-w-600">43271</h4>
+                                                                <h4 class="text-c-blue f-w-600">{{data['active_cases']}}</h4>
                                                                 <h6 class="text-muted m-b-0">Active Cases</h6>
                                                             </div>
                                                             <div class="col-4 text-right">

@@ -16,7 +16,9 @@ def home():
 @main.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('dashboard/dashboard.html')
+    updates = UpdatesDataParser()
+    updates_data = updates.get_updates()
+    return render_template('dashboard/dashboard.html', data=updates_data)
 
 
 @main.route("/test", methods=['GET', 'POST'])
