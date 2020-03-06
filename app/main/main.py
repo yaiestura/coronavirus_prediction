@@ -35,7 +35,7 @@ def train_model(x, y, train):
         return net
     # my_images = []
     # fig, ax = plt.subplots(figsize=(12, 7))
-    device = 'cuda:1'
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     x = torch.tensor(x).to(device).type(torch.cuda.FloatTensor)
     y = torch.tensor(y).to(device).type(torch.cuda.FloatTensor).unsqueeze(1)
     loss_func = torch.nn.MSELoss()
