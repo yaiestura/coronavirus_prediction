@@ -19,7 +19,7 @@ def dashboard():
     countries_min = CountriesMinDataParser()
     deaths = DeathsDataParser()
     demographics = DemographicsDataParser()
-    updates = UpdatesDataParser()      
+    updates = UpdatesDataParser()
 
     countries_data = countries_min.get_countries()
     deaths_data = deaths.get_deaths()
@@ -36,19 +36,24 @@ def test():
     return render_template('test.html')
 
 
-@main.route("/deaths", methods=['GET', 'POST'])
+@main.route("/api/predict/deaths", methods=['GET', 'POST'])
 @login_required
-def api_deaths():
-    deaths = DeathsDataParser()
-    return jsonify(deaths.get_deaths())
+def test_deaths():
+    cases = start('deaths', 10, train=True)
+    return jsonify(cases)
 
 
 @main.route("/api/predict/cases", methods=['GET', 'POST'])
 @login_required
-def api_pred_cases():
-    cases = start(10, train=False)
+def test_cases():
+    cases = start('cases', 10, train=False)
     return jsonify(cases)
 
+@main.route("/api/deaths", methods=['GET', 'POST'])
+@login_required
+def api_deaths():
+    deaths = DeathsDataParser()
+    return jsonify(deaths.get_deaths())
 
 @main.route("/api/countries_min", methods=['GET', 'POST'])
 @login_required

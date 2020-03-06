@@ -1,13 +1,23 @@
 import operator
-import json
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
+from torch import cuda
 import torch.nn.functional as F
+import imageio
 
 from app.data_parser.data_parser import *
 torch.manual_seed(1)
 
+use_cuda = torch.cuda.is_available()
+if use_cuda:
+    device = 'cuda:0'
+    dtype = cuda.FloatTensor
+    ltype = cuda.LongTensor
+else:
+    device = 'cpu'
+    dtype = torch.FloatTensor
+    ltype = torch.LongTensor
 
 class Net(torch.nn.Module):
     def __init__(self, n_feature, n_hidden, n_output):
@@ -27,29 +37,51 @@ class Net(torch.nn.Module):
         return x
 
 
-def train_model(x, y, train):
+def train_model(x, y, train, flag):
     if not train:
         net = Net(n_feature=1, n_hidden=200, n_output=1)
-        net.load_state_dict(torch.load('app/models/model1.pth', map_location='cpu'))
+        if flag == 1:
+            net.load_state_dict(torch.load('app/models/cases.pth', map_location='cpu'))
+        elif flag == 2:
+            net.load_state_dict(torch.load('app/models/deaths.pth', map_location='cpu'))
         net.eval()
         return net
-    # my_images = []
-    # fig, ax = plt.subplots(figsize=(12, 7))
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    x = torch.tensor(x).to(device).type(torch.cuda.FloatTensor)
-    y = torch.tensor(y).to(device).type(torch.cuda.FloatTensor).unsqueeze(1)
+    my_images = []
+    fig, ax = plt.subplots(figsize=(12, 7))
+    x = torch.tensor(x).to(device).type(dtype)
+    if flag == 2:
+        y = torch.tensor(y).to(device).type(dtype)
+    elif flag == 1:
+        y = torch.tensor(y).to(device).type(dtype).unsqueeze(1)
     loss_func = torch.nn.MSELoss()
     net = Net(n_feature=1, n_hidden=200, n_output=1)
     net.train()
     net = net.to(device)
-    optimizer = torch.optim.Adam(net.parameters(), lr=0.0001)
-    for t in range(2000):
+    optimizer = torch.optim.Adam(net.parameters(), lr=0.0002)
+    for t in range(1800):
         prediction = net(x)  # input x and predict based on x
         loss = loss_func(prediction, y)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-    torch.save(net.state_dict(), 'app/models/model2.pth')
+        plt.cla()
+        ax.set_title('Regression Analysis', fontsize=35)
+        ax.set_xlabel('Independent variable', fontsize=24)
+        ax.set_ylabel('Dependent variable', fontsize=24)
+        ax.scatter(x.cpu().data.numpy(), y.cpu().data.numpy(), color="orange")
+        ax.plot(x.cpu().data.numpy(), prediction.cpu().data.numpy(), 'g-', lw=3)
+        ax.text(1.0, 1, 'Step = %d' % t, fontdict={'size': 24, 'color': 'red'})
+        ax.text(15, 1, 'Loss = %.4f' % loss.item(),
+                fontdict={'size': 24, 'color': 'red'})
+        fig.canvas.draw()  # draw the canvas, cache the renderer
+        image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
+        image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+
+        my_images.append(image)
+
+    # save images as a gif
+    imageio.mimsave('./curve_1.gif', my_images, fps=50)
+    torch.save(net.state_dict(), 'app/models/deaths1.pth')
     return net
 
 
@@ -66,17 +98,25 @@ def plot_graph(model_name, x, y, y_pred):
     plt.show()
 
 
-def model_handler(training_set, train, days):
+def model_handler(flag, training_set, train, days):
     x = np.arange(len(training_set[0])).reshape(-1, 1)
-    y = np.asarray(training_set[1]).reshape(-1, 1)
-    model = train_model(x, y, train)
+    y = np.asarray(training_set[1]).reshape(-1, 1).astype(np.int)
+    model = train_model(x, y, train, flag)
     x1 = np.arange(len(training_set[0]) + days).reshape(-1, 1)
-    result = torch.flatten(model(torch.tensor(x1).type(torch.FloatTensor))).tolist()
+    result = torch.flatten(model(torch.tensor(x1).type(dtype))).tolist()
     return result
 
 
-def start(days, train=False):
-    cases = UpdatesDataParser().get_updates()['cases_plot']
-    data = model_handler(cases, train, days)
+def start(in1, days, train=False):
+    data = []
+    if in1 == 'cases':
+        cases = UpdatesDataParser().get_updates()['cases_plot']
+        data = model_handler(1, cases, train, days)
+    elif in1 == 'deaths':
+        d_all = np.asarray(DeathsDataParser().get_deaths()['total_deaths'])[:, :2]
+        a = d_all[:, 0]
+        b = d_all[:, 1]
+        deaths = np.concatenate(([a], [b]), axis=0)
+        data = model_handler(2, deaths, train, days)
     return data
 
