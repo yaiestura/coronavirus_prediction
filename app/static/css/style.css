@@ -7,6 +7,14 @@
     transition: all ease-in 0.3s !important;
 }
 
+#cases_doughnut {
+    height: 237px;
+}
+
+#age_chart {
+    height: 217px;
+}
+
 body {
     background-color: #f3f3f3;
     font-size: .875em;
@@ -218,6 +226,12 @@ p {
 .card .card-footer {
     background-color: #fff;
     border-top: none
+}
+
+.card .card-footer h6 {
+    color: #505458;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .card .card-header {

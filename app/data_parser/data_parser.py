@@ -85,7 +85,7 @@ class DeathsDataParser(DataParser):
         return {'total_deaths': total_data, 'daily_deaths': daily_data}
 
 
-class CountriesDataParser(DataParser):
+class CountriesMinDataParser(DataParser):
 
     def __init__(self):
         super()
@@ -113,6 +113,15 @@ class CountriesDataParser(DataParser):
 
         return data_countries
 
+    def get_countries(self):
+        return {'countries_min_data': self.get_countries_minimal(),
+                'countries_affected': len(self.get_countries_minimal())}
+
+class CountriesAdvDataParser(DataParser):
+
+    def __init__(self):
+        super()
+
     @staticmethod
     def get_countries_advanced():
 
@@ -136,9 +145,8 @@ class CountriesDataParser(DataParser):
         return data_countries[:-1]
 
     def get_countries(self):
-        return {'countries_minimal_table': self.get_countries_minimal(),
-                'countries_extended_table': self.get_countries_advanced(),
-                'countries_affected': len(self.get_countries_minimal())}
+        return {'countries_adv_data': self.get_countries_advanced(),
+                'countries_affected': len(self.get_countries_advanced())}
 
 
 class UpdatesDataParser(DataParser):
@@ -196,7 +204,8 @@ class UpdatesDataParser(DataParser):
                                       list(json.loads(y_axis_cl[0])),
                                       list(json.loads(y_axis_cl[1]))
                                       ],
-                'updates_data': list(updates_data)}
+                'updates_data': list(updates_data),
+                'last_updated': soup.find('div', {'id': 'page-top'}).find_next('div').text }
 
 
 class DemographicsDataParser(DataParser):
@@ -233,7 +242,7 @@ class DemographicsDataParser(DataParser):
         for row in age_rows:
             columns = row.find_all('td')[0].contents + row.find_all('td')[-1].contents
             columns = [value.text.strip() for value in columns]
-            age_data.append([value.replace(',', '') for value in columns if value])
+            age_data.append([value.replace(',', '').replace(' years old', '') for value in columns if value])
 
         for row in sex_rows:
             columns = row.find_all('td')

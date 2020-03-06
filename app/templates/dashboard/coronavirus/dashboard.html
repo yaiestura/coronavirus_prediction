@@ -231,7 +231,7 @@
                                                                 <h6 class="text-muted m-b-0">Coronavirus Cases</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="feather icon-bar-chart f-28"></i>
+                                                                <i class="feather icon-bar-chart f-28 text-c-yellow"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -257,7 +257,7 @@
                                                                 <h6 class="text-muted m-b-0">Deaths</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="feather icon-file-text f-28"></i>
+                                                                <i class="feather icon-users f-28 text-c-green"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -282,7 +282,7 @@
                                                                 <h6 class="text-muted m-b-0">Recovered</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="feather icon-calendar f-28"></i>
+                                                                <i class="feather icon-heart f-28 text-c-pink"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,7 +307,7 @@
                                                                 <h6 class="text-muted m-b-0">Active Cases</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="feather icon-download f-28"></i>
+                                                                <i class="feather icon-eye f-28 text-c-blue"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -329,12 +329,8 @@
                                             <div class="col-xl-8 col-md-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Confirmed Cases</h5>
-                                                        <span class="text-muted">
-                                                            For more details about usage, please refer
-                                                            <a href="https://www.amcharts.com/online-store/" target="_blank">amCharts</a>
-                                                            licences.
-                                                        </span>
+                                                        <h5>Confirmed Deaths</h5>
+                                                        <span>{{data['last_updated']}}</span>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
@@ -342,25 +338,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
-                                                        <div id="visitor" style="height:300px"></div>
+                                                        <div id="cases_chart" style="height:300px"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-md-12">
                                                 <div class="card">
-                                                    <div class="card-block bg-c-green">
-                                                        <div id="proj-earning" style="height: 230px"></div>
+                                                    <div class="card-header">
+                                                        <h5>Age of Coronavirus Deaths</h5>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div id="age_chart"></div>
                                                     </div>
                                                     <div class="card-footer">
-                                                        <h6 class="text-muted m-b-30 m-t-15">Total completed project and earning</h6>
+                                                        <h6 class="m-b-20">Death Rate Of Confirmed Cases By Sex</h6>
                                                         <div class="row text-center">
                                                             <div class="col-6 b-r-default">
-                                                                <h6 class="text-muted m-b-10">Completed Projects</h6>
-                                                                <h4 class="m-b-0 f-w-600 ">175</h4>
+                                                                <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][0][0]}}</h6>
+                                                                <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][0][1]}}</h4>
                                                             </div>
                                                             <div class="col-6">
-                                                                <h6 class="text-muted m-b-10">Total Earnings</h6>
-                                                                <h4 class="m-b-0 f-w-600 ">76.6M</h4>
+                                                                <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][1][0]}}</h6>
+                                                                <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][1][1]}}</h4>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -372,7 +371,7 @@
                                             <div class="col-xl-5 col-md-12">
                                                 <div class="card table-card">
                                                     <div class="card-header">
-                                                        <h5>Confirmed Cases and Deaths by Country</h5>
+                                                        <h5>Confirmed Cases and Deaths by Country ({{countries['countries_affected'] | int }} affected)</h5>
                                                     </div>
                                                     <div class="card-block">
                                                         <div class="table-responsive">
@@ -386,36 +385,14 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td><img src="{{ url_for('static', filename='images/widget/CHINA.jpg')}}" alt="" class="img-fluid img-30"></td>
-                                                                        <td>China</td>
-                                                                        <td>79257</td>
-                                                                        <td class="text-right">2835</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><img src="{{ url_for('static', filename='images/widget/SOUTHKOREA.jpg')}}" alt="" class="img-fluid img-30"></td>
-                                                                        <td>South Korea</td>
-                                                                        <td>3150</td>
-                                                                        <td class="text-right">17</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><img src="{{ url_for('static', filename='images/widget/ITALY.jpg')}}" alt="" class="img-fluid img-30"></td>
-                                                                        <td>Italy</td>
-                                                                        <td>1128</td>
-                                                                        <td class="text-right">29</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><img src="{{ url_for('static', filename='images/widget/IRAN.jpg')}}" alt="" class="img-fluid img-30"></td>
-                                                                        <td>Iran</td>
-                                                                        <td>593</td>
-                                                                        <td class="text-right">43</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><img src="{{ url_for('static', filename='images/widget/JAPAN.jpg')}}" alt="" class="img-fluid img-30"></td>
-                                                                        <td>Japan</td>
-                                                                        <td>241</td>
-                                                                        <td class="text-right">5</td>
-                                                                    </tr>
+                                                                    {% for country in countries['countries_min_data'][:5] %}
+                                                                        <tr>
+                                                                            <td><img src="{{ url_for('static', filename='images/widget/CHINA.jpg')}}" alt="" class="img-fluid img-30"></td>
+                                                                            <td>{{country[0]}}</td>
+                                                                            <td>{{country[1]}}</td>
+                                                                            <td class="text-right">{{country[2]}}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -431,7 +408,7 @@
                                                         <h5>Coronavirus Cases Distribution Chart</h5>
                                                     </div>
                                                     <div class="card-block">
-                                                        <canvas id="newuserchart" height="250"></canvas>
+                                                        <div id="cases_doughnut"></div>
                                                     </div>
                                                     <div class="card-footer ">
                                                         <div class="row text-center b-t-default">
@@ -690,391 +667,162 @@
 <!-- Chart js -->
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/chart.js/js/Chart.js')}}"></script>
 <!-- amchart js -->
-<script type="text/javascript" src="{{ url_for('static', filename='pages/widget/amchart/amcharts.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='pages/widget/amchart/serial.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='pages/widget/amchart/light.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/core.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/charts.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/animated.js')}}"></script>
 <!-- Custom js -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
-<script type="text/javascript">
-    "use strict";
-    $(document).ready(function() {
-        function e(e,t,a) {
-            return null==a && (a="rgba(0,0,0,0)"),
-                { labels:["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
-                  datasets:[{
-                      label:"",
-                      borderColor:e,
-                      borderWidth:2,
-                      hitRadius:30,
-                      pointRadius:3,
-                      pointHoverRadius:4,
-                      pointBorderWidth:5,
-                      pointHoverBorderWidth:12,
-                      pointBackgroundColor:Chart.helpers.color("#000000").alpha(0).rgbString(),
-                      pointBorderColor:e,
-                      pointHoverBackgroundColor:e,
-                      pointHoverBorderColor:Chart.helpers.color("#000000").alpha(.1).rgbString(),
-                      fill:!0,
-                      lineTension:0, backgroundColor:a,
-                      data:t
-                  }]
-                }
-        }
-        function t() {
-            return {
-                title:{display:!1},
-                tooltips:{
-                    position:"nearest",
-                    mode:"index",
-                    intersect:!1,
-                    yPadding:10,
-                    xPadding:10
-                },
-                legend:{
-                    display:!1,
-                    labels: {
-                        usePointStyle:!1
-                    }
-                },
-                responsive:!0,
-                maintainAspectRatio:!0,
-                hover:{mode:"index"},
-                scales:{
-                    xAxes:[{
-                        display:!1,
-                        gridLines:!1,
-                        scaleLabel:{
-                            display:!0,
-                            labelString:"Month"
-                        }
-                    }],
-                    yAxes:[{
-                        display:!1,
-                        gridLines:!1,
-                        scaleLabel:{
-                            display:!0,
-                            labelString:"Value"},
-                            ticks:{
-                                beginAtZero:!0
-                            }
-                    }]
-                },
-                elements:{
-                    point:{
-                        radius:4,
-                        borderWidth:12
-                    }
-                },
-                layout:{
-                    padding:{
-                        left:10,
-                        right:10,
-                        top:25,
-                        bottom:25
-                    }
-                }
-            }
-        }
+<script>
+    am4core.ready(function() {
 
-        var a=(AmCharts.makeChart("visitor", {
-            type:"serial",
-            hideCredits:!0,
-            theme:"light",
-            dataDateFormat:"YYYY-MM-DD",
-            precision:2,
-            valueAxes:[{
-                id:"v1",
-                title:"Visitors",
-                position:"left",
-                autoGridCount:!1,
-                labelFunction:function(e) {
-                    return"$"+Math.round(e)+"M"
-                }}, {
-                id:"v2",
-                title:"New Visitors",
-                gridAlpha:0,
-                position:"right",
-                autoGridCount:!1
-                }
-            ],
-            graphs:[{
-                id:"g3",
-                valueAxis:"v1",
-                lineColor:"#feb798",
-                fillColors:"#feb798",
-                fillAlphas:1,
-                type:"column",
-                title:"old Visitor",
-                valueField:"sales2",
-                clustered:!1,
-                columnWidth:.5,
-                legendValueText:"$[[value]]M",
-                balloonText:"[[title]]<br /><b style='font-size: 130%'>$[[value]]M</b>"
-                }, {
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
 
-                id:"g4",
-                valueAxis:"v1",
-                lineColor:"#fe9365",
-                fillColors:"#fe9365",
-                fillAlphas:1,
-                type:"column",
-                title:"New visitor",
-                valueField:"sales1",
-                clustered:!1,
-                columnWidth:.3,
-                legendValueText:"$[[value]]M",
-                balloonText:"[[title]]<br /><b style='font-size: 130%'>$[[value]]M</b>"
-                }, {
+    // Create chart instance
+    var plot = am4core.create("cases_chart", am4charts.XYChart);
 
-                id:"g1",
-                valueAxis:"v2",
-                bullet:"round",
-                bulletBorderAlpha:1,
-                bulletColor:"#FFFFFF",
-                bulletSize:5,
-                hideBulletsCount:50,
-                lineThickness:2,
-                lineColor:"#0df3a3",
-                type:"smoothedLine",
-                title:"Last Month Visitor",
-                useLineColorForBulletBorder:!0,
-                valueField:"market1",
-                balloonText:"[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    // Add data
+    plot.data = [
+        {% for item in deaths['total_deaths'] | reverse %}
+            {date: '{{loop.index}}', value: '{{ item[1] }}' },
+        {% endfor %}
+    ];
 
-                },{
+    // Set input format for the dates
 
-                id:"g2",
-                valueAxis:"v2",
-                bullet:"round",
-                bulletBorderAlpha:1,
-                bulletColor:"#FFFFFF",
-                bulletSize:5,
-                hideBulletsCount:50,
-                lineThickness:2,
-                lineColor:"#fe5d70",
-                dashLength:5,
-                title:"Average Visitor",
-                useLineColorForBulletBorder:!0,
-                valueField:"market2",
-                balloonText:"[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-            }],
-            chartCursor:{
-                pan:!0,
-                valueLineEnabled:!0,
-                valueLineBalloonEnabled:!0,
-                cursorAlpha:0,
-                valueLineAlpha:.2
-            },
-            categoryField:"date",
-            categoryAxis:{
-                parseDates:!0,
-                dashLength:1,
-                minorGridEnabled:!0},
-                legend:{
-                    useGraphSettings:!0,
-                    position:"top"
-                },
-                balloon:{
-                    borderThickness:1,
-                    cornerRadius:5,
-                    shadowAlpha:0
-                },
-                dataProvider:[{
-                    date:"2013-01-16",
-                    market1:71,
-                    market2:75,
-                    sales1:5,
-                    sales2:8
-                },{
-                    date:"2013-01-17",
-                    market1:74,
-                    market2:78,
-                    sales1:4,
-                    sales2:6
-                },{
-                    date:"2013-01-18",
-                    market1:78,
-                    market2:88,
-                    sales1:5,
-                    sales2:2
-                },{
-                    date:"2013-01-19",
-                    market1:85,
-                    market2:89,
-                    sales1:8,
-                    sales2:9
-                },{
-                    date:"2013-01-20",
-                    market1:82,
-                    market2:89,
-                    sales1:9,
-                    sales2:6
-                },{
-                    date:"2013-01-21",
-                    market1:83,
-                    market2:85,
-                    sales1:3,
-                    sales2:5
-                },{
-                    date:"2013-01-22",
-                    market1:88,
-                    market2:92,
-                    sales1:5,
-                    sales2:7
-                },{
-                    date:"2013-01-23",
-                    market1:85,
-                    market2:90,
-                    sales1:7,
-                    sales2:6
-                },{
-                    date:"2013-01-24"
-                    ,market1:85,
-                    market2:91,
-                    sales1:9,
-                    sales2:5
-                },{
-                    date:"2013-01-25",
-                    market1:80,
-                    market2:84,
-                    sales1:5,
-                    sales2:8
-                },{
-                    date:"2013-01-26",
-                    market1:87,
-                    market2:92,
-                    sales1:4,
-                    sales2:8
-                },{
-                    date:"2013-01-27",
-                    market1:84,
-                    market2:87,
-                    sales1:3,
-                    sales2:4
-                },{
-                    date:"2013-01-28",
-                    market1:83,
-                    market2:88,
-                    sales1:5,
-                    sales2:7
-                },{
-                    date:"2013-01-29",
-                    market1:84,
-                    market2:87,
-                    sales1:5,
-                    sales2:8
-                },{
-                    date:"2013-01-30",
-                    market1:81,
-                    market2:85,
-                    sales1:4,
-                    sales2:7
-                }]
-            }
-        ),
-        AmCharts.makeChart("proj-earning",{
-            type:"serial",
-            hideCredits:!0,
-            theme:"light",
-            dataProvider:[{
-                type:"UI",visits:10
-            },{
-                type:"UX",visits:15
-            },{
-                type:"Web",visits:12
-            },{
-                type:"App",visits:16
-            },{
-                type:"SEO",visits:8
-            }],
-            valueAxes:[{
-                gridAlpha:.3,
-                gridColor:"#fff",
-                axisColor:"transparent",
-                color:"#fff",
-                dashLength:0
-            }],
-            gridAboveGraphs:!0,
-            startDuration:1,
-            graphs:[{
-                balloonText:"Active User: <b>[[value]]</b>",
-                fillAlphas:1,
-                lineAlpha:1,
-                lineColor:"#fff",
-                type:"column",
-                valueField:"visits",
-                columnWidth:.5
-            }],
-            chartCursor:{
-                categoryBalloonEnabled:!1,
-                cursorAlpha:0,
-                zoomable:!1
-            },
-            categoryField:"type",
-            categoryAxis:{
-                gridPosition:"start",
-                gridAlpha:0,
-                axesAlpha:0,
-                lineAlpha:0,
-                fontSize:12,
-                color:"#fff",
-                tickLength:0
-            },
-            export:{enabled:!1}
-        }),
+    // Create axes
+    var dateAxis = plot.xAxes.push(new am4charts.ValueAxis());
+    var valueAxis = plot.yAxes.push(new am4charts.ValueAxis());
 
-        document.getElementById("newuserchart").getContext("2d"));
-        var doughnut_data = {{ data | tojson }};
-        console.log(doughnut_data);
-        window.myDoughnut=new Chart(a,{
-            type:"doughnut",
-            data:{
-                datasets:[{
-                    data:[
-                        doughnut_data['total_deaths'],
-                        doughnut_data['active_cases'],
-                        doughnut_data['total_recovered']
-                    ],
-                    backgroundColor:["#fe9365","#01a9ac","#fe5d70"],
-                    label:"Dataset 1"
-                }],
-                labels:["Total Deaths","Active Cases","Total Recovered"]
-            },
-            options:{
-                maintainAspectRatio:!1,
-                responsive:!0,
-                legend:{position:"bottom"},
-                title:{
-                    display:!0,
-                    text:""
-                },
-                animation:{
-                    animateScale:!0,
-                    animateRotate:!0
-                }
-            }
-        });
+    dateAxis.title.text = "Date";
+    valueAxis.title.text = "Deaths";
 
-        var a=document.getElementById("sale-chart1").getContext("2d"),
-        a=(new Chart(a,{
-            type:"line",
-            data:e("#b71c1c",[25,30,15,20,25,30,15,25,35,30,20,10,12,1],"transparent"),
-            options:t()}),
-        document.getElementById("sale-chart2").getContext("2d")),
-        a=(new Chart(a,{
-            type:"line",
-            data:e("#00692c",[30,15,25,35,30,20,25,30,15,20,25,10,12,1],"transparent"),
-            options:t()}),
-        document.getElementById("sale-chart3").getContext("2d"));
-        new Chart(a,{
-            type:"line",
-            data:e("#096567",[15,20,25,10,30,15,25,35,30,20,25,30,12,1],"transparent"),
-            options:t()})
-    });
+    // Create series
+    var series = plot.series.push(new am4charts.LineSeries());
+    series.dataFields.valueY = "value";
+    series.dataFields.valueX = "date";
+    series.tooltipText = "{value}"
+    series.strokeWidth = 2;
+    series.minBulletDistance = 15;
+
+    // Drop-shaped tooltips
+    series.tooltip.background.cornerRadius = 20;
+    series.tooltip.background.strokeOpacity = 0;
+    series.tooltip.pointerOrientation = "vertical";
+    series.tooltip.label.minWidth = 40;
+    series.tooltip.label.minHeight = 40;
+    series.tooltip.label.textAlign = "middle";
+    series.tooltip.label.textValign = "middle";
+
+    // Make bullets grow on hover
+    var bullet = series.bullets.push(new am4charts.CircleBullet());
+    bullet.circle.strokeWidth = 2;
+    bullet.circle.radius = 4;
+    bullet.circle.fill = am4core.color("#fff");
+
+    var bullethover = bullet.states.create("hover");
+    bullethover.properties.scale = 1.3;
+
+    // Make a panning cursor
+    plot.cursor = new am4charts.XYCursor();
+    plot.cursor.behavior = "panXY";
+    plot.cursor.xAxis = dateAxis;
+    plot.cursor.snapToSeries = series;
+
+    // Create vertical scrollbar and place it before the value axis
+    plot.scrollbarY = new am4core.Scrollbar();
+    plot.scrollbarY.parent = plot.leftAxesContainer;
+    plot.scrollbarY.toBack();
+
+    // Create a horizontal scrollbar with previe and place it underneath the date axis
+    plot.scrollbarX = new am4charts.XYChartScrollbar();
+    plot.scrollbarX.series.push(series);
+    plot.scrollbarX.parent = plot.bottomAxesContainer;
+
+    dateAxis.start = 0.79;
+    dateAxis.keepSelection = true;
+
+    }); // end am4core.ready()
 </script>
+
+<script>
+    am4core.ready(function() {
+
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+
+    var pie_chart = am4core.create("cases_doughnut", am4charts.PieChart);
+
+    pie_chart.data = [
+    { "statistics": "Total Deaths" , "value": '{{ data['total_deaths'] }}' },
+    { "statistics": "Active Cases" , "value": '{{ data['active_cases'] }}' },
+    { "statistics": "Total Recovered" , "value": '{{ data['total_recovered'] }}' }
+    ];
+
+
+    pie_chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+    pie_chart.innerRadius = 80;
+    var label = pie_chart.seriesContainer.createChild(am4core.Label);
+    label.text = '{{ data['total_cases'] }}';
+    label.horizontalCenter = "middle";
+    label.verticalCenter = "middle";
+    label.fontSize = 40;
+
+    var series = pie_chart.series.push(new am4charts.PieSeries());
+    series.dataFields.value = "value";
+    series.dataFields.category = "statistics";
+
+    }); // end am4core.ready()
+</script>
+
+<script>
+    am4core.ready(function() {
+
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+
+    var age_chart = am4core.create("age_chart", am4charts.XYChart);
+
+    age_chart.data = [
+        {% for item in demographics['death_rate_by_age'] | reverse %}
+            {age: '{{item[0]}}', fatality: '{{ item[1] }}' },
+        {% endfor %}
+    ];
+
+    var categoryAxis = age_chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "age";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.minGridDistance = 30;
+
+    categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+    if (target.dataItem && target.dataItem.index & 2 == 2) {
+        return dy + 25;
+    }
+    return dy;
+    });
+
+    var valueAxis = age_chart.yAxes.push(new am4charts.ValueAxis());
+
+    // Create series
+    var series = age_chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueY = "fatality";
+    series.dataFields.categoryX = "age";
+    series.name = "Death Rate by Age";
+    series.columns.template.tooltipText = "{categoryX} years old: [bold]{valueY}%[/]";
+    series.columns.template.fillOpacity = .8;
+
+    var columnTemplate = series.columns.template;
+    columnTemplate.strokeWidth = 2;
+    columnTemplate.strokeOpacity = 1;
+
+    }); // end am4core.ready()
+</script>
+
 <script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
 </html>
 
