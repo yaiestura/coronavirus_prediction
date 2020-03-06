@@ -29,14 +29,14 @@ def test():
 @main.route("/test_deaths", methods=['GET', 'POST'])
 @login_required
 def test_deaths():
-    deaths = DeathsDataParser()
-    return jsonify(deaths.get_deaths())
+    cases = start('deaths', 10, train=True)
+    return jsonify(cases)
 
 
 @main.route("/test_cases", methods=['GET', 'POST'])
 @login_required
 def test_cases():
-    cases = start(10, train=False)
+    cases = start('cases', 10, train=False)
     return jsonify(cases)
 
 
