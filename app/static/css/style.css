@@ -15,6 +15,11 @@
     height: 217px;
 }
 
+.news-card {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 body {
     background-color: #f3f3f3;
     font-size: .875em;
@@ -1366,7 +1371,8 @@ label.btn-upload {
     padding: 14px 20px;
     border-top: 1px solid #ddd;
     font-weight: 600;
-    cursor: pointer
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .accordion-msg:focus,
@@ -1405,11 +1411,19 @@ label.btn-upload {
     margin-bottom: 0
 }
 
-.color-accordion-block a.ui-state-active,
-.color-accordion-block a:focus,
-.color-accordion-block a:hover {
+.color-accordion-block a.ui-state-active {
     color: #fff;
-    background: #4680ff
+    background: #404e67;
+}
+
+.accordion-desc a {
+    color: #353c4e;
+}
+
+.color-accordion-block .accordion-msg,
+.color-accordion-block .accordion-msg {
+    color: #353c4e;
+    background: #d5dae6;
 }
 
 a.bg-default:focus,

@@ -162,7 +162,7 @@ class UpdatesDataParser(DataParser):
 
         soup = BeautifulSoup(content, 'html.parser')
 
-        updates_data, cases_data = [], []
+        cases_data = []
 
         statistics = soup.select('.maincounter-number')
 
@@ -188,9 +188,6 @@ class UpdatesDataParser(DataParser):
         x_axis_cases.append(today_date)
         y_axis_cases.append(int(statistics[0].text.strip().replace(',', '')))
 
-        for item in soup.find('div', {'id': 'innercontent'}).find_next('ul').find_all('li'):
-            updates_data.append([item.text.replace('[source]', "").strip(), item.find_next('a')['href']])
-
         return {'total_cases': statistics[0].text.strip().replace(',', ''),
                 'total_deaths': statistics[1].text.strip().replace(',', ''),
                 'total_recovered': statistics[2].text.strip().replace(',', ''),
@@ -204,9 +201,31 @@ class UpdatesDataParser(DataParser):
                                       list(json.loads(y_axis_cl[0])),
                                       list(json.loads(y_axis_cl[1]))
                                       ],
-                'updates_data': list(updates_data),
                 'last_updated': soup.find('div', {'id': 'page-top'}).find_next('div').text }
 
+
+class NewsDataParser(DataParser):
+
+    def __init__(self):
+        super()
+
+    @staticmethod
+    def get_news_updates():
+
+        url = DataParser.BASE_URL
+        r = requests.get(url)
+        content = r.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+    
+        news = []
+
+        for item in soup.find('div', {'id': 'innercontent'}).find_next('ul').find_all('li'):
+            news.append([item.text.replace('[source]', "").strip(), item.find_next('a')['href']])
+
+        return { 'news': list(news),
+            'last_updated': soup.find('div', {'id': 'page-top'}).find_next('div').text
+        }
 
 class DemographicsDataParser(DataParser):
 
