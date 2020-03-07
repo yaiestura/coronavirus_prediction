@@ -6,7 +6,7 @@ from torch import cuda
 import torch.nn.functional as F
 import imageio
 
-from app.data_parser.data_parser import *
+from app.api.data_parser.data_parser import *
 torch.manual_seed(1)
 
 use_cuda = torch.cuda.is_available()

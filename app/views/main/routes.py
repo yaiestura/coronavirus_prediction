@@ -1,7 +1,7 @@
 from flask import render_template, request, Blueprint, jsonify
 from flask_login import login_required
 
-from app.main.main import *
+from app.views.main.main import *
 
 main = Blueprint('main', __name__)
 
@@ -36,6 +36,11 @@ def news():
     news_data = news.get_news_updates()
 
     return render_template('dashboard/coronavirus/news.html', news=news_data['news'], updated=news_data['last_updated'])
+
+
+@main.route("/about", methods=['GET', 'POST'])
+def about():
+    return render_template('about.html', title='About')
 
 
 @main.route("/test", methods=['GET', 'POST'])
@@ -98,8 +103,3 @@ def api_news():
 def api_demographics():
     demographics = DemographicsDataParser()
     return jsonify(demographics.get_demographics())
-
-
-@main.route("/about", methods=['GET', 'POST'])
-def about():
-    return render_template('about.html', title='About')

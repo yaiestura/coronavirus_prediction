@@ -25,9 +25,9 @@ def create_app(config_class=Config):
 
     migrate = Migrate(app, db)
 
-    from app.users.routes import users
-    from app.main.routes import main
-    from app.errors.handlers import errors
+    from app.views.users.routes import users
+    from app.views.main.routes import main
+    from app.views.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(main)
     app.register_blueprint(errors)
