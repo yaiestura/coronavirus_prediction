@@ -56,10 +56,11 @@ def train_model(x, y, train, flag):
         y = torch.tensor(y).to(device).type(dtype).unsqueeze(1)
     loss_func = torch.nn.MSELoss()
     net = Net(n_feature=1, n_hidden=200, n_output=1)
+    net.load_state_dict(torch.load('app/models/' + flag + '.pth', map_location=device))
     net.train()
     net = net.to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=0.0002)
-    for t in range(1800):
+    for t in range(1000):
         prediction = net(x)  # input x and predict based on x
         loss = loss_func(prediction, y)
         optimizer.zero_grad()
@@ -77,11 +78,8 @@ def train_model(x, y, train, flag):
     #     fig.canvas.draw()  # draw the canvas, cache the renderer
     #     image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
     #     image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    #
     #     my_images.append(image)
-    #
-    # # save images as a gif
-    # imageio.mimsave('./curve_1.gif', my_images, fps=50)
+    # imageio.mimsave('./curve_1.gif', my_images, fps=60)
     torch.save(net.state_dict(), 'app/models/' + flag + '.pth')
     return net
 
@@ -115,8 +113,8 @@ def start(in1, days, train=False):
         data = model_handler(in1, cases, train, days)
     elif in1 == 'deaths':
         d_all = np.asarray(DeathsDataParser().get_deaths()['total_deaths'])[:, :2]
-        a = d_all[:, 0]
-        b = d_all[:, 1]
+        a = np.flip(d_all[:, 0])
+        b = np.flip(d_all[:, 1])
         deaths = np.concatenate(([a], [b]), axis=0)
         data = model_handler(in1, deaths, train, days)
     return data
