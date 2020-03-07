@@ -15,7 +15,6 @@ def home():
 @main.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-
     countries_min = CountriesMinDataParser()
     deaths = DeathsDataParser()
     demographics = DemographicsDataParser()
@@ -27,7 +26,7 @@ def dashboard():
     updates_data = updates.get_updates()
 
     return render_template('dashboard/coronavirus/dashboard.html', data=updates_data,
-                demographics=demographics_data, deaths=deaths_data, countries=countries_data)
+                           demographics=demographics_data, deaths=deaths_data, countries=countries_data)
 
 
 @main.route("/news", methods=['GET', 'POST'])
@@ -48,7 +47,7 @@ def test():
 @main.route("/api/predict/deaths", methods=['GET', 'POST'])
 @login_required
 def test_deaths():
-    cases = start('deaths', 10, train=True)
+    cases = start('deaths', 10, train=False)
     return jsonify(cases)
 
 
@@ -78,7 +77,6 @@ def api_countries_min():
 def api_countries_adv():
     countries = CountriesAdvDataParser()
     return jsonify(countries.get_countries())
-
 
 
 @main.route("/api/updates", methods=['GET', 'POST'])
