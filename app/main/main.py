@@ -23,11 +23,11 @@ else:
 class Net(torch.nn.Module):
     def __init__(self, n_feature, n_hidden, n_output):
         super(Net, self).__init__()
-        self.hidden = torch.nn.Linear(n_feature, n_hidden)
-        self.hidden1 = torch.nn.Linear(n_hidden, 400)
-        self.hidden2 = torch.nn.Linear(400, 300)
-        self.hidden3 = torch.nn.Linear(300, n_hidden)  # hidden layer
-        self.predict = torch.nn.Linear(n_hidden, n_output)   # output layer
+        self.hidden = torch.nn.Linear(n_feature, n_hidden).to(device)
+        self.hidden1 = torch.nn.Linear(n_hidden, 400).to(device)
+        self.hidden2 = torch.nn.Linear(400, 300).to(device)
+        self.hidden3 = torch.nn.Linear(300, n_hidden).to(device)  # hidden layer
+        self.predict = torch.nn.Linear(n_hidden, n_output).to(device)   # output layer
 
     def forward(self, x):
         x = F.relu(self.hidden(x))      # activation function for hidden layer
@@ -42,9 +42,9 @@ def train_model(x, y, train, flag):
     if not train:
         net = Net(n_feature=1, n_hidden=200, n_output=1)
         if flag == 'cases':
-            net.load_state_dict(torch.load('app/models/cases.pth', map_location='cpu'))
+            net.load_state_dict(torch.load('app/models/cases.pth', map_location=device))
         elif flag == 'deaths':
-            net.load_state_dict(torch.load('app/models/deaths.pth', map_location='cpu'))
+            net.load_state_dict(torch.load('app/models/deaths.pth', map_location=device))
         net.eval()
         return net
     # my_images = []
