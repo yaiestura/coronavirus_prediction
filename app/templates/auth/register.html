@@ -91,73 +91,10 @@
 
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
-                            <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
-                                    </div>
-                                </div>
-                            </li>
                             <li>
                                 <a href="#!" onclick="javascript:toggleFullScreen()">
                                     <i class="feather icon-maximize full-screen"></i>
                                 </a>
-                            </li>
-                        </ul>
-                        <ul class="nav-right">
-                            <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-bell"></i>
-                                        <span class="badge bg-c-pink">5</span>
-                                    </div>
-                                    <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <h6>Notifications</h6>
-                                            <label class="label label-danger">New</label>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="{{ url_for('static', filename='images/avatar-4.jpg')}}" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="{{ url_for('static', filename='images/avatar-3.jpg')}}" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Joseph William</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="{{ url_for('static', filename='images/avatar-4.jpg')}}" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Sara Soudein</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-message-square"></i>
-                                        <span class="badge bg-c-green">3</span>
-                                    </div>
-                                </div>
                             </li>
                         </ul>
                     </div>
@@ -180,12 +117,13 @@
                                             <h3 class="text-center txt-primary">Sign up</h3>
                                         </div>
                                     </div>
-                                    <div class="row m-b-20">
-                                        <div class="col-md-6">
-                                            <a href="#!" class="btn btn-facebook m-b-20 btn-block waves-effect waves-light"><i class="icofont icofont-social-facebook"></i>facebook</a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <a href="#!" class="btn btn-twitter m-b-0 btn-block waves-effect waves-light"><i class="icofont icofont-social-twitter"></i>twitter</a>
+                                    <div class="row m-b-10">
+                                        <div class="col-md-12">
+                                            <a role="button" href={{url_for('users.google_auth')}}
+                                                class="btn btn-google btn-md btn-block m-b-10">
+                                                    <i class="fa fa-google fa-fw"></i>
+                                                    Login with Google
+                                            </a>
                                         </div>
                                     </div>
                                     <p class="text-muted text-center p-b-5">Sign up with your regular account</p>
@@ -264,7 +202,7 @@
                                             {{ form.submit(class="btn btn-outline-info btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20") }}
                                         </div>
                                     </div>
-                                    <p class="text-inverse text-left">Already have an account?<a href="{{ url_for('users.login') }}"><b class="f-w-600">Sign in here</b></a></p>
+                                    <p class="text-inverse text-left">Already have an account?<a href="{{ url_for('users.login') }}"><b class="f-w-600"> Sign in here</b></a></p>
                                 </div>
                             </div>
                         </form>

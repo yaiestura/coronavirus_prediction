@@ -1,0 +1,476 @@
+<html lang="html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datedropper/css/datedropper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/themify-icons/themify-icons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/feather/css/feather.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/icofont/css/icofont.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
+
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="">
+                            <i class="feather icon-menu"></i>
+                        </a>
+                        <a href="{{ url_for('main.home')}}">
+                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
+                        </a>
+                        <a class="mobile-options">
+                            <i class="feather icon-more-horizontal"></i>
+                        </a>
+                    </div>
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-left">
+                            <li class="header-search">
+                                <div class="main-search morphsearch-search">
+                                    <div class="input-group">
+                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                    <i class="feather icon-maximize full-screen"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+                            <li class="user-profile header-notification">
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
+                                        <span>{{ username }}</span>
+                                        <i class="feather icon-chevron-down"></i>
+                                    </div>
+                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <a href="#!">
+                                                <i class="feather icon-settings"></i> Report a Bug
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url_for('users.profile')}}">
+                                                <i class="feather icon-user"></i> Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url_for('users.logout')}}">
+                                                <i class="feather icon-log-out"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="pcoded-inner-navbar main-menu">
+                            <div class="pcoded-navigatio-lavel">Navigation</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu active pcoded-trigger">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-mtext">Dashboard</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="{{ url_for('main.dashboard')}}">
+                                                <span class="pcoded-mtext">Coronavirus Data</span>
+                                            </a>
+                                        </li>
+                                        <li class="pcoded-hasmenu">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                <span class="pcoded-mtext">Countires</span>
+                                                <span class="pcoded-badge label label-danger">NEW</span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">China</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">United States</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="">
+                                            <a href="">
+                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                <span class="pcoded-mtext">Predictions</span>
+                                                <span class="pcoded-badge label label-danger">NEW</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ url_for('main.news')}}">
+                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                <span class="pcoded-mtext">News</span>
+                                                <span class="pcoded-badge label label-danger">NEW</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="pcoded-navigatio-lavel">Statistics</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                                        <span class="pcoded-mtext">Economics</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="">
+                                                <span class="pcoded-mtext">Stock Market</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="">
+                                                <span class="pcoded-mtext">USA Market</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
+                                        <span class="pcoded-mtext">Lorem ipsum</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="">
+                                                <span class="pcoded-mtext">Lorem ipsum</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="pcoded-navigatio-lavel">Lorem ipsum</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="">
+                                    <a href="" target="_blank">
+                                        <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
+                                        <span class="pcoded-mtext">Documentation</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="" target="_blank">
+                                        <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
+                                        <span class="pcoded-mtext">Submit an Issue</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="cover-profile">
+                                                    <div class="profile-bg-img">
+                                                        <img class="profile-bg-img img-fluid" src="{{ url_for('static', filename='images/user-profile/bg-img1.jpg')}}" alt="bg-img">
+                                                        <div class="card-block user-info">
+                                                            <div class="col-md-12">
+                                                                <div class="media-left">
+                                                                    <a href="#" class="profile-image">
+                                                                        <img class="user-img img-radius" src="{{ current_user.image_file }}" alt="user-img">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="user-title">
+                                                                            <h2>{{ username }}</h2>
+                                                                            <span class="text-white">HSE Student</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="pull-right cover-btn">
+                                                                            <button type="button" class="btn btn-primary"><i class="icofont icofont-ui-messaging"></i> Message</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-header-text">About Me</h5>
+                                                        <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                            <i class="icofont icofont-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="view-info">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="general-info">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-xl-6">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table m-0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <th scope="row">Full Name</th>
+                                                                                                <td>Random Name</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Gender</th>
+                                                                                                <td>Male</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Birth Date</th>
+                                                                                                <td>Some Day</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Marital Status</th>
+                                                                                                <td>Single</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Location</th>
+                                                                                                <td>Moscow, Russia</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12 col-xl-6">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <th scope="row">Email</th>
+                                                                                                <td>{{current_user.email}}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Mobile Number</th>
+                                                                                                <td>+79999999999</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Twitter</th>
+                                                                                                <td>@random</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Skype</th>
+                                                                                                <td>random.skype</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th scope="row">Website</th>
+                                                                                                <td><a href="http://github.com">github.com</a></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-info">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="general-info">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <table class="table">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-user"></i></span>
+                                                                                                    <input type="text" class="form-control" placeholder="Full Name">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-radio">
+                                                                                                    <div class="group-add-on">
+                                                                                                        <div class="radio radiofill radio-inline">
+                                                                                                            <label>
+                                                                                                                <input type="radio" name="radio" checked=""><i class="helper"></i> Male
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                        <div class="radio radiofill radio-inline">
+                                                                                                            <label>
+                                                                                                                <input type="radio" name="radio"><i class="helper"></i> Female
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <input id="dropper-default" class="form-control" type="text" placeholder="Select Your Birth Date">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <select id="hello-single" class="form-control">
+                                                                                                    <option value="">---- Marital Status ----</option>
+                                                                                                    <option value="married">Married</option>
+                                                                                                    <option value="unmarried">Unmarried</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-location-pin"></i></span>
+                                                                                                    <input type="text" class="form-control" placeholder="Address">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <table class="table">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-mobile-phone"></i></span>
+                                                                                                    <input type="text" class="form-control" placeholder="Mobile Number">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-social-twitter"></i></span>
+                                                                                                    <input type="text" class="form-control" placeholder="Twitter Id">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-social-skype"></i></span>
+                                                                                                    <input type="email" class="form-control" placeholder="Skype Id">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="input-group">
+                                                                                                    <span class="input-group-addon"><i class="icofont icofont-earth"></i></span>
+                                                                                                    <input type="text" class="form-control" placeholder="website">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="text-center">
+                                                                            <a href="#!" class="btn btn-primary waves-effect waves-light m-r-20">Save</a>
+                                                                            <a href="#!" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/popper.js/js/popper.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/modernizr.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='pages/user-profile.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
+</html>
+
+

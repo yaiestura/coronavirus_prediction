@@ -20,6 +20,25 @@
     padding-right: 20px;
 }
 
+.content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+}
+
+.account-heading {
+    font-size: 2.5rem;
+}
+
 body {
     background-color: #f3f3f3;
     font-size: .875em;
@@ -1771,7 +1790,8 @@ a.bg-danger:hover {
 .user-img img {
     margin: 0 auto;
     display: block;
-    width: 100%
+    width: 100px;
+    height: 100px
 }
 
 .user-img img {
@@ -2462,7 +2482,7 @@ img.comment-img {
 .btn-facebook i,
 .btn-flickr i,
 .btn-github i,
-.btn-google-plus i,
+.btn-google i,
 .btn-instagram i,
 .btn-linkedin i,
 .btn-pinterest i,
@@ -12054,10 +12074,6 @@ body.menu-bottom #collapse-menu {
     transform: skew(-15deg)
 }
 
-.btn i {
-    margin-right: 5px
-}
-
 .btn.btn-icon {
     border-radius: 50%;
     width: 40px;
@@ -12754,7 +12770,7 @@ body.menu-bottom #collapse-menu {
 .btn-facebook,
 .btn-flickr,
 .btn-github,
-.btn-google-plus,
+.btn-google,
 .btn-instagram,
 .btn-linkedin,
 .btn-pinterest,
@@ -12775,8 +12791,8 @@ body.menu-bottom #collapse-menu {
 .btn-flickr:hover,
 .btn-github:focus,
 .btn-github:hover,
-.btn-google-plus:focus,
-.btn-google-plus:hover,
+.btn-google:focus,
+.btn-google:hover,
 .btn-instagram:focus,
 .btn-instagram:hover,
 .btn-linkedin:focus,
@@ -12812,7 +12828,7 @@ body.menu-bottom #collapse-menu {
     background-color: #EA4C89
 }
 
-.btn-google-plus {
+.btn-google {
     background-color: #DD4B39
 }
 

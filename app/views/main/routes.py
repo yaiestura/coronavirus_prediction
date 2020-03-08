@@ -1,7 +1,8 @@
 from flask import render_template, request, Blueprint, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app.views.main.main import *
+from app.views.users.routes import users
 
 main = Blueprint('main', __name__)
 
@@ -13,7 +14,7 @@ def home():
 
 
 @main.route("/dashboard", methods=['GET', 'POST'])
-@login_required
+# @login_required
 def dashboard():
     countries_min = CountriesMinDataParser()
     deaths = DeathsDataParser()
@@ -25,8 +26,8 @@ def dashboard():
     demographics_data = demographics.get_demographics()
     updates_data = updates.get_updates()
 
-    return render_template('dashboard/coronavirus/dashboard.html', data=updates_data,
-                           demographics=demographics_data, deaths=deaths_data, countries=countries_data)
+    return render_template('dashboard/coronavirus/dashboard.html', data=updates_data, username=current_user.username,
+                           avatar=current_user.image_file, demographics=demographics_data, deaths=deaths_data, countries=countries_data)
 
 
 @main.route("/news", methods=['GET', 'POST'])
@@ -36,6 +37,23 @@ def news():
     news_data = news.get_news_updates()
 
     return render_template('dashboard/coronavirus/news.html', news=news_data['news'], updated=news_data['last_updated'])
+
+
+@main.route("/countries", methods=['GET', 'POST'])
+@login_required
+def countries():
+    countries = CountriesAdvDataParser()
+    countries_data = countries.get_countries()
+
+    return render_template('dashboard/coronavirus/countries.html', countries=countries_data)
+
+
+@main.route("/predictions", methods=['GET', 'POST'])
+@login_required
+def coronavirus_predictions():
+    deaths_predicted = start('deaths', 10, train=False)
+    cases_predicted = start('cases', 10, train=False)
+    return render_template('dashboard/coronavirus/predictions.html', deaths=deaths_predicted, cases=cases_predicted)
 
 
 @main.route("/about", methods=['GET', 'POST'])

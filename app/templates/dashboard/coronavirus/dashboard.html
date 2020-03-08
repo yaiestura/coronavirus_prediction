@@ -95,23 +95,23 @@
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="{{ url_for('static', filename='images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
-                                        <span>{{current_user.username}}</span>
+                                        <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
+                                        <span>{{username}}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
                                             <a href="#!">
-                                                <i class="feather icon-settings"></i> Settings
+                                                <i class="feather icon-settings"></i> Report a Bug
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="user-profile.htm">
+                                            <a href="{{url_for('users.profile')}}">
                                                 <i class="feather icon-user"></i> Profile
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="auth-normal-sign-in.htm">
+                                            <a href="{{url_for('users.logout')}}">
                                                 <i class="feather icon-log-out"></i> Logout
                                             </a>
                                         </li>
@@ -141,12 +141,24 @@
                                                 <span class="pcoded-mtext">Coronavirus Data</span>
                                             </a>
                                         </li>
-                                        <li class="">
-                                            <a href="">
+                                        <li class="pcoded-hasmenu">
+                                            <a href="javascript:void(0)">
                                                 <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
                                                 <span class="pcoded-mtext">Countires</span>
                                                 <span class="pcoded-badge label label-danger">NEW</span>
                                             </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">China</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">United States</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li class="">
                                             <a href="">
@@ -397,7 +409,7 @@
                                                             </table>
                                                         </div>
                                                         <div class="text-right  m-r-20">
-                                                            <a href="#!" class="b-b-primary text-primary">View all Coronavirus Confirmed Locations </a>
+                                                            <a href="{{url_for('main.countries')}}" class="b-b-primary text-primary">View all Coronavirus Confirmed Locations </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -642,11 +654,6 @@
                                 </div>
                             </div>
                         </div>
-                        <footer>
-                            <div class="footer bg-inverse" style="position:static !important">
-                                <p class="text-center">Copyright &copy; 2019 Coronavirus Prediction App , All rights reserved.</p>
-                            </div>
-                        </footer>
                     </div>
                 </div>
             </div>
@@ -705,7 +712,7 @@
     var series = plot.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = "value";
     series.dataFields.valueX = "date";
-    series.tooltipText = "{value}"
+    series.tooltipText = "{value} deaths"
     series.strokeWidth = 2;
     series.minBulletDistance = 15;
 
@@ -736,15 +743,16 @@
     // Create vertical scrollbar and place it before the value axis
     plot.scrollbarY = new am4core.Scrollbar();
     plot.scrollbarY.parent = plot.leftAxesContainer;
-    plot.scrollbarY.toBack();
+    //plot.scrollbarY.toBack();
 
     // Create a horizontal scrollbar with previe and place it underneath the date axis
     plot.scrollbarX = new am4charts.XYChartScrollbar();
     plot.scrollbarX.series.push(series);
     plot.scrollbarX.parent = plot.bottomAxesContainer;
-
-    dateAxis.start = 0.79;
-    dateAxis.keepSelection = true;
+    plot.scrollbarX.showSystemTooltip = false;
+    plot.scrollbarX.thumb.showSystemTooltip = false;
+    plot.scrollbarX.startGrip.showSystemTooltip = false;
+    plot.scrollbarX.endGrip.showSystemTooltip = false;
 
     }); // end am4core.ready()
 </script>
