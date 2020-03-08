@@ -63,7 +63,7 @@ class DeathsDataParser(DataParser):
         for row in total_rows:
             columns = row.find_all('td')
             columns = [value.text.strip() for value in columns]
-            total_data.append([value.replace(',', '') for value in columns if value])
+            total_data.append([value.replace(',', '') for value in columns])
 
         deaths_today = soup.select('.maincounter-number span')[0].text.strip().replace(',', '')
         today_date = re.sub(r'\d+', str(int(re.findall(r'\d+', total_data[0][0])[0]) + 1), total_data[0][0])
@@ -80,7 +80,7 @@ class DeathsDataParser(DataParser):
         for row in daily_rows:
             columns = row.find_all('td')
             columns = [value.text.strip() for value in columns]
-            daily_data.append([value.replace(',', '') for value in columns if value])
+            daily_data.append([value.replace(',', '') for value in columns])
 
         return {'total_deaths': total_data, 'daily_deaths': daily_data}
 
@@ -109,7 +109,7 @@ class CountriesMinDataParser(DataParser):
         for row in rows_countries:
             columns = row.find_all('td')
             columns = [value.text.strip() for value in columns]
-            data_countries.append([value.replace(',', '') for value in columns if value])
+            data_countries.append([value.replace(',', '') for value in columns])
 
         return data_countries
 
@@ -141,7 +141,7 @@ class CountriesAdvDataParser(DataParser):
         for row in rows_countries:
             columns = row.find_all('td')
             columns = [value.text.strip() for value in columns]
-            data_countries.append([value.replace(',', '') for value in columns if value])
+            data_countries.append([value.replace(',', '') for value in columns])
         return data_countries[:-1]
 
     def get_countries(self):

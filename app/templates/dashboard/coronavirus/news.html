@@ -135,17 +135,39 @@
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class="">
+                                        <li class="active">
                                             <a href="{{ url_for('main.dashboard')}}">
                                                 <span class="pcoded-mtext">Coronavirus Data</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="">
+                                            <a href="{{ url_for('main.maps')}}">
+                                                <span class="pcoded-mtext">Maps</span>
+                                            </a>
+                                        </li>
+                                        <li class="pcoded-hasmenu">
+                                            <a href="javascript:void(0)">
                                                 <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
                                                 <span class="pcoded-mtext">Countires</span>
                                                 <span class="pcoded-badge label label-danger">NEW</span>
                                             </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="{{ url_for('main.countries')}}">
+                                                        <span class="pcoded-mtext">Countries</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">China</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="">
+                                                        <span class="pcoded-mtext">United States</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li class="">
                                             <a href="">
@@ -154,7 +176,7 @@
                                                 <span class="pcoded-badge label label-danger">NEW</span>
                                             </a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="{{ url_for('main.news')}}">
                                                 <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
                                                 <span class="pcoded-mtext">News</span>

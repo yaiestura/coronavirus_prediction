@@ -7,6 +7,22 @@
     transition: all ease-in 0.3s !important;
 }
 
+.btn-secondary {
+    color: #fff !important;
+    background-color: #c9c9c9 !important;
+    border-color: #ddd #ddd #fff !important;
+}
+
+.btn-secondary.active {
+    color: #fff !important;
+    background-color: #404e67 !important;
+    border-color: #404e67 !important;
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 3px #404e67 !important;
+}
+
 #cases_doughnut {
     height: 237px;
 }
@@ -20,23 +36,25 @@
     padding-right: 20px;
 }
 
-.content-section {
-    background: #ffffff;
-    padding: 10px 20px;
-    border: 1px solid #dddddd;
-    border-radius: 3px;
-    margin-bottom: 20px;
+.nav-tabs .nav-link {
+    color: #fff !important;
+    background-color: #c9c9c9 !important;
+    border-color: #c9c9c9 !important;
 }
 
-.account-img {
-    height: 125px;
-    width: 125px;
-    margin-right: 20px;
-    margin-bottom: 16px;
+.nav-tabs .nav-link.active {
+    color: #fff !important;
+    background-color: #404e67 !important;
+    border-color: #ddd #ddd #fff !important;
 }
 
-.account-heading {
-    font-size: 2.5rem;
+#cases_map, #deaths_map, #recovered_map {
+    height: 90vh;
+    border: 2px solid #404e67;
+}
+
+.countries-card {
+    height: 80vh;
 }
 
 body {
@@ -302,7 +320,7 @@ p {
 .card .card-header span {
     color: #919aa3;
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     margin-top: 5px
 }
 
@@ -2761,7 +2779,7 @@ figure.effect-goliath {
 
 .dropdown-item.active,
 .dropdown-item:active {
-    background-color: #01a9ac
+    background-color: #404e67;
 }
 
 .task-detail-right .counter {
@@ -5907,7 +5925,7 @@ a[data-toggle="lightbox"] .img-fluid {
 }
 
 .text-primary {
-    color: #01a9ac !important
+    color: #404e67 !important
 }
 
 .text-warning {
@@ -6580,7 +6598,7 @@ table tbody .border-bottom-info td {
 }
 
 .b-b-primary {
-    border-bottom: 1px solid #01a9ac
+    border-bottom: 1px solid #404e67
 }
 
 .b-l-primary {
@@ -12921,7 +12939,7 @@ body.menu-bottom #collapse-menu {
 }
 
 .form-control:focus {
-    border: 1px solid #01a9ac
+    border: 1px solid #404e67;
 }
 
 .form-control.form-control-normal {
@@ -12970,20 +12988,20 @@ body.menu-bottom #collapse-menu {
 }
 
 .form-control-primary {
-    border-color: #01a9ac;
-    color: #01a9ac
+    border-color: #404e67;;
+    color: #404e67;
 }
 
 .form-control-primary:focus {
-    border-color: #01a9ac
+    border-color: #404e67;
 }
 
 .input-group-primary .input-group-addon {
-    background-color: #01a9ac
+    background-color: #404e67;
 }
 
 .input-group-primary .form-control {
-    border-color: #01a9ac
+    border-color: #404e67;
 }
 
 .form-control-warning {

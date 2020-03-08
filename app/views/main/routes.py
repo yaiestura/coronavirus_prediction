@@ -36,7 +36,8 @@ def news():
     news = NewsDataParser()
     news_data = news.get_news_updates()
 
-    return render_template('dashboard/coronavirus/news.html', news=news_data['news'], updated=news_data['last_updated'])
+    return render_template('dashboard/coronavirus/news.html', news=news_data['news'], updated=news_data['last_updated'], 
+                            username=current_user.username, avatar=current_user.image_file,)
 
 
 @main.route("/countries", methods=['GET', 'POST'])
@@ -44,8 +45,15 @@ def news():
 def countries():
     countries = CountriesAdvDataParser()
     countries_data = countries.get_countries()
+    print(countries_data)
 
-    return render_template('dashboard/coronavirus/countries.html', countries=countries_data)
+    return render_template('dashboard/coronavirus/countries.html', countries=countries_data, username=current_user.username,
+                           avatar=current_user.image_file,)
+
+
+@main.route('/maps')
+def maps():
+    return render_template('dashboard/coronavirus/maps.html', username=current_user.username, avatar=current_user.image_file,)
 
 
 @main.route("/predictions", methods=['GET', 'POST'])
@@ -53,7 +61,8 @@ def countries():
 def coronavirus_predictions():
     deaths_predicted = start('deaths', 10, train=False)
     cases_predicted = start('cases', 10, train=False)
-    return render_template('dashboard/coronavirus/predictions.html', deaths=deaths_predicted, cases=cases_predicted)
+    return render_template('dashboard/coronavirus/predictions.html', deaths=deaths_predicted, cases=cases_predicted,
+                           username=current_user.username, avatar=current_user.image_file,)
 
 
 @main.route("/about", methods=['GET', 'POST'])
@@ -79,6 +88,19 @@ def test_deaths():
 def test_cases():
     cases = start('cases', 10, train=False)
     return jsonify(cases)
+
+
+@main.route('/api/csse/data')
+def csse_data():
+    confirmed = get_data('confirmed')
+    deaths    = get_data('deaths')
+    recovered = get_data('recovered')
+
+    return jsonify({
+        'confirmed': confirmed,
+        'deaths':    deaths,
+        'recovered': recovered,
+    })
 
 
 @main.route("/api/deaths", methods=['GET', 'POST'])

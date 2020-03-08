@@ -1,0 +1,344 @@
+<html lang="html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datedropper/css/datedropper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/themify-icons/themify-icons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/feather/css/feather.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/icofont/css/icofont.css')}}">
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pages/data-table/css/buttons.dataTables.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
+
+    <title>Countries</title>
+</head>
+    <body>
+        <div class="theme-loader">
+            <div class="ball-scale">
+                <div class='contain'>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                    <div class="ring">
+                        <div class="frame"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="pcoded" class="pcoded">
+            <div class="pcoded-overlay-box"></div>
+            <div class="pcoded-container navbar-wrapper">
+                <nav class="navbar header-navbar pcoded-header">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-logo">
+                            <a class="mobile-menu" id="mobile-collapse" href="">
+                                <i class="feather icon-menu"></i>
+                            </a>
+                            <a href="{{ url_for('main.home')}}">
+                                <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
+                            </a>
+                            <a href="" class="mobile-options">
+                                <i class="feather icon-more-horizontal"></i>
+                            </a>
+                        </div>
+                        <div class="navbar-container container-fluid">
+                            <ul class="nav-left">
+                                <li class="header-search">
+                                    <div class="main-search morphsearch-search">
+                                        <div class="input-group">
+                                            <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#!" onclick="javascript:toggleFullScreen()">
+                                        <i class="feather icon-maximize full-screen"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav-right">
+                                <li class="user-profile header-notification">
+                                    <div class="dropdown-primary dropdown">
+                                        <div class="dropdown-toggle" data-toggle="dropdown">
+                                            <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
+                                            <span>{{ username }}</span>
+                                            <i class="feather icon-chevron-down"></i>
+                                        </div>
+                                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                            <li>
+                                                <a href="#!">
+                                                    <i class="feather icon-settings"></i> Report a Bug
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{url_for('users.profile')}}">
+                                                    <i class="feather icon-user"></i> Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{url_for('users.logout')}}">
+                                                    <i class="feather icon-log-out"></i> Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="pcoded-main-container">
+                    <div class="pcoded-wrapper">
+                        <nav class="pcoded-navbar">
+                            <div class="pcoded-inner-navbar main-menu">
+                                <div class="pcoded-navigatio-lavel">Navigation</div>
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li class="pcoded-hasmenu active pcoded-trigger">
+                                        <a href="javascript:void(0)">
+                                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                            <span class="pcoded-mtext">Dashboard</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class="active">
+                                                <a href="{{ url_for('main.dashboard')}}">
+                                                    <span class="pcoded-mtext">Coronavirus Data</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="{{ url_for('main.maps')}}">
+                                                    <span class="pcoded-mtext">Maps</span>
+                                                </a>
+                                            </li>
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)">
+                                                    <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                    <span class="pcoded-mtext">Countires</span>
+                                                    <span class="pcoded-badge label label-danger">NEW</span>
+                                                </a>
+                                                <ul class="pcoded-submenu">
+                                                    <li class="">
+                                                        <a href="{{ url_for('main.countries')}}">
+                                                            <span class="pcoded-mtext">Countries</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="">
+                                                            <span class="pcoded-mtext">China</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="">
+                                                            <span class="pcoded-mtext">United States</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="">
+                                                <a href="">
+                                                    <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                    <span class="pcoded-mtext">Predictions</span>
+                                                    <span class="pcoded-badge label label-danger">NEW</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="{{ url_for('main.news')}}">
+                                                    <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                    <span class="pcoded-mtext">News</span>
+                                                    <span class="pcoded-badge label label-danger">NEW</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="pcoded-navigatio-lavel">Statistics</div>
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                            <span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                                            <span class="pcoded-mtext">Economics</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class=" ">
+                                                <a href="">
+                                                    <span class="pcoded-mtext">Stock Market</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="">
+                                                    <span class="pcoded-mtext">USA Market</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                            <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
+                                            <span class="pcoded-mtext">Lorem ipsum</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class=" ">
+                                                <a href="">
+                                                    <span class="pcoded-mtext">Lorem ipsum</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="pcoded-navigatio-lavel">Lorem ipsum</div>
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li class="">
+                                        <a href="" target="_blank">
+                                            <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
+                                            <span class="pcoded-mtext">Documentation</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="" target="_blank">
+                                            <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
+                                            <span class="pcoded-mtext">Submit an Issue</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <div class="pcoded-content">
+                            <div class="pcoded-inner-content">
+                                <div class="main-body">
+                                    <div class="page-wrapper">
+                                        <div class="page-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card countries-card">
+                                                        <div class="card-header">
+                                                            <h5>Confirmed Cases and Deaths by Country and Territory</h5>
+                                                            <span>The coronavirus COVID-19 is affecting {{countries['countries_affected'] | int - 1}} countries and territories around the world and 1 international conveyance (the Diamond Princess cruise ship harbored in Yokohama, Japan).</span>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="scr-vtr-dynamic" class="table table-striped table-bordered nowrap">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Flag</th>
+                                                                            <th>Country</th>
+                                                                            <th>Total Cases</th>
+                                                                            <th>New Cases</th>
+                                                                            <th>Total Deaths</th>
+                                                                            <th>New Deaths</th>
+                                                                            <th>Total Recovered</th>
+                                                                            <th>Active Cases</th>
+                                                                            <th>Serious, Critical</th>
+                                                                            <th>Tot Cases / 1M pop</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for country in countries['countries_adv_data'] %}
+                                                                            <tr>
+                                                                                <td>{{ loop.index }}</td>
+                                                                                <td>{{ country[0] }}</td>
+                                                                                <td>{{ country[1] }}</td>
+                                                                                <td>{{ country[2] }}</td>
+                                                                                <td>{{ country[3] }}</td>
+                                                                                <td>{{ country[4] }}</td> 
+                                                                                <td>{{ country[5] }}</td> 
+                                                                                <td>{{ country[6] }}</td>
+                                                                                <td>{{ country[7] }}</td>
+                                                                                <td>{{ country[8] }}</td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr>
+                                                                            <th>Flag</th>
+                                                                            <th>Country</th>
+                                                                            <th>Total Cases</th>
+                                                                            <th>New Cases</th>
+                                                                            <th>Total Deaths</th>
+                                                                            <th>New Deaths</th>
+                                                                            <th>Total Recovered</th>
+                                                                            <th>Active Cases</th>
+                                                                            <th>Serious, Critical</th>
+                                                                            <th>Tot Cases / 1M pop</th>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/popper.js/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/modernizr.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/jszip.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/pdfmake.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/vfs_fonts.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/data-table-custom.js')}}"></script>
+</html>
+
+

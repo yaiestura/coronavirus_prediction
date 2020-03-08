@@ -2,11 +2,14 @@ venv/
 .vscode/
 
 #app/site.db
+app/views/__pycache__
+app/views/main/__pycache__
+app/views/errors/__pycache__
+app/views/users/__pycache__
 app/__pycache__
-app/data_parser/__pycache__
-app/errors/__pycache__
-app/main/__pycache__
-app/users/__pycache__
+app/api/__pycache__
+app/api/data_parser/__pycache__
+app/api/utils/__pycache__
 migrations/__pycache__
 migrations/versions/__pycache__
 

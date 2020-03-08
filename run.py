@@ -2,6 +2,9 @@ from app import create_app, db
 
 app = create_app()
 
+app.jinja_env.globals.update(zip=zip)
+app.jinja_env.globals.update(enumerate=enumerate)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
