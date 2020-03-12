@@ -70,12 +70,6 @@ def about():
     return render_template('about.html', title='About')
 
 
-@main.route("/test", methods=['GET', 'POST'])
-@login_required
-def test():
-    return render_template('test.html')
-
-
 @main.route("/api/predict/deaths", methods=['GET', 'POST'])
 @login_required
 def test_deaths():
@@ -143,3 +137,10 @@ def api_news():
 def api_demographics():
     demographics = DemographicsDataParser()
     return jsonify(demographics.get_demographics())
+
+
+@main.route("/api/tests", methods=['GET', 'POST'])
+@login_required
+def api_tests():
+    tests = TestsDataParser()
+    return jsonify(tests.get_testing())

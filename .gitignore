@@ -4,6 +4,7 @@ venv/
 #app/site.db
 app/views/__pycache__
 app/views/main/__pycache__
+app/views/posts/__pycache__
 app/views/errors/__pycache__
 app/views/users/__pycache__
 app/__pycache__

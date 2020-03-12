@@ -217,7 +217,7 @@ class NewsDataParser(DataParser):
         content = r.content
 
         soup = BeautifulSoup(content, 'html.parser')
-    
+
         news = []
 
         for item in soup.find('div', {'id': 'innercontent'}).find_next('ul').find_all('li'):
@@ -275,3 +275,32 @@ class DemographicsDataParser(DataParser):
 
         return {'death_rate_by_age': age_data, 'death_rate_by_sex': sex_data,
                 'pre_existing_conditions': conditions_data}
+
+class TestsDataParser(DataParser):
+
+    def __init__(self):
+        super()
+
+    @staticmethod
+    def get_testing():
+
+        url = DataParser.BASE_URL + '/' + 'covid-19-testing/'
+        r = requests.get(url)
+        content = r.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+
+        tests_table = soup.select('.table-responsive')[0].find('table')
+        tests_table_body = tests_table.find('tbody')
+
+        tests_rows = tests_table_body.find_all('tr')[1:]
+
+        tests_data = []
+
+        for row in tests_rows:
+            columns = row.find_all('td')
+            columns = [value.text.strip() for value in columns]
+            tests_data.append([value.replace(',', '') for value in columns[:-1]])
+
+        return { 'tests_data': tests_data }
+

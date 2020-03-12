@@ -1,0 +1,112 @@
+<nav class="pcoded-navbar">
+    <div class="pcoded-inner-navbar main-menu">
+        <div class="pcoded-navigatio-lavel">Navigation</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu active pcoded-trigger">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                    <span class="pcoded-mtext">Dashboard</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class="active">
+                        <a href="{{ url_for('main.dashboard')}}">
+                            <span class="pcoded-mtext">Coronavirus Data</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ url_for('main.maps')}}">
+                            <span class="pcoded-mtext">Maps</span>
+                        </a>
+                    </li>
+                    <li class="pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                            <span class="pcoded-mtext">Countires</span>
+                            <span class="pcoded-badge label label-danger">NEW</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li class="">
+                                <a href="{{ url_for('main.countries')}}">
+                                    <span class="pcoded-mtext">Countries</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <span class="pcoded-mtext">China</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <span class="pcoded-mtext">United States</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                            <span class="pcoded-mtext">Predictions</span>
+                            <span class="pcoded-badge label label-danger">NEW</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ url_for('main.news')}}">
+                            <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                            <span class="pcoded-mtext">News</span>
+                            <span class="pcoded-badge label label-danger">NEW</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="pcoded-navigatio-lavel">Statistics</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                    <span class="pcoded-mtext">Economics</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="">
+                            <span class="pcoded-mtext">Stock Market</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="">
+                            <span class="pcoded-mtext">USA Market</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
+                    <span class="pcoded-mtext">Lorem ipsum</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="">
+                            <span class="pcoded-mtext">Lorem ipsum</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="pcoded-navigatio-lavel">Lorem ipsum</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="">
+                <a href="" target="_blank">
+                    <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
+                    <span class="pcoded-mtext">Documentation</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="" target="_blank">
+                    <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
+                    <span class="pcoded-mtext">Submit an Issue</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

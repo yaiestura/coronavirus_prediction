@@ -78,15 +78,9 @@
                                     LOGOUT<span><i class="feather icon-chevron-down"></i></span>
                                 </a>
                             {% else %}
-                                <li class="nav-item dropdown-primary dropdown open">
-                                    <button id="dropdown-auth" class="btn btn-round dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #fd7a6b !important; border-color: #fd7a6b !important; color: #fff !important;">
-                                        LOGIN<span><i class="feather icon-chevron-down"></i></span>
-                                    </button>
-                                    <div class="show-notification profile-notification dropdown-menu" aria-labelledby="dropdown-auth" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start">
-                                        <a class="dropdown-item mb-2" href="{{url_for('users.login')}}" style="text-transform: none !important;">Sign In</a>
-                                        <a class="dropdown-item" href="{{url_for('users.register')}}" style="text-transform: none !important;">Sign Up</a>
-                                    </div>
-                                </li>
+                                <a href="{{url_for('users.login')}}" class="btn btn-round" type="button" style="background-color: #fd7a6b !important; border-color: #fd7a6b !important; color: #fff !important;">
+                                    LOGIN<span><i class="feather icon-chevron-down"></i></span>
+                                </a>
                             {% endif %}
                          </ul>
                     </div>
