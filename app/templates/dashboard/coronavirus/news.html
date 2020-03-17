@@ -14,7 +14,7 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
-    <title>Dashboard</title>
+    <title>Latest News</title>
 </head>
 <body>
     <!-- Pre-loader start -->
@@ -63,7 +63,7 @@
                 <div class="navbar-wrapper">
 
                     <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="">
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
                         <a href="{{ url_for('main.home')}}">
@@ -244,9 +244,9 @@
                                                             {% for article in news %}
                                                                     <a class="accordion-msg bg-dark-primary b-none m-b-10">{{loop.index}}. {{article[0]}}</a>
                                                                     <div class="accordion-desc">
-                                                                        Source: <a href={{article[1]}}>{{article[1]}}</a>
+                                                                        Source: <a href={{article[1]}} class ="news-links" target="_blank">{{article[1]}}</a>
                                                                     </div>
-                                                            {% endfor %}                                                         
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                 </div>

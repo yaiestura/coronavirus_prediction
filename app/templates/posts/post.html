@@ -3,14 +3,20 @@
   <article class="media content-section">
     <div class="media-body">
       <div class="article-metadata">
-        <a class="mr-2" href="{{ url_for('users.user_posts', username=post.user.username) }}">{{ post.user.username }}</a>
-        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-        {% if post.author == current_user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
-            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+        <div class="row">
+          <div class="col-lg-9">
+            <a class="mr-2" href="{{ url_for('posts.user_posts', username=post.user.username) }}">{{ post.user.username }}</a>
+            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
           </div>
-        {% endif %}
+          <div class="col-lg-3 row justify-content-end">
+            {% if post.user == current_user %}
+              <div>
+                <a class="btn btn-secondary mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+              </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
       <h2 class="article-title">{{ post.title }}</h2>
       <p class="article-content">{{ post.content }}</p>
@@ -26,6 +32,12 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="sa-icon sa-warning pulseWarning" style="display: block;">
+            <span class="sa-body pulseWarningIns"></span>
+            <span class="sa-dot pulseWarningIns"></span>
+        </div>
+        <h5 class="text-center m-10">Are you sure?</h5>
+        <p class="text-center m-10">You will not be able to recover this post!</p>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">

@@ -42,6 +42,7 @@ $(document).ready(function() {
     $(".mobile-options").on('click', function() {
         $(".navbar-container .nav-right").slideToggle('slow');
     });
+
     // card js end
     $.mCustomScrollbar.defaults.axis = "yx";
     $("#styleSelector .style-cont").slimScroll({
@@ -141,14 +142,11 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.theme-loader').fadeOut('slow', function() {
+            $(this).remove();
+        });
     })
-});
-
-$(window).load(function() {
-    $('.theme-loader').fadeOut('slow', function() {
-        $(this).remove();
-    });
 });
 
 // toggle full screen

@@ -2,6 +2,7 @@ from flask import render_template, request, Blueprint, jsonify
 from flask_login import login_required, current_user
 
 from app.views.main.main import *
+
 from app.views.users.routes import users
 
 main = Blueprint('main', __name__)
@@ -14,7 +15,7 @@ def home():
 
 
 @main.route("/dashboard", methods=['GET', 'POST'])
-# @login_required
+@login_required
 def dashboard():
     countries_min = CountriesMinDataParser()
     deaths = DeathsDataParser()
@@ -52,6 +53,7 @@ def countries():
 
 
 @main.route('/maps')
+@login_required
 def maps():
     return render_template('dashboard/coronavirus/maps.html', username=current_user.username, avatar=current_user.image_file,)
 

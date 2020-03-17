@@ -4,7 +4,7 @@ from flask import current_app as app
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import db, bcrypt
-from app.models import User, Post
+from app.models import User
 from app.views.users.forms import ( RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm )
 from app.views.users.utils import save_picture, send_reset_email
@@ -137,17 +137,6 @@ def google_callback():
 @login_required
 def profile():
     return render_template('auth/profile.html', username=current_user.username, avatar=current_user.image_file)
-
-
-
-@users.route("/user/<string:username>")
-def user_posts(username):
-    page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(user=user)\
-        .order_by(Post.date_posted.desc())\
-        .paginate(page=page, per_page=5)
-    return render_template('posts/user_posts.html', posts=posts, user=user)
 
 
 # Reset Passwords

@@ -101,6 +101,7 @@
                     <div class="col-sm-12">
                         <!-- Authentication card start -->
                         <form class="md-float-material form-material m-t-40 m-b-40" method="POST" action="">
+                            {{ form.csrf_token }}
                             {{ form.hidden_tag() }}
                             <div class="auth-box card">
                                 <div class="card-block">
@@ -228,4 +229,3 @@
 
 </body>
 </html>
-

@@ -212,7 +212,7 @@ class NewsDataParser(DataParser):
     @staticmethod
     def get_news_updates():
 
-        url = DataParser.BASE_URL
+        url = DataParser.BASE_URL + '/' + '#news'
         r = requests.get(url)
         content = r.content
 
@@ -220,8 +220,11 @@ class NewsDataParser(DataParser):
 
         news = []
 
-        for item in soup.find('div', {'id': 'innercontent'}).find_next('ul').find_all('li'):
+        print(soup.find_all('div', {'class': 'news_post'}))
+
+        for item in soup.find_all('div', {'class': 'news_post'}):
             news.append([item.text.replace('[source]', "").strip(), item.find_next('a')['href']])
+
 
         return { 'news': list(news),
             'last_updated': soup.find('div', {'id': 'page-top'}).find_next('div').text
