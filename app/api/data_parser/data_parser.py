@@ -34,6 +34,16 @@ class DataParser:
 
         return filename
 
+    @staticmethod
+    def parse_date(date, year=2020):
+
+        months = {
+            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10,
+            'Nov': 11, 'Dec': 12
+        }
+
+        return [ int(months[str(re.search('(.+?)\d+', date)[1]).strip()]), int(re.findall(r'\d+', date)[0]), year ]
+
     def scrape_table(self):
         pass
         # rewrite method
@@ -306,4 +316,78 @@ class TestsDataParser(DataParser):
             tests_data.append([value.replace(',', '') for value in columns[:-1]])
 
         return { 'tests_data': tests_data }
+
+
+class SingleCountryParser(DataParser):
+
+    def __init__(self):
+        super()
+
+    @staticmethod
+    def get_country_data(country):
+
+        url = DataParser.BASE_URL + f'/country/{country}/'
+        r = requests.get(url)
+        content = r.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+
+        country = soup.find('div', {'style': 'text-align:center;width:100%'}).find_next('h1').text
+
+        flag = soup.find('div', {'style': 'text-align:center;width:100%'}).find_next('img')['src']
+
+        statistics = soup.select('.maincounter-number')
+
+        scripts = soup.find_all('script')
+
+        cases_data = [script.text for script in scripts if 'coronavirus-cases-linear' in str(script)][0]
+        x_axis_cases = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', cases_data)[1]))]
+        y_axis_cases = list(json.loads(re.search(r'data: (.+?) }', cases_data)[1]))
+
+        daily_cases_data = [script.text for script in scripts if 'graph-cases-daily' in str(script)][0]
+        x_axis_daily = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', daily_cases_data)[1]))]
+        y_axis_daily = list(json.loads(re.search(r'data: (.+?) }', daily_cases_data)[1]))
+
+        active_cases_data = [script.text for script in scripts if 'graph-active-cases-total' in str(script)][0]
+        x_axis_active = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', active_cases_data)[1]))]
+        y_axis_active = list(json.loads(re.search(r'data: (.+?) }', active_cases_data)[1]))
+
+        total_deaths_data = [script.text for script in scripts if 'coronavirus-deaths-linear' in str(script)][0]
+        x_axis_deaths = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', total_deaths_data)[1]))]
+        y_axis_deaths = list(json.loads(re.search(r'data: (.+?) }', total_deaths_data)[1]))
+
+        daily_deaths_data = [script.text for script in scripts if 'graph-deaths-daily' in str(script)][0]
+        x_axis_daily_deaths = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', daily_deaths_data)[1]))]
+        y_axis_daily_deaths = list(json.loads(re.search(r'data: (.+?) }', daily_deaths_data)[1]))
+
+        closed_cases_data = [script.text for script in scripts if 'deaths-cured-outcome' in str(script)][0]
+        x_axis_closed = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', closed_cases_data)[1]))]
+        y_axis_closed_fat = list(json.loads(re.findall(r'data: (.+?) }', closed_cases_data)[0]))
+        y_axis_closed_rec = list(json.loads(re.findall(r'data: (.+?) }', closed_cases_data)[1]))
+
+        last_updated = soup.find('div', {'id': 'page-top'}).find_next('div').text
+
+        link = DataParser.BASE_URL
+        new_query = requests.get(link)
+
+        world_share = BeautifulSoup(new_query.content, 'html.parser').select('.maincounter-number')
+
+        return {
+            'country': country.strip(),
+            'flag': 'https://www.worldometers.info' + flag,
+            'total_cases': [ x_axis_cases, y_axis_cases ],
+            'daily_cases': [ x_axis_daily, y_axis_daily ],
+            'active_cases': [ x_axis_active, y_axis_active ],
+            'closed_cases': [ x_axis_closed, y_axis_closed_fat, y_axis_closed_rec ],
+            'total_deaths': [ x_axis_deaths, y_axis_deaths ],
+            'daily_deaths': [ x_axis_daily_deaths, y_axis_daily_deaths ],
+            'cases_now': statistics[0].text.strip().replace(',', ''),
+            'deaths_now': statistics[1].text.strip().replace(',', ''),
+            'recovered_now': statistics[2].text.strip().replace(',', ''),
+            'cases_world': world_share[0].text.strip().replace(',', ''),
+            'deaths_world': world_share[1].text.strip().replace(',', ''),
+            'last_updated': last_updated
+        }
+
+
 

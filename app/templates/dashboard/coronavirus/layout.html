@@ -14,6 +14,12 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pages/data-table/css/buttons.dataTables.min.css')}}">
+
     <title>Dashboard</title>
 </head>
 <body>
@@ -58,11 +64,11 @@
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
-            {% include "includes/_navbar.html" %}
+            {% include "dashboard/coronavirus/includes/_navbar.html" %}
             <!-- Sidebar inner chat end-->
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
-                    {% include "includes/_sidebar.html" %}
+                    {% include "dashboard/coronavirus/includes/_sidebar.html" %}
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
                             <div class="main-body">
@@ -91,16 +97,24 @@
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
 <!-- Chart js -->
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/chart.js/js/Chart.js')}}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='pages/accordion/accordion.js')}}"></script>
+
 <!-- amchart js -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/core.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/charts.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/maps.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/worldHigh.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/animated.js')}}"></script>
 <!-- Custom js -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
+
 <script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
+{% block scripts %}
+{% endblock %}
 </html>
 
 

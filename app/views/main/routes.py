@@ -14,15 +14,32 @@ def home():
     return render_template('landing/landing.html')
 
 
+@main.route("/live", methods=['GET', 'POST'])
+@login_required
+def monitor():
+    confirmed = get_data('confirmed')
+    deaths    = get_data('deaths')
+    recovered = get_data('recovered')
+
+    data = {
+        'confirmed': confirmed,
+        'deaths': deaths,
+        'recovered': recovered
+    }
+
+    return render_template('dashboard/coronavirus/monitor.html', data=data, username=current_user.username,
+                           avatar=current_user.image_file)
+
+
 @main.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    countries_min = CountriesMinDataParser()
+    countries_adv = CountriesAdvDataParser()
     deaths = DeathsDataParser()
     demographics = DemographicsDataParser()
     updates = UpdatesDataParser()
 
-    countries_data = countries_min.get_countries()
+    countries_data = countries_adv.get_countries()
     deaths_data = deaths.get_deaths()
     demographics_data = demographics.get_demographics()
     updates_data = updates.get_updates()
@@ -51,6 +68,27 @@ def countries():
     return render_template('dashboard/coronavirus/countries.html', countries=countries_data, username=current_user.username,
                            avatar=current_user.image_file,)
 
+
+@main.route("/countries/<string:country>", methods=['GET', 'POST'])
+@login_required
+def single_country(country):
+    country_data = SingleCountryParser()
+    data = country_data.get_country_data(country)
+
+    population_data = {
+        "China": { 'population': '1,439,323,776', 'density': 153, 'land': '9,388,211' },
+        "South Korea": { 'population': '51,269,185', 'density': 527, 'land': '97,230' },
+        "United States": { 'population': '331,002,651', 'density': 36, 'land': '9,147,420' },
+        "United Kingdom": { 'population': '67,886,011', 'density': 281, 'land': '241,930' },
+        "Iran": { 'population': '83,992,949', 'density': 52, 'land': '1,628,550' },
+        "Italy": { 'population': '60,461,826', 'density': 206, 'land': '294,140' },
+        "France": { 'population': '65,273,511', 'density': 119, 'land': '547,557' },
+        "Spain": { 'population': '46,754,778', 'density': 94, 'land': '498,800' },
+        "Germany": { 'population': '83,783,942', 'density': 153, 'land': '348,560' }
+    }
+
+    return render_template('dashboard/coronavirus/country.html', data=data, population=population_data,
+                           username=current_user.username, avatar=current_user.image_file)
 
 @main.route('/maps')
 @login_required
@@ -146,3 +184,10 @@ def api_demographics():
 def api_tests():
     tests = TestsDataParser()
     return jsonify(tests.get_testing())
+
+
+@main.route("/api/countries/<string:country>", methods=['GET', 'POST'])
+@login_required
+def api_single_country(country):
+    country_data = SingleCountryParser()
+    return jsonify(country_data.get_country_data(country))

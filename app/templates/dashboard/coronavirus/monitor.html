@@ -1,0 +1,88 @@
+{% extends "dashboard/coronavirus/layout.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-2 col-sm-12">
+            <div class="row card d-block text-center">
+                <h2><b>{{data['confirmed']['total']}}</b></h2>
+                <h4>confirmed cases</h4>
+            </div>
+            <div class="row card d-block text-center">
+                <h2><b>{{data['deaths']['total']}}</b></h2>
+                <h4>deaths</h4>
+            </div>
+            <div class="row card d-block text-center">
+                <h2><b>{{data['recovered']['total']}}</b></h2>
+                <h4>recovered people</h4>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="card">
+                <div id="chartdiv" style="height:80vh"></div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-12">
+            <div class="card-header">
+                <h5>Countries, areas or territories with cases</h5>
+            </div>
+            <div class="card-block">
+                <div class="dt-responsive table-responsive">
+                    <table id="scr-vtr-dynamic" class="table table-striped table-bordered nowrap">
+                        <tbody>
+                            {% for country in data['confirmed']['locations'] %}
+                                <tr>
+                                    <td>{{ country['country']}}: {{ country['latest'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        am4core.ready(function() {
+            am4core.useTheme(am4themes_animated);
+            // Create map instance
+            var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+            // Set map definition
+            chart.geodata = am4geodata_worldHigh;
+
+            // Set projection
+            chart.projection = new am4maps.projections.Miller();
+
+            // Create map polygon series
+            var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
+            // Exclude Antartica
+            polygonSeries.exclude = ["AQ"];
+
+            // Make map load polygon (like country names) data from GeoJSON
+            polygonSeries.useGeodata = true;
+
+            // Configure series
+            var polygonTemplate = polygonSeries.mapPolygons.template;
+
+            polygonTemplate.tooltipText = "{name}";
+            polygonTemplate.fill = chart.colors.getIndex(0);
+
+            // Create hover state and set alternative fill color
+            var hs = polygonTemplate.states.create("hover");
+            hs.properties.fill = chart.colors.getIndex(2);
+        });
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/jszip.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/pdfmake.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/vfs_fonts.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='pages/data-table/js/data-table-custom.js')}}"></script>
+{% endblock %}

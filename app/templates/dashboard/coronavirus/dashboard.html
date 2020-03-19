@@ -150,7 +150,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="">
-                                                    <a href="">
+                                                    <a href="{{ url_for('main.single_country', country='china')}}">
                                                         <span class="pcoded-mtext">China</span>
                                                     </a>
                                                 </li>
@@ -414,12 +414,12 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {% for country in countries['countries_min_data'][:5] %}
+                                                                    {% for country in countries['countries_adv_data'][:5] %}
                                                                         <tr>
-                                                                            <td><img src="{{ url_for('static', filename='images/countries/china.png')}}" alt="" class="img-fluid img-30"></td>
+                                                                            <td><img src="{{ url_for('static', filename='images/countries/' + country[0] + '.png')}}" alt="" class="img-fluid img-30"></td>
                                                                             <td>{{country[0]}}</td>
                                                                             <td>{{country[1]}}</td>
-                                                                            <td class="text-right">{{country[2]}}</td>
+                                                                            <td class="text-right">{{country[3]}}</td>
                                                                         </tr>
                                                                     {% endfor %}
                                                                 </tbody>

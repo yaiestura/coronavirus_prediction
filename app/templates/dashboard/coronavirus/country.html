@@ -1,0 +1,249 @@
+{% extends "dashboard/coronavirus/layout.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-xl-4 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <img src="{{ url_for('static', filename='images/countries/maps/' + data['country'] + '.png')}}" alt="" class="img-fluid img-50">
+                        </div>
+                        <div class="col-sm-10">
+                            <h3 class="m-t-10">Country: <b>{{data['country']}}</b></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <p>{{data['last_updated']}}</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered nowrap">
+                            <tbody>
+                                <tr>
+                                    <td><b>Population:</b></td>
+                                    <td>{{population[data['country']]['population']}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Land Area(km<sup>2</sup>):</b></td>
+                                    <td>{{population[data['country']]['land']}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Density(P/km<sup>2</sup>):</b></td>
+                                    <td>{{population[data['country']]['density']}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total cases:</b></td>
+                                    <td>{{data['cases_now']}} ({{'%0.3f'| format(data['cases_now'] | int *100 / data['cases_world'] | int)}}% of world's)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total deaths:</b></td>
+                                    <td>{{data['deaths_now']}} ({{'%0.3f'| format(data['deaths_now'] | int *100 / data['deaths_world'] | int)}}% of world's)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total recovered:</b></td>
+                                    <td>{{data['recovered_now']}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <div id="chartdiv" style="height:427px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6 col-md-12">
+            <div id='cases_graph' style="height:400px"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        am4core.ready(function() {
+            am4core.useTheme(am4themes_animated);
+            // Create map instance
+            var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+            // Set map definition
+            chart.geodata = am4geodata_worldHigh;
+
+            // Set projection
+            chart.projection = new am4maps.projections.Miller();
+
+            // Create map polygon series
+            var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
+            // Exclude Antartica
+            polygonSeries.exclude = ["AQ"];
+
+            // Make map load polygon (like country names) data from GeoJSON
+            polygonSeries.useGeodata = true;
+
+            polygonSeries.events.on("validated", function(){
+                imageSeries.invalidate();
+            })
+
+            // Configure series
+            var polygonTemplate = polygonSeries.mapPolygons.template;
+
+            polygonTemplate.tooltipText = "{name}";
+            polygonTemplate.fill = chart.colors.getIndex(0);
+
+            // Create hover state and set alternative fill color
+            var hs = polygonTemplate.states.create("hover");
+            hs.properties.fill = chart.colors.getIndex(2);
+
+            // Create active state
+            var as = polygonTemplate.states.create("active");
+            as.properties.fill = am4core.color("#404e67");
+
+            var country_name = "{{data['country']}}"
+
+            var iso_code = {
+                "China": "CN",
+                "Italy": "IT",
+                "United States": "US",
+                "United Kingdom": "GB",
+                "Iran": "IR",
+                "Spain": "ES",
+                "France": "FR",
+                "Germany": "DE",
+                "South Korea": "KR"
+            }
+            var cases = "{{data['cases_now'] | int}}"
+            var deaths = "{{data['deaths_now'] | int}}"
+            var recovered = "{{data['recovered_now'] | int}}"
+
+            chart.events.on("ready", function(ev) {
+            var country = polygonSeries.getPolygonById(iso_code[country_name]);
+
+            // Pre-zoom
+            chart.zoomToMapObject(country);
+
+            // Set active state
+            setTimeout(function() {
+                country.isActive = true;
+            }, 1000);
+            });
+
+            // Zoom control
+            chart.zoomControl = new am4maps.ZoomControl();
+
+            var homeButton = new am4core.Button();
+            homeButton.events.on("hit", function(){
+                var country = polygonSeries.getPolygonById(iso_code[country_name]);
+                chart.zoomToMapObject(country);;
+            });
+
+            homeButton.icon = new am4core.Sprite();
+            homeButton.padding(7, 5, 7, 5);
+            homeButton.width = 30;
+            homeButton.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+            homeButton.marginBottom = 10;
+            homeButton.parent = chart.zoomControl;
+            homeButton.insertBefore(chart.zoomControl.plusButton);
+
+            var mapData = [
+                { "id": iso_code[country_name], "name": country_name, "value": cases, "deaths": deaths,
+                "recovered":recovered, "color": am4core.color("#ff0000") }
+            ];
+
+            var imageSeries = chart.series.push(new am4maps.MapImageSeries());
+            imageSeries.data = mapData;
+            imageSeries.dataFields.value = "value";
+
+            var imageTemplate = imageSeries.mapImages.template;
+            imageTemplate.nonScaling = true
+
+            imageTemplate.adapter.add("latitude", function(latitude, target) {
+            var polygon = polygonSeries.getPolygonById(target.dataItem.dataContext.id);
+            if(polygon){
+                return polygon.visualLatitude;
+            }
+            return latitude;
+            })
+
+            imageTemplate.adapter.add("longitude", function(longitude, target) {
+            var polygon = polygonSeries.getPolygonById(target.dataItem.dataContext.id);
+            if(polygon){
+                return polygon.visualLongitude;
+            }
+            return longitude;
+            })
+
+            var circle = imageTemplate.createChild(am4core.Circle);
+            circle.fillOpacity = 0.7;
+            circle.propertyFields.fill = "color";
+            circle.tooltipText = "{name}: [bold]{value}[/] cases;\n [bold]{deaths}[/] deaths; [bold]{recovered}[/] recovered";
+
+            imageSeries.heatRules.push({
+            "target": circle,
+            "property": "radius",
+            "min": 4,
+            "max": 30,
+            "dataField": "value"
+            })
+        });
+    </script>
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        var chart = am4core.create("cases_graph", am4charts.XYChart);
+        chart.paddingRight = 20;
+
+        var data = [];
+        var visits = 10;
+        var previousValue;
+        console.log("{{data['total_cases'][1][0]}}")
+        //chart.data = [
+            //{% for item in data['total_cases'] %}
+                //{ date: new Date(int('{{item[0][2]}}'), int('{{item[0][0]}}'), int('{{item[0][1]}}')),
+                 //value: int('{{item[1]}}')
+                //}
+            //{% endfor %}
+        //]
+
+        //console.log(chart.data);
+
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.grid.template.location = 0;
+        dateAxis.renderer.axisFills.template.disabled = true;
+        dateAxis.renderer.ticks.template.disabled = true;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.tooltip.disabled = true;
+        valueAxis.renderer.minWidth = 35;
+        valueAxis.renderer.axisFills.template.disabled = true;
+        valueAxis.renderer.ticks.template.disabled = true;
+
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.dateX = "date";
+        series.dataFields.valueY = "value";
+        series.strokeWidth = 2;
+        series.tooltipText = "value: {valueY}, day change: {valueY.previousChange}";
+
+        // set stroke property field
+        series.propertyFields.stroke = "color";
+
+        chart.cursor = new am4charts.XYCursor();
+
+        var scrollbarX = new am4core.Scrollbar();
+        chart.scrollbarX = scrollbarX;
+
+        dateAxis.start = 0.7;
+        dateAxis.keepSelection = true;
+
+
+        }); // end am4core.ready()
+    </script>
+{% endblock %}
+
