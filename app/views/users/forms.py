@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, RadioField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from app.models import User
@@ -57,11 +58,12 @@ class ResetPasswordForm(FlaskForm):
 
 
 class ProfileForm(FlaskForm):
-    username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign Up')
+    full_name = StringField('Full Name', validators=[Length(min=2, max=120)])
+    birthday = DateField('Birthday', format='%d/%m/%Y')
+    marital_status = SelectField('Marital Status', choices=[('Single', 'Single'), ('Married', 'Married') ])
+    address = StringField('Address', validators=[Length(min=2, max=100)])
+    mobile_number = StringField('Mobile Number', validators=[Length(min=2, max=20)])
+    twitter_id = StringField('Twitter ID', validators=[Length(min=2, max=60)])
+    skype_id = StringField('Skype ID', validators=[Length(min=2, max=60)])
+    website = StringField('Website', validators=[Length(min=2, max=60)])
+    submit = SubmitField('Update')

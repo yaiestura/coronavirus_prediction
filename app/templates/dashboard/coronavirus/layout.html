@@ -19,7 +19,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pages/data-table/css/buttons.dataTables.min.css')}}">
-
+    {% block css %}
+    {% endblock %}
     <title>Dashboard</title>
 </head>
 <body>
@@ -104,6 +105,7 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/core.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/charts.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/maps.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/worldLow.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/worldHigh.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/amchart/animated.js')}}"></script>
 <!-- Custom js -->

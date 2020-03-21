@@ -5,6 +5,8 @@ from app.views.main.main import *
 
 from app.views.users.routes import users
 
+import requests
+
 main = Blueprint('main', __name__)
 
 
@@ -17,18 +19,21 @@ def home():
 @main.route("/live", methods=['GET', 'POST'])
 @login_required
 def monitor():
-    confirmed = get_data('confirmed')
-    deaths    = get_data('deaths')
-    recovered = get_data('recovered')
 
-    data = {
-        'confirmed': confirmed,
-        'deaths': deaths,
-        'recovered': recovered
-    }
+    url = 'https://media-cdn.factba.se/rss/json/coronavirus.json'
 
-    return render_template('dashboard/coronavirus/monitor.html', data=data, username=current_user.username,
-                           avatar=current_user.image_file)
+    r = requests.get(url=url)
+    data = r.json()
+
+    metrics = data['world']
+    countries = sorted(data['countries'], key=lambda item: (data['countries'][item]['cases']), reverse=True)
+    countries = [data['countries'][item] for item in countries if data['countries'][item]['iso3166-2']]
+
+    cases = CasesDataParser()
+    cases_data = cases.get_cases()
+
+    return render_template('dashboard/coronavirus/monitor.html', metrics=metrics, countries=countries,
+                           username=current_user.username, avatar=current_user.image_file, cases=cases_data)
 
 
 @main.route("/dashboard", methods=['GET', 'POST'])
@@ -38,14 +43,18 @@ def dashboard():
     deaths = DeathsDataParser()
     demographics = DemographicsDataParser()
     updates = UpdatesDataParser()
+    tests = TestsDataParser()
 
     countries_data = countries_adv.get_countries()
     deaths_data = deaths.get_deaths()
     demographics_data = demographics.get_demographics()
     updates_data = updates.get_updates()
+    tests_data = tests.get_testing()
+    print(tests_data)
 
     return render_template('dashboard/coronavirus/dashboard.html', data=updates_data, username=current_user.username,
-                           avatar=current_user.image_file, demographics=demographics_data, deaths=deaths_data, countries=countries_data)
+                           avatar=current_user.image_file, demographics=demographics_data, deaths=deaths_data,
+                           countries=countries_data, tests=tests_data)
 
 
 @main.route("/news", methods=['GET', 'POST'])
@@ -63,7 +72,6 @@ def news():
 def countries():
     countries = CountriesAdvDataParser()
     countries_data = countries.get_countries()
-    print(countries_data)
 
     return render_template('dashboard/coronavirus/countries.html', countries=countries_data, username=current_user.username,
                            avatar=current_user.image_file,)
@@ -84,7 +92,11 @@ def single_country(country):
         "Italy": { 'population': '60,461,826', 'density': 206, 'land': '294,140' },
         "France": { 'population': '65,273,511', 'density': 119, 'land': '547,557' },
         "Spain": { 'population': '46,754,778', 'density': 94, 'land': '498,800' },
-        "Germany": { 'population': '83,783,942', 'density': 153, 'land': '348,560' }
+        "Germany": { 'population': '83,783,942', 'density': 153, 'land': '348,560' },
+        "Canada": { 'population': '37,742,154', 'density': 4, 'land': '9,093,510' },
+        "Australia": { 'population': '25,499,884', 'density': 3, 'land': '7,682,300' },
+        "Switzerland": { 'population': '8,654,622', 'density': 219, 'land': '39,516' },
+
     }
 
     return render_template('dashboard/coronavirus/country.html', data=data, population=population_data,
@@ -98,9 +110,10 @@ def maps():
 
 @main.route("/predictions", methods=['GET', 'POST'])
 @login_required
-def coronavirus_predictions():
+def predictions():
     deaths_predicted = start('deaths', 10, train=False)
     cases_predicted = start('cases', 10, train=False)
+    print(cases_predicted)
     return render_template('dashboard/coronavirus/predictions.html', deaths=deaths_predicted, cases=cases_predicted,
                            username=current_user.username, avatar=current_user.image_file,)
 
@@ -113,14 +126,14 @@ def about():
 @main.route("/api/predict/deaths", methods=['GET', 'POST'])
 @login_required
 def test_deaths():
-    cases = start('deaths', 10, train=False)
+    cases = start('deaths', 10, train=True)
     return jsonify(cases)
 
 
 @main.route("/api/predict/cases", methods=['GET', 'POST'])
 @login_required
 def test_cases():
-    cases = start('cases', 10, train=False)
+    cases = start('cases', 10, train=True)
     return jsonify(cases)
 
 
@@ -177,6 +190,13 @@ def api_news():
 def api_demographics():
     demographics = DemographicsDataParser()
     return jsonify(demographics.get_demographics())
+
+
+@main.route("/api/cases", methods=['GET', 'POST'])
+@login_required
+def api_cases():
+    cases = CasesDataParser()
+    return jsonify(cases.get_cases())
 
 
 @main.route("/api/tests", methods=['GET', 'POST'])

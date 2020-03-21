@@ -268,7 +268,7 @@ body {
 
 .navbar-default .navbar-nav > li > a {
   color: #666666;
-  font-weight:700;
+  font-weight: 700;
   -webkit-transition: all 0.5s;
 	-moz-transition: all 0.5;
   transition: all 0.5s;
@@ -281,7 +281,7 @@ body {
 .navbar-default .navbar-nav > .active > a {
   background: transparent;
   color: #FFFFFF;
-  }
+}
 
 
 .navbar-default .navbar-nav > .active > a:hover {
@@ -531,6 +531,7 @@ body {
 
 .app-hero-content img {
 	margin-top: 50px;
+	margin-bottom: 80px;
 }
 
 .app-sub {
@@ -1035,11 +1036,7 @@ body {
   margin-top: 5em;
 }
 
-.app-info{
-}
-
 .app-info h3 {
-
   font-size: 34px;
   font-weight: 500;
   color: #404040;
@@ -1047,9 +1044,7 @@ body {
 }
 
 .app-info h4 {
-
   font-size: 18px;
-
   color:  #3C4B5D;
   margin-top: 20px;
 }
@@ -1059,7 +1054,6 @@ body {
 }
 
 .app-info span {
-
   font-size: 12px;
   font-weight: 400;
   color: #222222;
@@ -1081,11 +1075,6 @@ body {
 }
 
 
-/*------ Download Section Styling Ends ------ */
-
-
-/* ----- Pricing Section Styling Starts ----- */
-
 .pricing-section {
 	width: 100%;
 	height: 100%;
@@ -1099,19 +1088,15 @@ body {
 }
 
 .pricing-intro h1 {
-
 	font-size: 28px;
 	color: #111111;
 	font-weight: 600;
 	line-height: 1.4;
 }
 
-
 .pricing-intro p {
-
 	font-size: 15px;
 	color: #303030;
-
 	line-height: 1.4;
 	letter-spacing: 1px;
 	margin-top: 10px;
@@ -1139,7 +1124,6 @@ body {
 
 .table-left .pricing-details span, .table-right .pricing-details span {
 	display: inline-block;
-
 	font-size: 34px;
 	font-weight: 600;
 	color: #808080;
@@ -1147,7 +1131,6 @@ body {
 }
 
 .table-left .pricing-details h2, .table-right .pricing-details h2 {
-
 	font-size: 18px;
 	font-weight: 600;
 	color: #505050;
@@ -1155,9 +1138,7 @@ body {
 }
 
 .table-left .pricing-details p, .table-right .pricing-details p {
-
 	font-size: 14px;
-
 	color: #505050;
 	letter-spacing: 1px;
 	line-height: 1.4;
@@ -1170,7 +1151,6 @@ body {
 
 
 .table-left .pricing-details li, .table-right .pricing-details li {
-
 	font-size: 14px;
 	font-weight: 400;
 	color: #505050;
@@ -1182,14 +1162,6 @@ body {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-
-/* ----- Pricing Section Styling Ends ----- */
-
-
-/* ----- CTA Section Styling Starts ----- */
-
-
-
 .cta-sub {
 	padding-top: 100px;
 	padding-bottom: 100px;
@@ -1197,7 +1169,6 @@ body {
 }
 
 .cta-sub h1 {
-
 	font-size: 28px;
 	color: #111111;
 	font-weight: 600;
@@ -1207,10 +1178,8 @@ body {
 }
 
 .cta-sub p {
-
 	font-size: 16px;
 	color: #303030;
-
 	line-height: 1.5;
 	margin-top: 20px;
 	margin-bottom: 40px;
@@ -1237,7 +1206,6 @@ body {
 
 .subscribe-form input {
   color: #222222;
-
   padding: 0;
   font-size: 0.9em;
 }
@@ -1249,10 +1217,10 @@ body {
   border-radius: 0 5px 5px 0;
   margin: 0;
   padding: 0 25px 0 25px;
-	border-color: #fd7a6b;
+  border-color: #fd7a6b;
   background-color: #fd7a6b;
   color: #FFFFFF;
-	box-shadow: 0 0 1px transparent;
+  box-shadow: 0 0 1px transparent;
   outline: none;
 }
 
@@ -1261,12 +1229,6 @@ body {
   -webkit-transition: 500ms;
   transition: 500ms;
 }
-
-
-/* ----- CTA Section Styling Ends ----- */
-
-
-/* ----- Client Sectiion Styling ----- */
 
 .client-section {
 	background-color: #F3F3F3;
@@ -1281,15 +1243,10 @@ body {
     filter: grayscale(100%);
 }
 
-
-
-/* ------- Footer Section Styling Starts ------- */
-
-
 .footer {
-  background-color: #F3F3F3;
-  width: 100%;
-  height: 100%;
+    background-color: #F3F3F3;
+    width: 100%;
+    height: 100%;
 	overflow: hidden;
 	padding-top: 50px;
 	padding-bottom: 50px;
@@ -1306,7 +1263,6 @@ body {
 .footer-menu li {
 	display: inline;
 	line-height: 2;
-
 	font-size: 14px;
 	padding-right: 15px;
 	text-transform: uppercase;
@@ -1318,25 +1274,16 @@ body {
 }
 
 .footer-text p {
-
 	font-size: 14px;
 	color: #707570;
-
 	line-height: 2;
 	letter-spacing: 1px;
 	margin-top: 10px;
 }
 
-/* ------- Footer Section Styling Starts ------- */
-
 .no-color {
 	background: #FFFFFF;
 }
-
-
-/*---------------------------------------------------
------------ Contact Page Styling Starts -------------
----------------------------------------------------*/
 
 .contact-section {
 	width: 100%;
@@ -1355,112 +1302,94 @@ body {
 }
 
 .contact-section p {
-
 	font-size: 14px;
-
 	color: #111111;
 	line-height: 1.4;
 }
-
-
-
-/* ------------ Contact Form Styling --------*/
 
 .contact-form {
 	padding-top: 50px;
 }
 
-
 label {
 	display: block;
-
-  font-size: 14px;
-  font-weight: 500;
-  color: #333333;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
 	text-align: left;
 }
 
 .form-control {
-  border: 0px;
-  border-radius: 0px;
-  margin-top: 10px;
-  background: transparent;
-  margin-bottom: 40px;
-  border-bottom: 1px solid #999999;
-  -webkit-box-shadow: inset 0 0px 0px rgba(0,0,0,0);
-  box-shadow: inset 0 0px 0px rgba(0,0,0,0);
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
+    border: 0px;
+    border-radius: 0px;
+    margin-top: 10px;
+    background: transparent;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #999999;
+    -webkit-box-shadow: inset 0 0px 0px rgba(0,0,0,0);
+    box-shadow: inset 0 0px 0px rgba(0,0,0,0);
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
     transition: 0.5s;
 }
 
 .form-control:focus {
-  border-color: #fd7a6b;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+    border-color: #fd7a6b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .form-control::-webkit-input-placeholder {
-
-  font-size: 13px;
-  color: #999999;
+    font-size: 13px;
+    color: #999999;
 }
+
 .form-control:-moz-placeholder {
-
-  font-size: 13px;
-  color: #999999;
+    font-size: 13px;
+    color: #999999;
 }
+
 .form-control::-moz-placeholder {
-
-  font-size: 13px;
-  color: #999999;
+    font-size: 13px;
+    color: #999999;
 }
+
 .form-control:-ms-input-placeholder {
-  font-family: Quicksand;
-  font-size: 13px;
-  color: #999999;
+    font-family: Quicksand;
+    font-size: 13px;
+    color: #999999;
 }
 
 .text-muted {
-
-  font-size: 13px;
-  color: #222;
+    font-size: 13px;
+    color: #222;
 }
 
 .text-muted strong {
-  color: #FF3333;
+    color: #FF3333;
 }
 
 .btn-send {
-
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 20px;
-  border-radius: 0px;
-  color: #FFFFFF;
-  background: #fd7a6b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    border-radius: 0px;
+    color: #FFFFFF;
+    background: #fd7a6b;
 	border-color: #fd7a6b;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
     transition: 0.5s;
 }
 
 .btn-send:hover, .btn-send:focus {
-  color: #FFFFFF;
-  background: #000000;
+    color: #FFFFFF;
+    background: #000000;
 	border-color: #111111;
-  outline: none !important;
+    outline: none !important;
 }
-
-/* -------- Contact Section Styling Ends ---- */
-
-
-/* -------------------------------------------------------
------------ Bact-to-Top Styling Starts Here --------------
----------------------------------------------------------*/
-
 
 .back-to-top {
 	background: #fd7a6b;
@@ -1502,22 +1431,7 @@ label {
     color: #FFFFFF;
 }
 
-
-
-
-
-/*---------------------------------------------------
------------ Contact Page Styling Ends -------------
----------------------------------------------------*/
-
-
-/*----------------------------------------------------
-------------- All ------------------------------------
---------------------- Media --------------------------
-------------------------------- Queries --------------
------------------------------------------------------*/
-
- @media only screen and (min-width: 767px) {
+@media only screen and (min-width: 767px) {
 
 	#left, #right {
 			width: 25px;
@@ -1541,11 +1455,11 @@ label {
 
 	.hero-content h1 {
 		font-size: 64px;
-    font-weight: 600;
-    line-height: 1.2;
+    	font-weight: 600;
+    	line-height: 1.2;
 		margin-top: 0;
 		letter-spacing: -2px;
-    margin-bottom: 25px;
+    	margin-bottom: 25px;
 	}
 
 	.hero-content p {
@@ -1553,15 +1467,17 @@ label {
 	}
 
 	.btn-action {
-	  border: 2px solid #fd7a6b;
+		border: 2px solid #fd7a6b;
 		font-weight: 500;
-	  height: 42px;
-	  padding: 0 24px;
+		height: 42px;
+		padding: 0 24px;
 	}
-	.btn-action a{
+
+	.btn-action a {
 		color:#fff;
 	}
-	.btn-action a:hover{
+
+	.btn-action a:hover {
 		color: #fd7a6b;
 	}
 
@@ -1678,8 +1594,8 @@ label {
 	}
 
 	.counter-up {
-    margin-bottom: 2em;
-  }
+    	margin-bottom: 2em;
+    }
 
   .counter-text {
     margin-bottom: 0;
@@ -1739,42 +1655,43 @@ label {
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
 
- .subscribe-form .mail {
-   padding: 0 30px 0 20px;
-   border-radius: 5px 0 0 5px;
- }
+	.subscribe-form .mail {
+		padding: 0 30px 0 20px;
+		border-radius: 5px 0 0 5px;
+	}
 
- .subscribe-form .submit-button {
-   padding: 0 5px 0 5px;
-   border-radius: 0 5px 5px 0;
- }
+	.subscribe-form .submit-button {
+		padding: 0 5px 0 5px;
+		border-radius: 0 5px 5px 0;
+	}
 }
 
 
 @media screen and (max-width: 399px) {
 
- .subscribe-form .mail {
-	 text-align: center;
-   padding: 0 0 0 0;
-   border-radius: 5px 0 0 5px;
- }
+	.subscribe-form .mail {
+		text-align: center;
+    	padding: 0 0 0 0;
+    	border-radius: 5px 0 0 5px;
+ 	}
 
- .subscribe-form .submit-button {
-   padding: 0 5px 0 5px;
-   border-radius: 0 5px 5px 0;
-	 margin-top: 15px;
- }
+	.subscribe-form .submit-button {
+		padding: 0 5px 0 5px;
+		border-radius: 0 5px 5px 0;
+		margin-top: 15px;
+ 	}
 
- .app-info {
-	 margin-bottom: 0em;
- }
- .download-buttons img {
-	 height: 40px;
-	 width: 120px;
- }
- .back-to-top {
-	 right: 10px;
- }
+    .app-info {
+		margin-bottom: 0em;
+ 	}
+
+	.download-buttons img {
+		height: 40px;
+		width: 120px;
+ 	}
+ 	.back-to-top {
+		right: 10px;
+ 	}
 }
 
 
@@ -1812,8 +1729,6 @@ label {
 }
 
 
-/* ------ Features Split Section Media Queries ----- */
-
 @media only screen and (min-width: 769px) {
 	.flex-split {
 		display: -webkit-flex;
@@ -1822,7 +1737,6 @@ label {
 		flex-direction: row;
 	}
 	.flex-split .f-right h2 {
-
 		font-size: 34px;
 	}
 }
@@ -1852,8 +1766,6 @@ label {
 		padding: 40px 50px 50px 50px;
 	}
 }
-
-/* ------ Features Split Section Media Queries Ends  ----- */
 
 
 @media only screen and (max-width: 766px) {
@@ -1915,22 +1827,22 @@ label {
     color: #414141;
 }
 
-#pricing .generic_content .generic_feature_list ul li{	
+#pricing .generic_content .generic_feature_list ul li {
 	color: #a7a7a7;
 }
 
-#pricing .generic_content .generic_feature_list ul li span{
+#pricing .generic_content .generic_feature_list ul li span {
 	color: #414141;
 }
-#pricing .generic_content .generic_feature_list ul li:hover{
+#pricing .generic_content .generic_feature_list ul li:hover {
 	background-color: #E4E4E4;
 	border-left: 5px solid #fd7a6b;
 }
 
-#pricing .generic_content .generic_price_btn a{
-	border: 1px solid #fd7a6b; 
+#pricing .generic_content .generic_price_btn a {
+	border: 1px solid #fd7a6b;
     color: #fd7a6b;
-} 
+}
 
 #pricing .generic_content.active .generic_head_price .generic_head_content .head_bg,
 #pricing .generic_content:hover .generic_head_price .generic_head_content .head_bg{
@@ -1947,7 +1859,7 @@ label {
 #pricing .generic_content.active .generic_price_btn a{
 	background-color: #fd7a6b;
 	color: #fff;
-} 
+}
 #pricing{
 	margin: 50px 0 50px 0;
 }
@@ -2041,6 +1953,7 @@ label {
 	padding: 15px 0;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing .generic_content .generic_feature_list ul li:hover{
 	transition: all 0.3s ease-in-out 0s;
 	-moz-transition: all 0.3s ease-in-out 0s;
@@ -2049,9 +1962,11 @@ label {
 	-webkit-transition: all 0.3s ease-in-out 0s;
 
 }
+
 #pricing .generic_content .generic_feature_list ul li .fa{
 	padding: 0 10px;
 }
+
 #pricing .generic_content .generic_price_btn{
 	margin: 20px 0 32px;
 }
@@ -2085,8 +2000,8 @@ label {
 	-ms-transition: all 0.3s ease-in-out 0s;
 	-o-transition: all 0.3s ease-in-out 0s;
 	-webkit-transition: all 0.3s ease-in-out 0s;
-} 
-@media (max-width: 320px) {	
+}
+@media (max-width: 320px) {
 }
 
 @media (max-width: 767px) {
@@ -2094,17 +2009,18 @@ label {
 		margin-bottom:75px;
 	}
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
 	#pricing .col-md-3{
 		float:left;
 		width:50%;
 	}
-	
+
 	#pricing .col-md-4{
 		float:left;
 		width:50%;
 	}
-	
+
 	#pricing .generic_content{
 		margin-bottom:75px;
 	}
@@ -2113,6 +2029,7 @@ label {
 .demo-pic{
 	margin: 0 auto;
 }
+
 .demo-pic:hover{
 	opacity: 0.7;
 }
@@ -2123,47 +2040,58 @@ label {
 	list-style: none;
 	display: table;
 }
+
 #pricing_home li{
 	float: left;
 }
+
 #pricing_home li + li{
 	margin-left: 10px;
 	padding-bottom: 10px;
 }
+
 #pricing_home li a{
 	display: block;
 	width: 50px;
 	height: 50px;
 	font-size: 0px;
 }
+
 #pricing_home .blue{
 	background: #3498DB;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .emerald{
 	background: #fd7a6b;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .grey{
 	background: #7F8C8D;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .midnight{
 	background: #34495E;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .orange{
 	background: #E67E22;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .purple{
 	background: #9B59B6;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .red{
 	background: #E74C3C;
 	transition:all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .turquoise{
 	background: #1ABC9C;
 	transition: all 0.3s ease-in-out 0s;
@@ -2183,11 +2111,13 @@ label {
     border-top-right-radius: 50px;
 	transition: all 0.3s ease-in-out 0s;
 }
+
 #pricing_home .divider{
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 20px;
 	padding: 20px;
 }
+
 #pricing_home .divider span{
 	width: 100%;
 	display: table;
@@ -2196,6 +2126,7 @@ label {
 	margin: 50px auto;
 	line-height: 2px;
 }
+
 #pricing_home .itemname{
 	text-align: center;
 	font-size: 50px ;
@@ -2205,6 +2136,7 @@ label {
 	text-decoration: none;
     font-weight: 300;
 }
+
 #pricing_home .itemnametext{
     text-align: center;
     font-size: 20px;
@@ -2212,6 +2144,7 @@ label {
     text-transform: uppercase;
     display: inline-block;
 }
+
 #pricing_home .footer{
 	padding:40px 0;
 }
@@ -2219,11 +2152,13 @@ label {
 .price-heading{
     text-align: center;
 }
+
 .price-heading h1{
 	color: #666;
 	margin: 0;
 	padding: 0 0 50px 0;
 }
+
 .demo-button {
     background-color: #333333;
     color: #ffffff;
@@ -2240,6 +2175,7 @@ label {
     text-align: center;
     text-transform: uppercase;
 }
+
 .bottom_btn{
 	background-color: #333333;
     color: #ffffff;
@@ -2254,8 +2190,8 @@ label {
 	background-color: #666;
 	color: #FFF;
 	text-decoration:none;
-	
 }
+
 .bottom_btn:hover{
 	background-color: #666;
 	color: #FFF;

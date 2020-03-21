@@ -4,9 +4,9 @@ from flask import current_app as app
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import db, bcrypt
-from app.models import User
+from app.models import User, UserProfile
 from app.views.users.forms import ( RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm )
+                                    ProfileForm, RequestResetForm, ResetPasswordForm )
 from app.views.users.utils import save_picture, send_reset_email
 
 from oauthlib.oauth2 import WebApplicationClient
@@ -136,7 +136,23 @@ def google_callback():
 @users.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('auth/profile.html', username=current_user.username, avatar=current_user.image_file)
+    profile_data = UserProfile.query.filter_by(user=current_user).order_by(UserProfile.id.desc()).first()
+    print(profile_data)
+    form = ProfileForm()
+    print(form)
+    form.marital_status.default = "Single"
+    if form.validate_on_submit():
+        print(form.full_name.data)
+        profile = UserProfile(full_name=form.full_name.data, gender=form.gender.data, birthday=form.birthday.data,
+        marital_status=form.marital_status.data, address=form.address.data, mobile_number=form.mobile_number.data,
+        twitter_id=form.twitter_id.data, skype_id=form.skype_id.data, website=form.website.data)
+        print(profile)
+        db.session.add(profile)
+        db.session.commit()
+        flash('Your profile has been updated!', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('auth/profile.html', username=current_user.username, avatar=current_user.image_file,
+    form=form, data=profile_data)
 
 
 # Reset Passwords

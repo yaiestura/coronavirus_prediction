@@ -95,7 +95,7 @@
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
+                                        <img src="{{ avatar }}" class="img-fluid" width="100px" alt="User-Profile-Image">
                                         <span>{{ username }}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
@@ -243,16 +243,15 @@
                                                                         <img class="user-img img-radius" src="{{ current_user.image_file }}" alt="user-img">
                                                                     </a>
                                                                 </div>
-                                                                <div class="media-body row">
+                                                                <div class="media-body row align-items-end">
                                                                     <div class="col-lg-12">
                                                                         <div class="user-title">
                                                                             <h2>{{ username }}</h2>
-                                                                            <span class="text-white">HSE Student</span>
                                                                         </div>
                                                                     </div>
                                                                     <div>
                                                                         <div class="pull-right cover-btn">
-                                                                            <button type="button" class="btn btn-primary"><i class="icofont icofont-ui-messaging"></i> Message</button>
+                                                                            <button type="button" class="btn btn-dashboard"><i class="icofont icofont-ui-messaging"></i> Message</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -267,7 +266,7 @@
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <h5 class="card-header-text">About Me</h5>
-                                                        <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                        <button id="edit-btn" type="button" class="btn btn-sm btn-dashboard waves-effect waves-light f-right">
                                                             <i class="icofont icofont-edit"></i>
                                                         </button>
                                                     </div>
@@ -283,23 +282,43 @@
                                                                                         <tbody>
                                                                                             <tr>
                                                                                                 <th scope="row">Full Name</th>
-                                                                                                <td>Random Name</td>
+                                                                                                {% if data.full_name %}
+                                                                                                    <td>{{data.full_name}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Gender</th>
-                                                                                                <td>Male</td>
+                                                                                                {% if data.gender %}
+                                                                                                    <td>{{data.gender}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Birth Date</th>
-                                                                                                <td>Some Day</td>
+                                                                                                {% if data.birthday %}
+                                                                                                    <td>{{data.birthday}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Marital Status</th>
-                                                                                                <td>Single</td>
+                                                                                                {% if data.marital_status %}
+                                                                                                    <td>{{data.marital_status}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Location</th>
-                                                                                                <td>Moscow, Russia</td>
+                                                                                                {% if data.address %}
+                                                                                                    <td>{{data.address}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -315,19 +334,35 @@
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Mobile Number</th>
-                                                                                                <td>+79999999999</td>
+                                                                                                {% if data.mobile_number %}
+                                                                                                    <td>{{data.mobile_number}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Twitter</th>
-                                                                                                <td>@random</td>
+                                                                                                {% if data.twitter_id %}
+                                                                                                    <td>{{data.twitter_id}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Skype</th>
-                                                                                                <td>random.skype</td>
+                                                                                                {% if data.skype_id %}
+                                                                                                    <td>{{data.skype_id}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <th scope="row">Website</th>
-                                                                                                <td><a href="http://github.com">github.com</a></td>
+                                                                                                {% if data.website %}
+                                                                                                    <td>{{data.website}}</td>
+                                                                                                {% else %}
+                                                                                                    <td>Not completed</td>
+                                                                                                {% endif %}
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -342,104 +377,176 @@
                                                             <div class="row">
                                                                 <div class="col-lg-12">
                                                                     <div class="general-info">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-6">
-                                                                                <table class="table">
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-user"></i></span>
-                                                                                                    <input type="text" class="form-control" placeholder="Full Name">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="form-radio">
-                                                                                                    <div class="group-add-on">
-                                                                                                        <div class="radio radiofill radio-inline">
-                                                                                                            <label>
-                                                                                                                <input type="radio" name="radio" checked=""><i class="helper"></i> Male
-                                                                                                            </label>
+                                                                        <form method="POST" action="">
+                                                                            {{ form.csrf_token }}
+                                                                            {{ form.hidden_tag() }}
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6">
+                                                                                    <table class="table">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.full_name.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-user"></i></span>
+                                                                                                            {{ form.full_name(class="form-control", placeholder='Full Name') }}
                                                                                                         </div>
-                                                                                                        <div class="radio radiofill radio-inline">
-                                                                                                            <label>
-                                                                                                                <input type="radio" name="radio"><i class="helper"></i> Female
-                                                                                                            </label>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.full_name.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
                                                                                                         </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-user"></i></span>
+                                                                                                            {{ form.full_name(class="form-control", placeholder='Full Name') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="input-group">
+                                                                                                        {{ form.birthday(id="dropper-default", class="form-control") }}
+                                                                                                        {% if form.birthday.errors %}
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.birthday.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                        {% endif %}
                                                                                                     </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <input id="dropper-default" class="form-control" type="text" placeholder="Select Your Birth Date">
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <select id="hello-single" class="form-control">
-                                                                                                    <option value="">---- Marital Status ----</option>
-                                                                                                    <option value="married">Married</option>
-                                                                                                    <option value="unmarried">Unmarried</option>
-                                                                                                </select>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-location-pin"></i></span>
-                                                                                                    <input type="text" class="form-control" placeholder="Address">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="input-group">
+                                                                                                        {{ form.marital_status(id="hello-single", class="form-control") }}
+                                                                                                        {% if form.marital_status.errors %}
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.marital_status.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                        {% endif %}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.address.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-location-pin"></i></span>
+                                                                                                            {{ form.address(class="form-control", placeholder='Address') }}
+                                                                                                        </div>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.address.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-location-pin"></i></span>
+                                                                                                            {{ form.address(class="form-control", placeholder='Address') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="col-lg-6">
+                                                                                    <table class="table">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.mobile_number.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-mobile-phone"></i></span>
+                                                                                                            {{ form.mobile_number(class="form-control", placeholder='Mobile Number') }}
+                                                                                                        </div>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.mobile_number.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-mobile-phone"></i></span>
+                                                                                                            {{ form.mobile_number(class="form-control", placeholder='Mobile Number') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.twitter_id.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-social-twitter"></i></span>
+                                                                                                            {{ form.twitter_id(class="form-control", placeholder='Twitter ID') }}
+                                                                                                        </div>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.twitter_id.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-social-twitter"></i></span>
+                                                                                                            {{ form.twitter_id(class="form-control", placeholder='Twitter ID') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.skype_id.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-social-skype"></i></span>
+                                                                                                            {{ form.skype_id(class="form-control", placeholder='Skype ID') }}
+                                                                                                        </div>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.skype_id.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-social-skype"></i></span>
+                                                                                                            {{ form.skype_id(class="form-control", placeholder='Skype ID') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {% if form.website.errors %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-earth"></i></span>
+                                                                                                            {{ form.website(class="form-control", placeholder='Website') }}
+                                                                                                        </div>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            {% for error in form.website.errors %}
+                                                                                                                <span>{{ error }}</span>
+                                                                                                            {% endfor %}
+                                                                                                        </div>
+                                                                                                    {% else %}
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-addon"><i class="icofont icofont-earth"></i></span>
+                                                                                                            {{ form.website(class="form-control", placeholder='Website') }}
+                                                                                                        </div>
+                                                                                                    {% endif %}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-lg-6">
-                                                                                <table class="table">
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-mobile-phone"></i></span>
-                                                                                                    <input type="text" class="form-control" placeholder="Mobile Number">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-social-twitter"></i></span>
-                                                                                                    <input type="text" class="form-control" placeholder="Twitter Id">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-social-skype"></i></span>
-                                                                                                    <input type="email" class="form-control" placeholder="Skype Id">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="input-group">
-                                                                                                    <span class="input-group-addon"><i class="icofont icofont-earth"></i></span>
-                                                                                                    <input type="text" class="form-control" placeholder="website">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                            <div class="text-center">
+                                                                                {{ form.submit(class="btn btn-dashboard waves-effect waves-light m-r-20") }}
+                                                                                <button id="edit-cancel" class="btn btn-dashboard waves-effect">Cancel</button>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="text-center">
-                                                                            <a href="#!" class="btn btn-primary waves-effect waves-light m-r-20">Save</a>
-                                                                            <a href="#!" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>

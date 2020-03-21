@@ -1,545 +1,251 @@
-﻿<html lang="html">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon icon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
-    <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/feather/css/feather.css')}}">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
-    <title>Dashboard</title>
-</head>
-<body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div class='contain'>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
+﻿{% extends "dashboard/coronavirus/layout.html" %}
+{% block content %}
+<div class="row">
+<div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-yellow f-w-600">{{data['total_cases']}}</h4>
+                        <h6 class="text-muted m-b-0">Coronavirus Cases</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-bar-chart f-28 text-c-yellow"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                            <i class="feather icon-menu"></i>
-                        </a>
-                        <a href="{{ url_for('main.home')}}">
-                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
-                        </a>
-                        <a class="mobile-options">
-                            <i class="feather icon-more-horizontal"></i>
-                        </a>
+            <div class="card-footer bg-c-yellow">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_cases'] | int - data['cases_plot'][1][-2] | int) * 100) / data['cases_plot'][1][-2] | int) }}% change since yesterday</p>
                     </div>
-
-                    <div class="navbar-container container-fluid">
-                        <ul class="nav-left">
-                            <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
-                                    <i class="feather icon-maximize full-screen"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav-right">
-                            <li class="user-profile header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
-                                        <span>{{username}}</span>
-                                        <i class="feather icon-chevron-down"></i>
-                                    </div>
-                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Report a Bug
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url_for('users.profile')}}">
-                                                <i class="feather icon-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url_for('users.logout')}}">
-                                                <i class="feather icon-log-out"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Sidebar inner chat end-->
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu active pcoded-trigger">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="active">
-                                            <a href="{{ url_for('main.dashboard')}}">
-                                                <span class="pcoded-mtext">Coronavirus Data</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="{{ url_for('main.maps')}}">
-                                                <span class="pcoded-mtext">Maps</span>
-                                            </a>
-                                        </li>
-                                        <li class="pcoded-hasmenu">
-                                            <a href="javascript:void(0)">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">Countires</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="{{ url_for('main.countries')}}">
-                                                        <span class="pcoded-mtext">Countries</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="{{ url_for('main.single_country', country='china')}}">
-                                                        <span class="pcoded-mtext">China</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="">
-                                                        <span class="pcoded-mtext">United States</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="">
-                                            <a href="">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">Predictions</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="{{ url_for('main.news')}}">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">News</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="pcoded-navigatio-lavel">Statistics</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                                        <span class="pcoded-mtext">Economics</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">Stock Market</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">USA Market</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
-                                        <span class="pcoded-mtext">Lorem ipsum</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">Lorem ipsum</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="pcoded-navigatio-lavel">Lorem ipsum</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="" target="_blank">
-                                        <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
-                                        <span class="pcoded-mtext">Documentation</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="" target="_blank">
-                                        <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
-                                        <span class="pcoded-mtext">Submit an Issue</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-                                <div class="page-wrapper">
-                                    <div class="page-body">
-                                        <div class="row">
-                                        <div class="col-xl-3 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-block">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-8">
-                                                                <h4 class="text-c-yellow f-w-600">{{data['total_cases']}}</h4>
-                                                                <h6 class="text-muted m-b-0">Coronavirus Cases</h6>
-                                                            </div>
-                                                            <div class="col-4 text-right">
-                                                                <i class="feather icon-bar-chart f-28 text-c-yellow"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer bg-c-yellow">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-9">
-                                                                <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_cases'] | int - data['cases_plot'][1][-2] | int) * 100) / data['cases_plot'][1][-2] | int) }}% change since yesterday</p>
-                                                            </div>
-                                                            <div class="col-3 text-right">
-                                                                {% if '%0.2f'| format(((data['total_cases'] | int - data['cases_plot'][1][-2] | int) * 100) / data['cases_plot'][1][-2] | int) | float < 0 %}                                                            
-                                                                    <i class="feather icon-trending-down text-white f-16"></i>
-                                                                {% else %}
-                                                                    <i class="feather icon-trending-up text-white f-16"></i>
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-block">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-8">
-                                                                <h4 class="text-c-green f-w-600">{{data['total_deaths']}}</h4>
-                                                                <h6 class="text-muted m-b-0">Deaths</h6>
-                                                            </div>
-                                                            <div class="col-4 text-right">
-                                                                <i class="feather icon-users f-28 text-c-green"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer bg-c-green">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-9">
-                                                                <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_deaths'] | int - deaths['total_deaths'][1][1] | int) * 100) / deaths['total_deaths'][1][1] | int) }}% change since yesterday</p>
-                                                            </div>
-                                                            <div class="col-3 text-right">
-                                                                {% if '%0.2f'| format(((data['total_deaths'] | int - deaths['total_deaths'][1][1] | int) * 100) / deaths['total_deaths'][1][1] | int) | float < 0%}
-                                                                    <i class="feather icon-trending-down text-white f-16"></i>
-                                                                {% else %}
-                                                                    <i class="feather icon-trending-up text-white f-16"></i>
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-block">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-8">
-                                                                <h4 class="text-c-pink f-w-600">{{data['total_recovered']}}</h4>
-                                                                <h6 class="text-muted m-b-0">Recovered</h6>
-                                                            </div>
-                                                            <div class="col-4 text-right">
-                                                                <i class="feather icon-heart f-28 text-c-pink"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer bg-c-pink">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-9">
-                                                                <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_recovered'] | int - (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) * 100) /  (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) }}% change since yesterday</p>
-                                                            </div>
-                                                            <div class="col-3 text-right">
-                                                                {% if '%0.2f'| format(((data['total_recovered'] | int - (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) * 100) /  (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) | float < 0 %}
-                                                                    <i class="feather icon-trending-down text-white f-16"></i>
-                                                                {% else %}
-                                                                    <i class="feather icon-trending-up text-white f-16"></i>
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-block">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-8">
-                                                                <h4 class="text-c-blue f-w-600">{{data['active_cases']}}</h4>
-                                                                <h6 class="text-muted m-b-0">Active Cases</h6>
-                                                            </div>
-                                                            <div class="col-4 text-right">
-                                                                <i class="feather icon-eye f-28 text-c-blue"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer bg-c-blue">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-9">
-                                                                <p class="text-white m-b-0">{{ '%0.2f'| format(((data['active_cases'] | int - data['active_cases_plot'][1][-1] | int) * 100) / data['active_cases_plot'][1][-1] | int) }}% change since yesterday</p>
-                                                            </div>
-                                                            <div class="col-3 text-right">
-                                                                {% if '%0.2f'| format(((data['active_cases'] | int - data['active_cases_plot'][1][-1] | int) * 100) / data['active_cases_plot'][1][-1] | int) | float < 0 %}
-                                                                    <i class="feather icon-trending-down text-white f-16"></i>
-                                                                {% else %}
-                                                                    <i class="feather icon-trending-up text-white f-16"></i>
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- task, page, download counter  end -->
-
-                                            <!-- visitor start -->
-                                            <div class="col-xl-8 col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Confirmed Deaths</h5>
-                                                        <span>{{data['last_updated']}}</span>
-                                                        <div class="card-header-right">
-                                                            <ul class="list-unstyled card-option">
-                                                                <li><i class="feather icon-maximize full-card"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div id="cases_chart" style="height:300px"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Age of Coronavirus Deaths</h5>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div id="age_chart"></div>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <h6 class="m-b-20">Death Rate Of Confirmed Cases By Sex</h6>
-                                                        <div class="row text-center">
-                                                            <div class="col-6 b-r-default">
-                                                                <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][0][0]}}</h6>
-                                                                <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][0][1]}}</h4>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][1][0]}}</h6>
-                                                                <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][1][1]}}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- visitor end -->
-
-                                            <!-- sale start -->
-                                            <div class="col-xl-5 col-md-12">
-                                                <div class="card table-card">
-                                                    <div class="card-header">
-                                                        <h5>Confirmed Cases and Deaths by Country ({{countries['countries_affected'] | int }} affected)</h5>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover table-borderless">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Flag</th>
-                                                                        <th>Country</th>
-                                                                        <th>Total cases</th>
-                                                                        <th class="text-right">Total deaths</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {% for country in countries['countries_adv_data'][:5] %}
-                                                                        <tr>
-                                                                            <td><img src="{{ url_for('static', filename='images/countries/' + country[0] + '.png')}}" alt="" class="img-fluid img-30"></td>
-                                                                            <td>{{country[0]}}</td>
-                                                                            <td>{{country[1]}}</td>
-                                                                            <td class="text-right">{{country[3]}}</td>
-                                                                        </tr>
-                                                                    {% endfor %}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="text-right  m-r-20">
-                                                            <a href="{{url_for('main.countries')}}" class="b-b-primary text-primary">View all Coronavirus Confirmed Locations</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Coronavirus Cases Distribution Chart</h5>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div id="cases_doughnut"></div>
-                                                    </div>
-                                                    <div class="card-footer ">
-                                                        <div class="row text-center b-t-default">
-                                                            <div class="col-4 m-t-15">
-                                                                <h5>{{ '%0.2f'| format((data['total_deaths'] | int  * 100) / data['total_cases'] | int) }}%</h5>
-                                                                <p class="text-muted m-b-0">Total Deaths</p>
-                                                            </div>
-                                                            <div class="col-4 b-r-default m-t-15">
-                                                                <h5>{{ '%0.2f'| format((data['active_cases'] | int  * 100) / data['total_cases'] | int) }}%</h5>
-                                                                <p class="text-muted m-b-0">Active Cases</p>
-                                                            </div>
-                                                            <div class="col-4 b-r-default m-t-15">
-                                                                <h5>{{ '%0.2f'| format((data['total_recovered'] | int  * 100) / data['total_cases'] | int) }}%</h5>
-                                                                <p class="text-muted m-b-0">Total Recovered</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6">
-                                                <div class="card">
-                                                    <div class="card-block text-center">
-                                                        <i class="feather icon-mail text-c-lite-green d-block f-40"></i>
-                                                        <h4 class="m-t-15"><span class="text-c-lite-green">8.62k</span> Subscribers</h4>
-                                                        <p class="m-b-10">Your main list is growing</p>
-                                                        <button class="btn btn-primary btn-sm btn-round">Manage List</button>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-block text-center">
-                                                        <i class="feather icon-twitter text-c-green d-block f-40"></i>
-                                                        <h4 class="m-t-15"><span class="text-c-blgreenue">+40</span> Followers</h4>
-                                                        <p class="m-b-10">Your main list is growing</p>
-                                                        <button class="btn btn-success btn-sm btn-round">Check them out</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-md-12">
-                                                <div class="card quater-card">
-                                                    <div class="card-block">
-                                                        <h6 class="text-muted m-b-20">This Quarter</h6>
-                                                        <h4>$3,9452.50</h4>
-                                                        <p class="text-muted">$3,9452.50</p>
-                                                        <h5 class="m-t-30">87</h5>
-                                                        <p class="text-muted">Online Revenue<span class="f-right">80%</span></p>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-simple-c-pink" style="width: 80%"></div>
-                                                        </div>
-                                                        <h5 class="m-t-30">68</h5>
-                                                        <p class="text-muted">Offline Revenue<span class="f-right">50%</span></p>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-simple-c-yellow" style="width: 50%"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-md-12">
-                                                <div class="card social-network">
-                                                    <div class="card-header">
-                                                        <h5>Social Network</h5>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div class="row">
-                                                            <div id="bar_chart_cases" style="height: 250px;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- social end -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-3 text-right">
+                        {% if '%0.2f'| format(((data['total_cases'] | int - data['cases_plot'][1][-2] | int) * 100) / data['cases_plot'][1][-2] | int) | float < 0 %}                                                            
+                            <i class="feather icon-trending-down text-white f-16"></i>
+                        {% else %}
+                            <i class="feather icon-trending-up text-white f-16"></i>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-pink f-w-600">{{data['total_deaths']}}</h4>
+                        <h6 class="text-muted m-b-0">Deaths</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-users f-28 text-c-pink"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-c-pink">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_deaths'] | int - deaths['total_deaths'][1][1] | int) * 100) / deaths['total_deaths'][1][1] | int) }}% change since yesterday</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        {% if '%0.2f'| format(((data['total_deaths'] | int - deaths['total_deaths'][1][1] | int) * 100) / deaths['total_deaths'][1][1] | int) | float < 0%}
+                            <i class="feather icon-trending-down text-white f-16"></i>
+                        {% else %}
+                            <i class="feather icon-trending-up text-white f-16"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-green f-w-600">{{data['total_recovered']}}</h4>
+                        <h6 class="text-muted m-b-0">Recovered</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-heart f-28 text-c-green"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-c-green">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">{{ '%0.2f'| format(((data['total_recovered'] | int - (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) * 100) /  (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) }}% change since yesterday</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        {% if '%0.2f'| format(((data['total_recovered'] | int - (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) * 100) /  (data['cases_plot'][1][-2] | int - data['active_cases_plot'][1][-1] | int - deaths['total_deaths'][1][1] | int)) | float < 0 %}
+                            <i class="feather icon-trending-down text-white f-16"></i>
+                        {% else %}
+                            <i class="feather icon-trending-up text-white f-16"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-blue f-w-600">{{data['active_cases']}}</h4>
+                        <h6 class="text-muted m-b-0">Active Cases</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-eye f-28 text-c-blue"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-c-blue">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">{{ '%0.2f'| format(((data['active_cases'] | int - data['active_cases_plot'][1][-1] | int) * 100) / data['active_cases_plot'][1][-1] | int) }}% change since yesterday</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        {% if '%0.2f'| format(((data['active_cases'] | int - data['active_cases_plot'][1][-1] | int) * 100) / data['active_cases_plot'][1][-1] | int) | float < 0 %}
+                            <i class="feather icon-trending-down text-white f-16"></i>
+                        {% else %}
+                            <i class="feather icon-trending-up text-white f-16"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- task, page, download counter  end -->
 
-
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/js/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/popper.js/js/popper.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
-<!-- jquery slimscroll js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
-<!-- modernizr js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/modernizr.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
-<!-- Chart js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/chart.js/js/Chart.js')}}"></script>
-<!-- amchart js -->
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/core.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/charts.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/animated.js')}}"></script>
-<!-- Custom js -->
-<script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
+    <!-- visitor start -->
+    <div class="col-xl-8 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Confirmed Deaths</h5>
+                <span>{{data['last_updated']}}</span>
+                <div class="card-header-right">
+                    <ul class="list-unstyled card-option">
+                        <li><i class="feather icon-maximize full-card"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-block">
+                <div id="cases_chart" style="height:300px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Coronavirus Cases Distribution Chart</h5>
+            </div>
+            <div class="card-block">
+                <div id="cases_doughnut"></div>
+            </div>
+            <div class="card-footer ">
+                <div class="row text-center b-t-default">
+                    <div class="col-4 m-t-15">
+                        <h5>{{ '%0.2f'| format((data['total_deaths'] | int  * 100) / data['total_cases'] | int) }}%</h5>
+                        <p class="text-muted m-b-0">Total Deaths</p>
+                    </div>
+                    <div class="col-4 b-r-default m-t-15">
+                        <h5>{{ '%0.2f'| format((data['active_cases'] | int  * 100) / data['total_cases'] | int) }}%</h5>
+                        <p class="text-muted m-b-0">Active Cases</p>
+                    </div>
+                    <div class="col-4 b-r-default m-t-15">
+                        <h5>{{ '%0.2f'| format((data['total_recovered'] | int  * 100) / data['total_cases'] | int) }}%</h5>
+                        <p class="text-muted m-b-0">Total Recovered</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-12">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>Confirmed Cases and Deaths by Country ({{countries['countries_affected'] | int }} affected)</h5>
+            </div>
+            <div class="card-block">
+                <div class="table-responsive">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Flag</th>
+                                <th>Country</th>
+                                <th>Total cases</th>
+                                <th class="text-right">Total deaths</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for country in countries['countries_adv_data'][:5] %}
+                                <tr>
+                                    <td><img src="{{ url_for('static', filename='images/countries/' + country[0] + '.png')}}" alt="" class="img-fluid img-30"></td>
+                                    <td>{{country[0]}}</td>
+                                    <td>{{country[1]}}</td>
+                                    <td class="text-right">{{country[3]}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right  m-r-20">
+                    <a href="{{url_for('main.countries')}}" class="b-b-primary text-primary">View all Coronavirus Confirmed Locations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Age of Coronavirus Deaths</h5>
+            </div>
+            <div class="card-block">
+                <div id="age_chart"></div>
+            </div>
+            <div class="card-footer">
+                <h6 class="m-b-20">Death Rate Of Confirmed Cases By Sex</h6>
+                <div class="row text-center">
+                    <div class="col-6 b-r-default">
+                        <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][0][0]}}</h6>
+                        <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][0][1]}}</h4>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-muted m-b-10">{{demographics['death_rate_by_sex'][1][0]}}</h6>
+                        <h4 class="m-b-0 f-w-600 ">{{demographics['death_rate_by_sex'][1][1]}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-7 col-md-12">
+        <div class="card social-network">
+            <div class="card-header">
+                <h5>Coronavirus Tests Performed by Countries</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div id="tests_chart" style="height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5 col-md-12">
+        <div class="card social-network">
+            <div class="card-header">
+                <h5>COVID-19 Fatality Rate by Pre-existing medical conditions</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div id="disease_chart" style="height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
 <script>
     am4core.ready(function() {
 
@@ -616,7 +322,6 @@
 
     });
 </script>
-
 <script>
     am4core.ready(function() {
 
@@ -647,7 +352,6 @@
 
     }); // end am4core.ready()
 </script>
-
 <script>
     am4core.ready(function() {
 
@@ -691,1399 +395,90 @@
     }); // end am4core.ready()
 </script>
 <script>
-am4core.ready(function() {
+    am4core.ready(function() {
 
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
 
-var chart = am4core.create("bar_chart_cases", am4charts.XYChart);
-chart.padding(40, 40, 40, 40);
+    // Create chart instance
+    var chart = am4core.create("tests_chart", am4charts.XYChart);
+    chart.scrollbarX = new am4core.Scrollbar();
+    // Add data
+    chart.data = [
+        {% for item in tests['tests_data'] %}
+            {category: '{{item[0]}}', value: parseInt('{{ item[1] | int}}') },
+        {% endfor %}
+    ];
 
-chart.numberFormatter.bigNumberPrefixes = [
-  { "number": 1e+3, "suffix": "K" },
-  { "number": 1e+6, "suffix": "M" },
-  { "number": 1e+9, "suffix": "B" }
-];
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "category";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.minGridDistance = 30;
+    categoryAxis.renderer.labels.template.horizontalCenter = "right";
+    categoryAxis.renderer.labels.template.verticalCenter = "middle";
+    categoryAxis.renderer.labels.template.rotation = 270;
+    categoryAxis.tooltip.disabled = true;
+    categoryAxis.renderer.minHeight = 110;
 
-var label = chart.plotContainer.createChild(am4core.Label);
-label.x = am4core.percent(97);
-label.y = am4core.percent(95);
-label.horizontalCenter = "right";
-label.verticalCenter = "middle";
-label.dx = -15;
-label.fontSize = 50;
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.renderer.minWidth = 50;
 
-var playButton = chart.plotContainer.createChild(am4core.PlayButton);
-playButton.x = am4core.percent(97);
-playButton.y = am4core.percent(95);
-playButton.dy = -2;
-playButton.verticalCenter = "middle";
-playButton.events.on("toggled", function(event) {
-  if (event.target.isActive) {
-    play();
-  }
-  else {
-    stop();
-  }
-})
+    // Create series
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.sequencedInterpolation = true;
+    series.dataFields.valueY = "value";
+    series.dataFields.categoryX = "category";
 
-var stepDuration = 4000;
+    series.columns.template.column.cornerRadiusTopLeft = 10;
+    series.columns.template.column.cornerRadiusTopRight = 10;
+    series.columns.template.column.fillOpacity = 0.8;
 
-var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.dataFields.category = "network";
-categoryAxis.renderer.minGridDistance = 1;
-categoryAxis.renderer.inversed = true;
-categoryAxis.renderer.grid.template.disabled = true;
+    var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+    labelBullet.label.verticalCenter = "bottom";
+    labelBullet.label.dy = -10;
+    labelBullet.label.text = "{value}"
+    // on hover, make corner radiuses bigger
+    var hoverState = series.columns.template.column.states.create("hover");
+    hoverState.properties.cornerRadiusTopLeft = 0;
+    hoverState.properties.cornerRadiusTopRight = 0;
+    hoverState.properties.fillOpacity = 1;
 
-var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-valueAxis.min = 0;
-valueAxis.rangeChangeEasing = am4core.ease.linear;
-valueAxis.rangeChangeDuration = stepDuration;
-valueAxis.extraMax = 0.1;
+    series.columns.template.adapter.add("fill", function(fill, target) {
+    return chart.colors.getIndex(target.dataItem.index);
+    });
 
-var series = chart.series.push(new am4charts.ColumnSeries());
-series.dataFields.categoryY = "network";
-series.dataFields.valueX = "MAU";
-series.tooltipText = "{valueX.value}"
-series.columns.template.strokeOpacity = 0;
-series.columns.template.column.cornerRadiusBottomRight = 5;
-series.columns.template.column.cornerRadiusTopRight = 5;
-series.interpolationDuration = stepDuration;
-series.interpolationEasing = am4core.ease.linear;
-
-var labelBullet = series.bullets.push(new am4charts.LabelBullet())
-labelBullet.label.horizontalCenter = "right";
-labelBullet.label.text = "{values.valueX.workingValue.formatNumber('#.0as')}";
-labelBullet.label.textAlign = "end";
-labelBullet.label.dx = -10;
-
-chart.zoomOutButton.disabled = true;
-
-// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
-series.columns.template.adapter.add("fill", function(fill, target){
-  return chart.colors.getIndex(target.dataItem.index);
 });
-
-var year = 2003;
-label.text = year.toString();
-
-var interval;
-
-function play() {
-  interval = setInterval(function(){
-    nextYear();
-  }, stepDuration)
-  nextYear();
-}
-
-function stop() {
-  if (interval) {
-    clearInterval(interval);
-  }
-}
-
-function nextYear() {
-  year++
-
-  if (year > 2018) {
-    year = 2003;
-  }
-
-  var newData = allData[year];
-  var itemsWithNonZero = 0;
-  for (var i = 0; i < chart.data.length; i++) {
-    chart.data[i].MAU = newData[i].MAU;
-    if (chart.data[i].MAU > 0) {
-      itemsWithNonZero++;
-    }
-  }
-
-  if (year == 2003) {
-    series.interpolationDuration = stepDuration / 4;
-    valueAxis.rangeChangeDuration = stepDuration / 4;
-  }
-  else {
-    series.interpolationDuration = stepDuration;
-    valueAxis.rangeChangeDuration = stepDuration;
-  }
-
-  chart.invalidateRawData();
-  label.text = year.toString();
-
-  categoryAxis.zoom({ start: 0, end: itemsWithNonZero / categoryAxis.dataItems.length });
-}
-
-
-categoryAxis.sortBySeries = series;
-
-var allData = {
-  "2003": [
-    {
-      "network": "Facebook",
-      "MAU": 0
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-
-    {
-      "network": "Friendster",
-      "MAU": 4470000
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 0
-    }
-  ],
-  "2004": [
-    {
-      "network": "Facebook",
-      "MAU": 0
-    },
-    {
-      "network": "Flickr",
-      "MAU": 3675135
-    },
-    {
-      "network": "Friendster",
-      "MAU": 5970054
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 980036
-    },
-    {
-      "network": "Orkut",
-      "MAU": 4900180
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 0
-    }
-  ],
-  "2005": [
-    {
-      "network": "Facebook",
-      "MAU": 0
-    },
-    {
-      "network": "Flickr",
-      "MAU": 7399354
-    },
-    {
-      "network": "Friendster",
-      "MAU": 7459742
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 9731610
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 19490059
-    },
-    {
-      "network": "Orkut",
-      "MAU": 9865805
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1946322
-    }
-  ],
-  "2006": [
-    {
-      "network": "Facebook",
-      "MAU": 0
-    },
-    {
-      "network": "Flickr",
-      "MAU": 14949270
-    },
-    {
-      "network": "Friendster",
-      "MAU": 8989854
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 19932360
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 54763260
-    },
-    {
-      "network": "Orkut",
-      "MAU": 14966180
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 248309
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 19878248
-    }
-  ],
-  "2007": [
-    {
-      "network": "Facebook",
-      "MAU": 0
-    },
-    {
-      "network": "Flickr",
-      "MAU": 29299875
-    },
-    {
-      "network": "Friendster",
-      "MAU": 24253200
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 29533250
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 69299875
-    },
-    {
-      "network": "Orkut",
-      "MAU": 26916562
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 488331
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 143932250
-    }
-  ],
-  "2008": [
-    {
-      "network": "Facebook",
-      "MAU": 100000000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 30000000
-    },
-    {
-      "network": "Friendster",
-      "MAU": 51008911
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 55045618
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 72408233
-    },
-    {
-      "network": "Orkut",
-      "MAU": 44357628
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 1944940
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 294493950
-    }
-  ],
-  "2009": [
-    {
-      "network": "Facebook",
-      "MAU": 276000000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 41834525
-    },
-    {
-      "network": "Friendster",
-      "MAU": 28804331
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 57893524
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 70133095
-    },
-    {
-      "network": "Orkut",
-      "MAU": 47366905
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 3893524
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 0
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 0
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 413611440
-    }
-  ],
-  "2010": [
-    {
-      "network": "Facebook",
-      "MAU": 517750000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 54708063
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 166029650
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 59953290
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 68046710
-    },
-    {
-      "network": "Orkut",
-      "MAU": 49941613
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 43250000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 0
-    },
-    {
-      "network": "Weibo",
-      "MAU": 19532900
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 480551990
-    }
-  ],
-  "2011": [
-    {
-      "network": "Facebook",
-      "MAU": 766000000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 66954600
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 170000000
-    },
-    {
-      "network": "Google+",
-      "MAU": 0
-    },
-    {
-      "network": "Hi5",
-      "MAU": 46610848
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 46003536
-    },
-    {
-      "network": "Orkut",
-      "MAU": 47609080
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 0
-    },
-    {
-      "network": "Twitter",
-      "MAU": 92750000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 47818400
-    },
-    {
-      "network": "Weibo",
-      "MAU": 48691040
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 642669824
-    }
-  ],
-  "2012": [
-    {
-      "network": "Facebook",
-      "MAU": 979750000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 79664888
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 170000000
-    },
-    {
-      "network": "Google+",
-      "MAU": 107319100
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 0
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 45067022
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 146890156
-    },
-    {
-      "network": "Twitter",
-      "MAU": 160250000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 118123370
-    },
-    {
-      "network": "Weibo",
-      "MAU": 79195730
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 0
-    },
-    {
-      "network": "YouTube",
-      "MAU": 844638200
-    }
-  ],
-  "2013": [
-    {
-      "network": "Facebook",
-      "MAU": 1170500000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 80000000
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 170000000
-    },
-    {
-      "network": "Google+",
-      "MAU": 205654700
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 117500000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 0
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 293482050
-    },
-    {
-      "network": "Twitter",
-      "MAU": 223675000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 196523760
-    },
-    {
-      "network": "Weibo",
-      "MAU": 118261880
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 300000000
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1065223075
-    }
-  ],
-  "2014": [
-    {
-      "network": "Facebook",
-      "MAU": 1334000000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 170000000
-    },
-    {
-      "network": "Google+",
-      "MAU": 254859015
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 250000000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 135786956
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 388721163
-    },
-    {
-      "network": "Twitter",
-      "MAU": 223675000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 444232415
-    },
-    {
-      "network": "Weibo",
-      "MAU": 154890345
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 498750000
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1249451725
-    }
-  ],
-  "2015": [
-    {
-      "network": "Facebook",
-      "MAU": 1516750000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 170000000
-    },
-    {
-      "network": "Google+",
-      "MAU": 298950015
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 400000000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 0
-    },
-    {
-      "network": "Reddit",
-      "MAU": 163346676
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 475923363
-    },
-    {
-      "network": "Twitter",
-      "MAU": 304500000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 660843407
-    },
-    {
-      "network": "Weibo",
-      "MAU": 208716685
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 800000000
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1328133360
-    }
-  ],
-  "2016": [
-    {
-      "network": "Facebook",
-      "MAU": 1753500000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 398648000
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 550000000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 143250000
-    },
-    {
-      "network": "Reddit",
-      "MAU": 238972480
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 238648000
-    },
-    {
-      "network": "TikTok",
-      "MAU": 0
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 565796720
-    },
-    {
-      "network": "Twitter",
-      "MAU": 314500000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 847512320
-    },
-    {
-      "network": "Weibo",
-      "MAU": 281026560
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 1000000000
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1399053600
-    }
-  ],
-  "2017": [
-    {
-      "network": "Facebook",
-      "MAU": 2035750000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 495657000
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 750000000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 195000000
-    },
-    {
-      "network": "Reddit",
-      "MAU": 297394200
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 239142500
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 593783960
-    },
-    {
-      "network": "Twitter",
-      "MAU": 328250000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 921742750
-    },
-    {
-      "network": "Weibo",
-      "MAU": 357569030
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 1333333333
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1495657000
-    }
-  ],
-  "2018": [
-    {
-      "network": "Facebook",
-      "MAU": 2255250000
-    },
-    {
-      "network": "Flickr",
-      "MAU": 0
-    },
-    {
-      "network": "Friendster",
-      "MAU": 0
-    },
-    {
-      "network": "Google Buzz",
-      "MAU": 0
-    },
-    {
-      "network": "Google+",
-      "MAU": 430000000
-    },
-    {
-      "network": "Hi5",
-      "MAU": 0
-    },
-    {
-      "network": "Instagram",
-      "MAU": 1000000000
-    },
-    {
-      "network": "MySpace",
-      "MAU": 0
-    },
-    {
-      "network": "Orkut",
-      "MAU": 0
-    },
-    {
-      "network": "Pinterest",
-      "MAU": 246500000
-    },
-    {
-      "network": "Reddit",
-      "MAU": 355000000
-    },
-    {
-      "network": "Snapchat",
-      "MAU": 0
-    },
-    {
-      "network": "TikTok",
-      "MAU": 500000000
-    },
-    {
-      "network": "Tumblr",
-      "MAU": 624000000
-    },
-    {
-      "network": "Twitter",
-      "MAU": 329500000
-    },
-    {
-      "network": "WeChat",
-      "MAU": 1000000000
-    },
-    {
-      "network": "Weibo",
-      "MAU": 431000000
-    },
-    {
-      "network": "Whatsapp",
-      "MAU": 1433333333
-    },
-    {
-      "network": "YouTube",
-      "MAU": 1900000000
-    }
-  ]
-}
-
-chart.data = JSON.parse(JSON.stringify(allData[year]));
-categoryAxis.zoom({ start: 0, end: 1 / chart.data.length });
-
-series.events.on("inited", function() {
-  setTimeout(function() {
-    playButton.isActive = true; // this starts interval
-  }, 2000)
-})
-
-}); // end am4core.ready()
 </script>
+<script>
+    am4core.useTheme(am4themes_animated);
 
+    // Create chart instance
+    var chart = am4core.create("disease_chart", am4charts.XYChart);
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
-</html>
+    // Add data
+    chart.data = [
+        {% for item in demographics['pre_existing_conditions'] %}
+            {category: '{{item[0]}}', value: '{{ item[-1] }}' },
+        {% endfor %}
+    ];
+
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "category";
+    categoryAxis.renderer.grid.template.location = 0;
+
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueX = "value";
+    series.dataFields.categoryY = "category";
+
+    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+    valueLabel.label.text = "{value.formatNumber('#.00')}%";
+    valueLabel.label.horizontalCenter = "left";
+    valueLabel.label.dx = 5;
+    valueLabel.label.fontSize = 20;
+</script>
+{% endblock %}
 
 

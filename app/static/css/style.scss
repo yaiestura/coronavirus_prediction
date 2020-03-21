@@ -23,12 +23,30 @@
     box-shadow: 0 0 0 3px #404e67 !important;
 }
 
+.btn-dashboard {
+    background-color: #404e67;
+    border-color: #404e67;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: all ease-in 0.3s;
+    transition: all ease-in 0.3s;
+}
+
+.btn-dashboard:hover {
+    background-color: #4e5f7c;
+    border-color: #4e5f7c;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: all ease-in 0.3s;
+    transition: all ease-in 0.3s;
+}
+
 #cases_doughnut {
-    height: 237px;
+    height: 243px !important;
 }
 
 #age_chart {
-    height: 217px;
+    height: 245px !important;
 }
 
 .news-card {
@@ -150,6 +168,36 @@ a.article-title:hover {
 
 .news-links {
     text-decoration: underline;
+}
+
+.scroll {
+    max-height: 78vh;
+    overflow-y: scroll;
+}
+
+.monitor-card-block {
+    padding: 0 !important;
+}
+
+.monitor-card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+    box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+    border: 2px solid #404e67 !important;
+    padding: 5px 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.monitor-card:hover {
+    background: #404e67 !important;
+    color: #fff !important;
+    border: 2px solid #303d55 !important;
+}
+
+.monitor-card.active {
+    background: #404e67 !important;
+    color: #fff !important;
+    border: 2px solid #303d55 !important;
 }
 
 body {
@@ -8144,7 +8192,8 @@ table tbody .border-bottom-info td {
 .pcoded-main-container {
     display: block;
     position: relative;
-    background: #F6F7FB;
+    // background: #F6F7FB;
+    background: #dad9d9;
     min-height: calc(100vh - 56px)
 }
 
@@ -27363,7 +27412,7 @@ h6.media-heading {
 .user-title h2 {
     color: #fff;
     text-shadow: 1px 1px 4px #373a3c;
-    font-size: 20px
+    font-size: 20px;
 }
 
 .profile-image img {
@@ -38880,7 +38929,7 @@ body.menu-bottom #collapse-menu {
 }
 
 .input-group-addon {
-    background-color: #01a9ac;
+    background-color: #404e67;
     color: #fff
 }
 

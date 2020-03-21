@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 import json
@@ -35,14 +35,12 @@ class DataParser:
         return filename
 
     @staticmethod
-    def parse_date(date, year=2020):
+    def create_date_axis(dataset):
 
-        months = {
-            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10,
-            'Nov': 11, 'Dec': 12
-        }
+        yesterday = datetime.now() - timedelta(days=1)
+        date_list = [int(datetime.timestamp(yesterday - timedelta(days=x)) * 1000) for x in range(len(dataset))]
 
-        return [ int(months[str(re.search('(.+?)\d+', date)[1]).strip()]), int(re.findall(r'\d+', date)[0]), year ]
+        return date_list[::-1]
 
     def scrape_table(self):
         pass
@@ -141,7 +139,7 @@ class CountriesAdvDataParser(DataParser):
 
         soup = BeautifulSoup(content, 'html.parser')
 
-        table_countries = soup.select('#main_table_countries_div')[0].find('table')
+        table_countries = soup.find('table', {'id': 'main_table_countries_today'})
         table_body_countries = table_countries.find('tbody')
 
         rows_countries = table_body_countries.find_all('tr')
@@ -181,17 +179,17 @@ class UpdatesDataParser(DataParser):
         active_conditions = soup.select('.panel-body')[0].find_all('span', {'class': 'number-table'})
 
         active_plot_data = soup.select('.panel-body')[0].find('script', type="text/javascript").text
-        x_axis_act = list(json.loads(re.search(r'categories: (.+?)}, yAxis', active_plot_data)[1]))
-        y_axis_act = list(json.loads(re.search(r'data: (.+?) }', active_plot_data)[1]))
+        x_axis_act = list(json.loads(re.search(r'categories:(.+?)},yAxis', re.sub('\s+','',active_plot_data))[1]))
+        y_axis_act = list(json.loads(re.search(r'data:(.+?)}', re.sub('\s+','',active_plot_data))[1]))
 
         closed_plot_data = soup.select('.panel-body')[1].find('script', type="text/javascript").text
-        x_axis_cl = list(json.loads(re.search(r'categories: (.+?) }, yAxis', closed_plot_data)[1]))
-        y_axis_cl = re.findall(r'data: (.+?) }', closed_plot_data)
+        x_axis_cl = list(json.loads(re.search(r'categories:(.+?)},yAxis', re.sub('\s+','',closed_plot_data))[1]))
+        y_axis_cl = re.findall(r'data:(.+?)}', re.sub('\s+','',closed_plot_data))
 
         cases_plot_data = soup.find('div', {'id': 'coronavirus-cases-log'}).find_next('script',
                                                                                       type="text/javascript").text
-        x_axis_cases = list(json.loads(re.search(r'categories: (.+?) }, yAxis', cases_plot_data)[1]))
-        y_axis_cases = list(json.loads(re.search(r'data: (.+?) }', cases_plot_data)[1]))
+        x_axis_cases = list(json.loads(re.search(r'categories:(.+?)},yAxis', re.sub('\s+','',cases_plot_data))[1]))
+        y_axis_cases = list(json.loads(re.search(r'data:(.+?)}', re.sub('\s+','',cases_plot_data))[1]))
 
         today_date = re.sub(r'\d+', str(int(re.findall(r'\d+', x_axis_cases[-1])[0]) + 1).zfill(2), x_axis_cases[-1])
 
@@ -212,6 +210,34 @@ class UpdatesDataParser(DataParser):
                                       list(json.loads(y_axis_cl[1]))
                                       ],
                 'last_updated': soup.find('div', {'id': 'page-top'}).find_next('div').text }
+
+
+class CasesDataParser(DataParser):
+
+    def __init__(self):
+        super()
+
+    @staticmethod
+    def get_cases():
+        url = DataParser.BASE_URL
+        r = requests.get(url)
+        content = r.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+
+        cases_data = []
+
+        statistics = soup.select('.maincounter-number')
+
+        cases_plot_data = soup.find('div', {'id': 'coronavirus-cases-log'}).find_next('script',
+                                                                                      type="text/javascript").text
+        y_axis_cases = list(json.loads(re.search(r'data:(.+?)}', re.sub('\s+','',cases_plot_data))[1]))
+        x_axis_cases = DataParser.create_date_axis(y_axis_cases)
+
+        return {
+            'cases_data': list(zip(x_axis_cases, y_axis_cases)),
+        }
+
 
 
 class NewsDataParser(DataParser):
@@ -284,7 +310,7 @@ class DemographicsDataParser(DataParser):
         for row in conditions_rows:
             columns = row.find_all('td')
             columns = [value.text.strip() for value in columns]
-            conditions_data.append([value.replace(',', '') for value in columns if value])
+            conditions_data.append([value.replace(',', '').replace('%', '') for value in columns if value])
 
         return {'death_rate_by_age': age_data, 'death_rate_by_sex': sex_data,
                 'pre_existing_conditions': conditions_data}
@@ -341,29 +367,30 @@ class SingleCountryParser(DataParser):
         scripts = soup.find_all('script')
 
         cases_data = [script.text for script in scripts if 'coronavirus-cases-linear' in str(script)][0]
-        x_axis_cases = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', cases_data)[1]))]
-        y_axis_cases = list(json.loads(re.search(r'data: (.+?) }', cases_data)[1]))
+
+        y_axis_cases = list(json.loads(re.search(r'data:(.+?)}]', re.sub('\s+','',cases_data))[1]))
+        x_axis_cases = DataParser.create_date_axis(y_axis_cases)
 
         daily_cases_data = [script.text for script in scripts if 'graph-cases-daily' in str(script)][0]
-        x_axis_daily = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', daily_cases_data)[1]))]
-        y_axis_daily = list(json.loads(re.search(r'data: (.+?) }', daily_cases_data)[1]))
+        y_axis_daily = list(json.loads(re.search(r'data:(.+?)}]', re.sub('\s+','',daily_cases_data))[1]))
+        x_axis_daily = DataParser.create_date_axis(y_axis_daily)
 
         active_cases_data = [script.text for script in scripts if 'graph-active-cases-total' in str(script)][0]
-        x_axis_active = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', active_cases_data)[1]))]
-        y_axis_active = list(json.loads(re.search(r'data: (.+?) }', active_cases_data)[1]))
+        y_axis_active = list(json.loads(re.search(r'data:(.+?)}]', re.sub('\s+','',active_cases_data))[1]))
+        x_axis_active = DataParser.create_date_axis(y_axis_active)
 
         total_deaths_data = [script.text for script in scripts if 'coronavirus-deaths-linear' in str(script)][0]
-        x_axis_deaths = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', total_deaths_data)[1]))]
-        y_axis_deaths = list(json.loads(re.search(r'data: (.+?) }', total_deaths_data)[1]))
+        y_axis_deaths = list(json.loads(re.search(r'data:(.+?)}', re.sub('\s+','',total_deaths_data))[1]))
+        x_axis_deaths = DataParser.create_date_axis(y_axis_deaths)
 
         daily_deaths_data = [script.text for script in scripts if 'graph-deaths-daily' in str(script)][0]
-        x_axis_daily_deaths = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', daily_deaths_data)[1]))]
-        y_axis_daily_deaths = list(json.loads(re.search(r'data: (.+?) }', daily_deaths_data)[1]))
+        y_axis_daily_deaths = list(json.loads(re.search(r'data:(.+?)}', re.sub('\s+','',daily_deaths_data))[1]))
+        x_axis_daily_deaths = DataParser.create_date_axis(y_axis_daily_deaths)
 
         closed_cases_data = [script.text for script in scripts if 'deaths-cured-outcome' in str(script)][0]
-        x_axis_closed = [DataParser.parse_date(date) for date in list(json.loads(re.search(r'categories: (.+?) }, yAxis', closed_cases_data)[1]))]
-        y_axis_closed_fat = list(json.loads(re.findall(r'data: (.+?) }', closed_cases_data)[0]))
-        y_axis_closed_rec = list(json.loads(re.findall(r'data: (.+?) }', closed_cases_data)[1]))
+        y_axis_closed_fat = list(json.loads(re.findall(r'data:(.+?)}', re.sub('\s+','',closed_cases_data))[0]))
+        y_axis_closed_rec = list(json.loads(re.findall(r'data:(.+?)}', re.sub('\s+','',closed_cases_data))[1]))
+        x_axis_closed = DataParser.create_date_axis(y_axis_closed_fat)
 
         last_updated = soup.find('div', {'id': 'page-top'}).find_next('div').text
 
@@ -375,12 +402,12 @@ class SingleCountryParser(DataParser):
         return {
             'country': country.strip(),
             'flag': 'https://www.worldometers.info' + flag,
-            'total_cases': [ x_axis_cases, y_axis_cases ],
-            'daily_cases': [ x_axis_daily, y_axis_daily ],
-            'active_cases': [ x_axis_active, y_axis_active ],
-            'closed_cases': [ x_axis_closed, y_axis_closed_fat, y_axis_closed_rec ],
-            'total_deaths': [ x_axis_deaths, y_axis_deaths ],
-            'daily_deaths': [ x_axis_daily_deaths, y_axis_daily_deaths ],
+            'total_cases': list(zip(x_axis_cases, y_axis_cases)),
+            'daily_cases': list(zip(x_axis_daily, y_axis_daily)),
+            'active_cases': list(zip(x_axis_active, y_axis_active)),
+            'closed_cases': list(zip(x_axis_closed, y_axis_closed_fat, y_axis_closed_rec)),
+            'total_deaths': list(zip(x_axis_deaths, y_axis_deaths)),
+            'daily_deaths': list(zip(x_axis_daily_deaths, y_axis_daily_deaths)),
             'cases_now': statistics[0].text.strip().replace(',', ''),
             'deaths_now': statistics[1].text.strip().replace(',', ''),
             'recovered_now': statistics[2].text.strip().replace(',', ''),

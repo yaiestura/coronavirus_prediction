@@ -1,648 +1,379 @@
-<html lang="html">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon icon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
-    <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/feather/css/feather.css')}}">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
+{% block css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-
-    <title>Maps</title>
-</head>
-<body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div class='contain'>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                            <i class="feather icon-menu"></i>
-                        </a>
-                        <a href="{{ url_for('main.home')}}">
-                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
-                        </a>
-                        <a class="mobile-options">
-                            <i class="feather icon-more-horizontal"></i>
-                        </a>
+{% endblock %}
+{% extends "dashboard/coronavirus/layout.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <section id="stats">
+                <div class="card-deck" style="margin-bottom:2em;">
+                <div class="card border-0">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title count" data-value=0 id="confirmed_cases-stat">0</h5>
+                        <p class="card-text" style="text-align: center; ">Confirmed Cases</p>
                     </div>
-
-                    <div class="navbar-container container-fluid">
-                        <ul class="nav-left">
-                            <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
-                                    <i class="feather icon-maximize full-screen"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav-right">
-                            <li class="user-profile header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="{{ avatar }}" class="img-radius" alt="User-Profile-Image">
-                                        <span>{{username}}</span>
-                                        <i class="feather icon-chevron-down"></i>
-                                    </div>
-                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Report a Bug
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url_for('users.profile')}}">
-                                                <i class="feather icon-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url_for('users.logout')}}">
-                                                <i class="feather icon-log-out"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-
+                </div>
+                <div class="card border-0">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title count" data-value=0 id="deaths-stat">0</h5>
+                        <p class="card-text" style="text-align: center; ">Deaths</p>
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title count" data-value=10000 id="recovered-stat">0</h5>
+                        <p class="card-text" style="text-align: center;">Recovered</p>
+                    </div>
+                </div>
+                </div>
+            </section>
+            <!-- Map -->
+            <section id="map" style="height: 100vh;">
+                <h2 style="margin-bottom: 20px;"> Map </h2>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="row justify-content-center">
+                            <ul class="nav nav-tabs tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#cases" role="tab">Cases</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#deaths" role="tab">Deaths</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#recovered" role="tab">Recovered</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content tabs card-block">
+                                <div class="tab-pane active" id="cases" role="tabpanel">
+                                    <div id="cases_map"></div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Sidebar inner chat end-->
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu active pcoded-trigger">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="active">
-                                            <a href="{{ url_for('main.dashboard')}}">
-                                                <span class="pcoded-mtext">Coronavirus Data</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="{{ url_for('main.maps')}}">
-                                                <span class="pcoded-mtext">Maps</span>
-                                            </a>
-                                        </li>
-                                        <li class="pcoded-hasmenu">
-                                            <a href="javascript:void(0)">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">Countires</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="{{ url_for('main.countries')}}">
-                                                        <span class="pcoded-mtext">Countries</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="">
-                                                        <span class="pcoded-mtext">China</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="">
-                                                        <span class="pcoded-mtext">United States</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="">
-                                            <a href="">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">Predictions</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="{{ url_for('main.news')}}">
-                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
-                                                <span class="pcoded-mtext">News</span>
-                                                <span class="pcoded-badge label label-danger">NEW</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="pcoded-navigatio-lavel">Statistics</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                                        <span class="pcoded-mtext">Economics</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">Stock Market</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">USA Market</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
-                                        <span class="pcoded-mtext">Lorem ipsum</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="">
-                                                <span class="pcoded-mtext">Lorem ipsum</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="pcoded-navigatio-lavel">Lorem ipsum</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="" target="_blank">
-                                        <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
-                                        <span class="pcoded-mtext">Documentation</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="" target="_blank">
-                                        <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
-                                        <span class="pcoded-mtext">Submit an Issue</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-                                <div class="page-wrapper">
-                                    <div class="page-body">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <section id="stats">
-                                                    <div class="card-deck" style="margin-bottom:2em;">
-                                                    <div class="card border-0">
-                                                        <div class="card-body" style="text-align: center;">
-                                                            <h5 class="card-title count" data-value=0 id="confirmed_cases-stat">0</h5>
-                                                            <p class="card-text" style="text-align: center; ">Confirmed Cases</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card border-0">
-                                                        <div class="card-body" style="text-align: center;">
-                                                            <h5 class="card-title count" data-value=0 id="deaths-stat">0</h5>
-                                                            <p class="card-text" style="text-align: center; ">Deaths</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card border-0">
-                                                        <div class="card-body" style="text-align: center;">
-                                                            <h5 class="card-title count" data-value=10000 id="recovered-stat">0</h5>
-                                                            <p class="card-text" style="text-align: center;">Recovered</p>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </section>
-                                                <!-- Map -->
-                                                <section id="map" style="height: 100vh;">
-                                                    <h2 style="margin-bottom: 20px;"> Map </h2>
-                                                    <div class="row">
-                                                        <div class="col-xl-12">
-                                                            <div class="row justify-content-center">
-                                                                <ul class="nav nav-tabs tabs" role="tablist">
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link active" data-toggle="tab" href="#cases" role="tab">Cases</a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" data-toggle="tab" href="#deaths" role="tab">Deaths</a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" data-toggle="tab" href="#recovered" role="tab">Recovered</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <div class="tab-content tabs card-block">
-                                                                    <div class="tab-pane active" id="cases" role="tabpanel">
-                                                                        <div id="cases_map"></div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="deaths" role="tabpanel">
-                                                                        <div id="deaths_map"></div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="recovered" role="tabpanel">
-                                                                        <div id="recovered_map"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                                <!-- Timeline -->
-                                                <section id="timeline" style="margin-top: 5em;">
-                                                    <h2 class="m-b-20">History</h2>
-                                                    <div class="row">
-                                                        <div class="col-xl-12">
-                                                            <div class="row justify-content-center">
-                                                                <select class="selectpicker m-r-20" id="select_ts" data-style="btn-secondary" data-size="5" data-live-search="true" aria-haspopup="true" aria-expanded="true"></select>
-                                                                <div id="buttonsTs" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                    <label class="btn btn-secondary ts-button active">
-                                                                        <input class="ts-type-selector" type="radio" name="options" id="confirmed" checked> Confirmed Cases
-                                                                    </label>
-                                                                    <label class="btn btn-secondary ts-button">
-                                                                        <input class="ts-type-selector" , type="radio" name="options" id="deaths"> Deaths
-                                                                    </label>
-                                                                    <label class="btn btn-secondary ts-button">
-                                                                        <input class="ts-type-selector" , type="radio" name="options" id="recovered"> Recovered
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-12">
-                                                        <div id="tsdiv" style="margin-top: 1em; height: 60vh;"></div>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="tab-pane" id="deaths" role="tabpanel">
+                                    <div id="deaths_map"></div>
+                                </div>
+                                <div class="tab-pane" id="recovered" role="tabpanel">
+                                    <div id="recovered_map"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+            <!-- Timeline -->
+            <section id="timeline" style="margin-top: 5em;">
+                <h2 class="m-b-20">History</h2>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="row justify-content-center">
+                            <select class="selectpicker m-r-20" id="select_ts" data-style="btn-secondary" data-size="5" data-live-search="true" aria-haspopup="true" aria-expanded="true"></select>
+                            <div id="buttonsTs" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary ts-button active">
+                                    <input class="ts-type-selector" type="radio" name="options" id="confirmed" checked> Confirmed Cases
+                                </label>
+                                <label class="btn btn-secondary ts-button">
+                                    <input class="ts-type-selector" , type="radio" name="options" id="deaths"> Deaths
+                                </label>
+                                <label class="btn btn-secondary ts-button">
+                                    <input class="ts-type-selector" , type="radio" name="options" id="recovered"> Recovered
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div id="tsdiv" style="margin-top: 1em; height: 60vh;"></div>
+                </div>
+            </section>
         </div>
     </div>
-</body>
+{% endblock%}
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
+    <script>
+        isoCountries = {'Afghanistan': 'AF', 'Aland Islands': 'AX', 'Albania': 'AL', 'Algeria': 'DZ', 'American Samoa': 'AS', 'Andorra': 'AD', 'Angola': 'AO', 'Anguilla': 'AI', 'Antarctica': 'AQ', 'Antigua and Barbuda': 'AG', 'Argentina': 'AR', 'Armenia': 'AM', 'Aruba': 'AW', 'Australia': 'AU', 'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahamas': 'BS', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Barbados': 'BB', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 'Benin': 'BJ', 'Bermuda': 'BM', 'Bhutan': 'BT', 'Bolivia (Plurinational State of)': 'BO', 'Bonaire, Sint Eustatius and Saba': 'BQ', 'Bosnia and Herzegovina': 'BA', 'Botswana': 'BW', 'Bouvet Island': 'BV', 'Brazil': 'BR', 'British Indian Ocean Territory': 'IO', 'Brunei Darussalam': 'BN', 'Bulgaria': 'BG', 'Burkina Faso': 'BF', 'Burundi': 'BI', 'Cabo Verde': 'CV', 'Cambodia': 'KH', 'Cameroon': 'CM', 'Canada': 'CA', 'Cayman Islands': 'KY', 'Central African Republic': 'CF', 'Chad': 'TD', 'Chile': 'CL', 'China': 'CN', 'Christmas Island': 'CX', 'Cocos (Keeling) Islands': 'CC', 'Colombia': 'CO', 'Comoros': 'KM', 'Congo': 'CG', 'Congo, Democratic Republic of the': 'CD', 'Cook Islands': 'CK', 'Costa Rica': 'CR', "Côte d'Ivoire": 'CI', 'Croatia': 'HR', 'Cuba': 'CU', 'Curaçao': 'CW', 'Cyprus': 'CY', 'Czech Republic': 'CZ', 'Denmark': 'DK', 'Djibouti': 'DJ', 'Dominica': 'DM', 'Dominican Republic': 'DO', 'Ecuador': 'EC', 'Egypt': 'EG', 'El Salvador': 'SV', 'Equatorial Guinea': 'GQ', 'Eritrea': 'ER', 'Estonia': 'EE', 'Eswatini': 'SZ', 'Ethiopia': 'ET', 'Falkland Islands (Malvinas)': 'FK', 'Faroe Islands': 'FO', 'Fiji': 'FJ', 'Finland': 'FI', 'France': 'FR', 'French Guiana': 'GF', 'French Polynesia': 'PF', 'French Southern Territories': 'TF', 'Gabon': 'GA', 'Gambia': 'GM', 'Georgia': 'GE', 'Germany': 'DE', 'Ghana': 'GH', 'Gibraltar': 'GI', 'Greece': 'GR', 'Greenland': 'GL', 'Grenada': 'GD', 'Guadeloupe': 'GP', 'Guam': 'GU', 'Guatemala': 'GT', 'Guernsey': 'GG', 'Guinea': 'GN', 'Guinea-Bissau': 'GW', 'Guyana': 'GY', 'Haiti': 'HT', 'Heard Island and McDonald Islands': 'HM', 'Holy See': 'VA', 'Honduras': 'HN', 'Hong Kong': 'HK', 'Hungary': 'HU', 'Iceland': 'IS', 'India': 'IN', 'Indonesia': 'ID', 'Iran': 'IR', 'Iraq': 'IQ', 'Ireland': 'IE', 'Isle of Man': 'IM', 'Israel': 'IL', 'Italy': 'IT', 'Jamaica': 'JM', 'Japan': 'JP', 'Jersey': 'JE', 'Jordan': 'JO', 'Kazakhstan': 'KZ', 'Kenya': 'KE', 'Kiribati': 'KI', "North Korea": 'KP', 'South Korea': 'KR', 'Kuwait': 'KW', 'Kyrgyzstan': 'KG', "Lao People's Democratic Republic": 'LA', 'Latvia': 'LV', 'Lebanon': 'LB', 'Lesotho': 'LS', 'Liberia': 'LR', 'Libya': 'LY', 'Liechtenstein': 'LI', 'Lithuania': 'LT', 'Luxembourg': 'LU', 'Macao': 'MO', 'Madagascar': 'MG', 'Malawi': 'MW', 'Malaysia': 'MY', 'Maldives': 'MV', 'Mali': 'ML', 'Malta': 'MT', 'Marshall Islands': 'MH', 'Martinique': 'MQ', 'Mauritania': 'MR', 'Mauritius': 'MU', 'Mayotte': 'YT', 'Mexico': 'MX', 'Micronesia (Federated States of)': 'FM', 'Moldova, Republic of': 'MD', 'Monaco': 'MC', 'Mongolia': 'MN', 'Montenegro': 'ME', 'Montserrat': 'MS', 'Morocco': 'MA', 'Mozambique': 'MZ', 'Myanmar': 'MM', 'Namibia': 'NA', 'Nauru': 'NR', 'Nepal': 'NP', 'Netherlands': 'NL', 'New Caledonia': 'NC', 'New Zealand': 'NZ', 'Nicaragua': 'NI', 'Niger': 'NE', 'Nigeria': 'NG', 'Niue': 'NU', 'Norfolk Island': 'NF', 'North Macedonia': 'MK', 'Northern Mariana Islands': 'MP', 'Norway': 'NO', 'Oman': 'OM', 'Pakistan': 'PK', 'Palau': 'PW', 'Palestine': 'PS', 'Panama': 'PA', 'Papua New Guinea': 'PG', 'Paraguay': 'PY', 'Peru': 'PE', 'Philippines': 'PH', 'Pitcairn': 'PN', 'Poland': 'PL', 'Portugal': 'PT', 'Puerto Rico': 'PR', 'Qatar': 'QA', 'Reunion': 'RE', 'Romania': 'RO', 'Russia': 'RU', 'Rwanda': 'RW', 'Saint Barthelemy': 'BL', 'Saint Helena, Ascension and Tristan da Cunha': 'SH', 'Saint Kitts and Nevis': 'KN', 'Saint Lucia': 'LC', 'Saint Martin (French part)': 'MF', 'Saint Pierre and Miquelon': 'PM', 'Saint Vincent and the Grenadines': 'VC', 'Samoa': 'WS', 'San Marino': 'SM', 'Sao Tome and Principe': 'ST', 'Saudi Arabia': 'SA', 'Senegal': 'SN', 'Serbia': 'RS', 'Seychelles': 'SC', 'Sierra Leone': 'SL', 'Singapore': 'SG', 'Sint Maarten (Dutch part)': 'SX', 'Slovakia': 'SK', 'Slovenia': 'SI', 'Solomon Islands': 'SB', 'Somalia': 'SO', 'South Africa': 'ZA', 'South Georgia and the South Sandwich Islands': 'GS', 'South Sudan': 'SS', 'Spain': 'ES', 'Sri Lanka': 'LK', 'Sudan': 'SD', 'Suriname': 'SR', 'Svalbard and Jan Mayen': 'SJ', 'Sweden': 'SE', 'Switzerland': 'CH', 'Syrian Arab Republic': 'SY', 'Taiwan': 'TW', 'Tajikistan': 'TJ', 'Tanzania, United Republic of': 'TZ', 'Thailand': 'TH', 'Timor-Leste': 'TL', 'Togo': 'TG', 'Tokelau': 'TK', 'Tonga': 'TO', 'Trinidad and Tobago': 'TT', 'Tunisia': 'TN', 'Turkey': 'TR', 'Turkmenistan': 'TM', 'Turks and Caicos Islands': 'TC', 'Tuvalu': 'TV', 'Uganda': 'UG', 'Ukraine': 'UA', 'United Arab Emirates': 'AE', 'UK': 'GB', 'US': 'US', 'United States Minor Outlying Islands': 'UM', 'Uruguay': 'UY', 'Uzbekistan': 'UZ', 'Vanuatu': 'VU', 'Venezuela (Bolivarian Republic of)': 'VE', 'Vietnam': 'VN', 'Virgin Islands (British)': 'VG', 'Virgin Islands (U.S.)': 'VI', 'Wallis and Futuna': 'WF', 'Western Sahara': 'EH', 'Yemen': 'YE', 'Zambia': 'ZM', 'Zimbabwe': 'ZW', 'Others': 'XX'}
+        countriesIso = {'AF': 'Afghanistan', 'AX': 'Aland Islands', 'AL': 'Albania', 'DZ': 'Algeria', 'AS': 'American Samoa', 'AD': 'Andorra', 'AO': 'Angola', 'AI': 'Anguilla', 'AQ': 'Antarctica', 'AG': 'Antigua and Barbuda', 'AR': 'Argentina', 'AM': 'Armenia', 'AW': 'Aruba', 'AU': 'Australia', 'AT': 'Austria', 'AZ': 'Azerbaijan', 'BS': 'Bahamas', 'BH': 'Bahrain', 'BD': 'Bangladesh', 'BB': 'Barbados', 'BY': 'Belarus', 'BE': 'Belgium', 'BZ': 'Belize', 'BJ': 'Benin', 'BM': 'Bermuda', 'BT': 'Bhutan', 'BO': 'Bolivia (Plurinational State of)', 'BQ': 'Bonaire, Sint Eustatius and Saba', 'BA': 'Bosnia and Herzegovina', 'BW': 'Botswana', 'BV': 'Bouvet Island', 'BR': 'Brazil', 'IO': 'British Indian Ocean Territory', 'BN': 'Brunei Darussalam', 'BG': 'Bulgaria', 'BF': 'Burkina Faso', 'BI': 'Burundi', 'CV': 'Cabo Verde', 'KH': 'Cambodia', 'CM': 'Cameroon', 'CA': 'Canada', 'KY': 'Cayman Islands', 'CF': 'Central African Republic', 'TD': 'Chad', 'CL': 'Chile', 'CN': 'China', 'CX': 'Christmas Island', 'CC': 'Cocos (Keeling) Islands', 'CO': 'Colombia', 'KM': 'Comoros', 'CG': 'Congo', 'CD': 'Congo, Democratic Republic of the', 'CK': 'Cook Islands', 'CR': 'Costa Rica', 'CI': "Côte d'Ivoire", 'HR': 'Croatia', 'CU': 'Cuba', 'CW': 'Curaçao', 'CY': 'Cyprus', 'CZ': 'Czech Republic', 'DK': 'Denmark', 'DJ': 'Djibouti', 'DM': 'Dominica', 'DO': 'Dominican Republic', 'EC': 'Ecuador', 'EG': 'Egypt', 'SV': 'El Salvador', 'GQ': 'Equatorial Guinea', 'ER': 'Eritrea', 'EE': 'Estonia', 'SZ': 'Eswatini', 'ET': 'Ethiopia', 'FK': 'Falkland Islands (Malvinas)', 'FO': 'Faroe Islands', 'FJ': 'Fiji', 'FI': 'Finland', 'FR': 'France', 'GF': 'French Guiana', 'PF': 'French Polynesia', 'TF': 'French Southern Territories', 'GA': 'Gabon', 'GM': 'Gambia', 'GE': 'Georgia', 'DE': 'Germany', 'GH': 'Ghana', 'GI': 'Gibraltar', 'GR': 'Greece', 'GL': 'Greenland', 'GD': 'Grenada', 'GP': 'Guadeloupe', 'GU': 'Guam', 'GT': 'Guatemala', 'GG': 'Guernsey', 'GN': 'Guinea', 'GW': 'Guinea-Bissau', 'GY': 'Guyana', 'HT': 'Haiti', 'HM': 'Heard Island and McDonald Islands', 'VA': 'Holy See', 'HN': 'Honduras', 'HK': 'Hong Kong', 'HU': 'Hungary', 'IS': 'Iceland', 'IN': 'India', 'ID': 'Indonesia', 'IR': 'Iran', 'IQ': 'Iraq', 'IE': 'Ireland', 'IM': 'Isle of Man', 'IL': 'Israel', 'IT': 'Italy', 'JM': 'Jamaica', 'JP': 'Japan', 'JE': 'Jersey', 'JO': 'Jordan', 'KZ': 'Kazakhstan', 'KE': 'Kenya', 'KI': 'Kiribati', 'KP': 'North Korea', 'KR': 'South Korea', 'KW': 'Kuwait', 'KG': 'Kyrgyzstan', 'LA': "Lao People's Democratic Republic", 'LV': 'Latvia', 'LB': 'Lebanon', 'LS': 'Lesotho', 'LR': 'Liberia', 'LY': 'Libya', 'LI': 'Liechtenstein', 'LT': 'Lithuania', 'LU': 'Luxembourg', 'MO': 'Macao', 'MG': 'Madagascar', 'MW': 'Malawi', 'MY': 'Malaysia', 'MV': 'Maldives', 'ML': 'Mali', 'MT': 'Malta', 'MH': 'Marshall Islands', 'MQ': 'Martinique', 'MR': 'Mauritania', 'MU': 'Mauritius', 'YT': 'Mayotte', 'MX': 'Mexico', 'FM': 'Micronesia (Federated States of)', 'MD': 'Moldova, Republic of', 'MC': 'Monaco', 'MN': 'Mongolia', 'ME': 'Montenegro', 'MS': 'Montserrat', 'MA': 'Morocco', 'MZ': 'Mozambique', 'MM': 'Myanmar', 'NA': 'Namibia', 'NR': 'Nauru', 'NP': 'Nepal', 'NL': 'Netherlands', 'NC': 'New Caledonia', 'NZ': 'New Zealand', 'NI': 'Nicaragua', 'NE': 'Niger', 'NG': 'Nigeria', 'NU': 'Niue', 'NF': 'Norfolk Island', 'MK': 'North Macedonia', 'MP': 'Northern Mariana Islands', 'NO': 'Norway', 'OM': 'Oman', 'PK': 'Pakistan', 'PW': 'Palau', 'PS': 'Palestine', 'PA': 'Panama', 'PG': 'Papua New Guinea', 'PY': 'Paraguay', 'PE': 'Peru', 'PH': 'Philippines', 'PN': 'Pitcairn', 'PL': 'Poland', 'PT': 'Portugal', 'PR': 'Puerto Rico', 'QA': 'Qatar', 'RE': 'Reunion', 'RO': 'Romania', 'RU': 'Russia', 'RW': 'Rwanda', 'BL': 'Saint Barthelemy', 'SH': 'Saint Helena, Ascension and Tristan da Cunha', 'KN': 'Saint Kitts and Nevis', 'LC': 'Saint Lucia', 'MF': 'Saint Martin (French part)', 'PM': 'Saint Pierre and Miquelon', 'VC': 'Saint Vincent and the Grenadines', 'WS': 'Samoa', 'SM': 'San Marino', 'ST': 'Sao Tome and Principe', 'SA': 'Saudi Arabia', 'SN': 'Senegal', 'RS': 'Serbia', 'SC': 'Seychelles', 'SL': 'Sierra Leone', 'SG': 'Singapore', 'SX': 'Sint Maarten (Dutch part)', 'SK': 'Slovakia', 'SI': 'Slovenia', 'SB': 'Solomon Islands', 'SO': 'Somalia', 'ZA': 'South Africa', 'GS': 'South Georgia and the South Sandwich Islands', 'SS': 'South Sudan', 'ES': 'Spain', 'LK': 'Sri Lanka', 'SD': 'Sudan', 'SR': 'Suriname', 'SJ': 'Svalbard and Jan Mayen', 'SE': 'Sweden', 'CH': 'Switzerland', 'SY': 'Syrian Arab Republic', 'TW': 'Taiwan', 'TJ': 'Tajikistan', 'TZ': 'Tanzania, United Republic of', 'TH': 'Thailand', 'TL': 'Timor-Leste', 'TG': 'Togo', 'TK': 'Tokelau', 'TO': 'Tonga', 'TT': 'Trinidad and Tobago', 'TN': 'Tunisia', 'TR': 'Turkey', 'TM': 'Turkmenistan', 'TC': 'Turks and Caicos Islands', 'TV': 'Tuvalu', 'UG': 'Uganda', 'UA': 'Ukraine', 'AE': 'United Arab Emirates', 'GB': 'UK', 'US': 'US', 'UM': 'United States Minor Outlying Islands', 'UY': 'Uruguay', 'UZ': 'Uzbekistan', 'VU': 'Vanuatu', 'VE': 'Venezuela (Bolivarian Republic of)', 'VN': 'Vietnam', 'VG': 'Virgin Islands (British)', 'VI': 'Virgin Islands (U.S.)', 'WF': 'Wallis and Futuna', 'EH': 'Western Sahara', 'YE': 'Yemen', 'ZM': 'Zambia', 'ZW': 'Zimbabwe', 'XX': 'Others'}
 
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/js/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/popper.js/js/popper.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
-<!-- jquery slimscroll js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
-<!-- modernizr js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/modernizr.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
-<!-- Chart js -->
-<script type="text/javascript" src="{{ url_for('static', filename='bower_components/chart.js/js/Chart.js')}}"></script>
-<!-- amchart js -->
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/core.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/charts.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/maps.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/worldLow.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/worldHigh.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/amchart/animated.js')}}"></script>
-<!-- Custom js -->
-<script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/pcoded.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/vertical-layout.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
-<script>
-
-isoCountries = {'Afghanistan': 'AF', 'Aland Islands': 'AX', 'Albania': 'AL', 'Algeria': 'DZ', 'American Samoa': 'AS', 'Andorra': 'AD', 'Angola': 'AO', 'Anguilla': 'AI', 'Antarctica': 'AQ', 'Antigua and Barbuda': 'AG', 'Argentina': 'AR', 'Armenia': 'AM', 'Aruba': 'AW', 'Australia': 'AU', 'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahamas': 'BS', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Barbados': 'BB', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 'Benin': 'BJ', 'Bermuda': 'BM', 'Bhutan': 'BT', 'Bolivia (Plurinational State of)': 'BO', 'Bonaire, Sint Eustatius and Saba': 'BQ', 'Bosnia and Herzegovina': 'BA', 'Botswana': 'BW', 'Bouvet Island': 'BV', 'Brazil': 'BR', 'British Indian Ocean Territory': 'IO', 'Brunei Darussalam': 'BN', 'Bulgaria': 'BG', 'Burkina Faso': 'BF', 'Burundi': 'BI', 'Cabo Verde': 'CV', 'Cambodia': 'KH', 'Cameroon': 'CM', 'Canada': 'CA', 'Cayman Islands': 'KY', 'Central African Republic': 'CF', 'Chad': 'TD', 'Chile': 'CL', 'China': 'CN', 'Christmas Island': 'CX', 'Cocos (Keeling) Islands': 'CC', 'Colombia': 'CO', 'Comoros': 'KM', 'Congo': 'CG', 'Congo, Democratic Republic of the': 'CD', 'Cook Islands': 'CK', 'Costa Rica': 'CR', "Côte d'Ivoire": 'CI', 'Croatia': 'HR', 'Cuba': 'CU', 'Curaçao': 'CW', 'Cyprus': 'CY', 'Czech Republic': 'CZ', 'Denmark': 'DK', 'Djibouti': 'DJ', 'Dominica': 'DM', 'Dominican Republic': 'DO', 'Ecuador': 'EC', 'Egypt': 'EG', 'El Salvador': 'SV', 'Equatorial Guinea': 'GQ', 'Eritrea': 'ER', 'Estonia': 'EE', 'Eswatini': 'SZ', 'Ethiopia': 'ET', 'Falkland Islands (Malvinas)': 'FK', 'Faroe Islands': 'FO', 'Fiji': 'FJ', 'Finland': 'FI', 'France': 'FR', 'French Guiana': 'GF', 'French Polynesia': 'PF', 'French Southern Territories': 'TF', 'Gabon': 'GA', 'Gambia': 'GM', 'Georgia': 'GE', 'Germany': 'DE', 'Ghana': 'GH', 'Gibraltar': 'GI', 'Greece': 'GR', 'Greenland': 'GL', 'Grenada': 'GD', 'Guadeloupe': 'GP', 'Guam': 'GU', 'Guatemala': 'GT', 'Guernsey': 'GG', 'Guinea': 'GN', 'Guinea-Bissau': 'GW', 'Guyana': 'GY', 'Haiti': 'HT', 'Heard Island and McDonald Islands': 'HM', 'Holy See': 'VA', 'Honduras': 'HN', 'Hong Kong': 'HK', 'Hungary': 'HU', 'Iceland': 'IS', 'India': 'IN', 'Indonesia': 'ID', 'Iran': 'IR', 'Iraq': 'IQ', 'Ireland': 'IE', 'Isle of Man': 'IM', 'Israel': 'IL', 'Italy': 'IT', 'Jamaica': 'JM', 'Japan': 'JP', 'Jersey': 'JE', 'Jordan': 'JO', 'Kazakhstan': 'KZ', 'Kenya': 'KE', 'Kiribati': 'KI', "North Korea": 'KP', 'South Korea': 'KR', 'Kuwait': 'KW', 'Kyrgyzstan': 'KG', "Lao People's Democratic Republic": 'LA', 'Latvia': 'LV', 'Lebanon': 'LB', 'Lesotho': 'LS', 'Liberia': 'LR', 'Libya': 'LY', 'Liechtenstein': 'LI', 'Lithuania': 'LT', 'Luxembourg': 'LU', 'Macao': 'MO', 'Madagascar': 'MG', 'Malawi': 'MW', 'Malaysia': 'MY', 'Maldives': 'MV', 'Mali': 'ML', 'Malta': 'MT', 'Marshall Islands': 'MH', 'Martinique': 'MQ', 'Mauritania': 'MR', 'Mauritius': 'MU', 'Mayotte': 'YT', 'Mexico': 'MX', 'Micronesia (Federated States of)': 'FM', 'Moldova, Republic of': 'MD', 'Monaco': 'MC', 'Mongolia': 'MN', 'Montenegro': 'ME', 'Montserrat': 'MS', 'Morocco': 'MA', 'Mozambique': 'MZ', 'Myanmar': 'MM', 'Namibia': 'NA', 'Nauru': 'NR', 'Nepal': 'NP', 'Netherlands': 'NL', 'New Caledonia': 'NC', 'New Zealand': 'NZ', 'Nicaragua': 'NI', 'Niger': 'NE', 'Nigeria': 'NG', 'Niue': 'NU', 'Norfolk Island': 'NF', 'North Macedonia': 'MK', 'Northern Mariana Islands': 'MP', 'Norway': 'NO', 'Oman': 'OM', 'Pakistan': 'PK', 'Palau': 'PW', 'Palestine': 'PS', 'Panama': 'PA', 'Papua New Guinea': 'PG', 'Paraguay': 'PY', 'Peru': 'PE', 'Philippines': 'PH', 'Pitcairn': 'PN', 'Poland': 'PL', 'Portugal': 'PT', 'Puerto Rico': 'PR', 'Qatar': 'QA', 'Reunion': 'RE', 'Romania': 'RO', 'Russia': 'RU', 'Rwanda': 'RW', 'Saint Barthelemy': 'BL', 'Saint Helena, Ascension and Tristan da Cunha': 'SH', 'Saint Kitts and Nevis': 'KN', 'Saint Lucia': 'LC', 'Saint Martin (French part)': 'MF', 'Saint Pierre and Miquelon': 'PM', 'Saint Vincent and the Grenadines': 'VC', 'Samoa': 'WS', 'San Marino': 'SM', 'Sao Tome and Principe': 'ST', 'Saudi Arabia': 'SA', 'Senegal': 'SN', 'Serbia': 'RS', 'Seychelles': 'SC', 'Sierra Leone': 'SL', 'Singapore': 'SG', 'Sint Maarten (Dutch part)': 'SX', 'Slovakia': 'SK', 'Slovenia': 'SI', 'Solomon Islands': 'SB', 'Somalia': 'SO', 'South Africa': 'ZA', 'South Georgia and the South Sandwich Islands': 'GS', 'South Sudan': 'SS', 'Spain': 'ES', 'Sri Lanka': 'LK', 'Sudan': 'SD', 'Suriname': 'SR', 'Svalbard and Jan Mayen': 'SJ', 'Sweden': 'SE', 'Switzerland': 'CH', 'Syrian Arab Republic': 'SY', 'Taiwan': 'TW', 'Tajikistan': 'TJ', 'Tanzania, United Republic of': 'TZ', 'Thailand': 'TH', 'Timor-Leste': 'TL', 'Togo': 'TG', 'Tokelau': 'TK', 'Tonga': 'TO', 'Trinidad and Tobago': 'TT', 'Tunisia': 'TN', 'Turkey': 'TR', 'Turkmenistan': 'TM', 'Turks and Caicos Islands': 'TC', 'Tuvalu': 'TV', 'Uganda': 'UG', 'Ukraine': 'UA', 'United Arab Emirates': 'AE', 'UK': 'GB', 'US': 'US', 'United States Minor Outlying Islands': 'UM', 'Uruguay': 'UY', 'Uzbekistan': 'UZ', 'Vanuatu': 'VU', 'Venezuela (Bolivarian Republic of)': 'VE', 'Vietnam': 'VN', 'Virgin Islands (British)': 'VG', 'Virgin Islands (U.S.)': 'VI', 'Wallis and Futuna': 'WF', 'Western Sahara': 'EH', 'Yemen': 'YE', 'Zambia': 'ZM', 'Zimbabwe': 'ZW', 'Others': 'XX'}
-countriesIso = {'AF': 'Afghanistan', 'AX': 'Aland Islands', 'AL': 'Albania', 'DZ': 'Algeria', 'AS': 'American Samoa', 'AD': 'Andorra', 'AO': 'Angola', 'AI': 'Anguilla', 'AQ': 'Antarctica', 'AG': 'Antigua and Barbuda', 'AR': 'Argentina', 'AM': 'Armenia', 'AW': 'Aruba', 'AU': 'Australia', 'AT': 'Austria', 'AZ': 'Azerbaijan', 'BS': 'Bahamas', 'BH': 'Bahrain', 'BD': 'Bangladesh', 'BB': 'Barbados', 'BY': 'Belarus', 'BE': 'Belgium', 'BZ': 'Belize', 'BJ': 'Benin', 'BM': 'Bermuda', 'BT': 'Bhutan', 'BO': 'Bolivia (Plurinational State of)', 'BQ': 'Bonaire, Sint Eustatius and Saba', 'BA': 'Bosnia and Herzegovina', 'BW': 'Botswana', 'BV': 'Bouvet Island', 'BR': 'Brazil', 'IO': 'British Indian Ocean Territory', 'BN': 'Brunei Darussalam', 'BG': 'Bulgaria', 'BF': 'Burkina Faso', 'BI': 'Burundi', 'CV': 'Cabo Verde', 'KH': 'Cambodia', 'CM': 'Cameroon', 'CA': 'Canada', 'KY': 'Cayman Islands', 'CF': 'Central African Republic', 'TD': 'Chad', 'CL': 'Chile', 'CN': 'China', 'CX': 'Christmas Island', 'CC': 'Cocos (Keeling) Islands', 'CO': 'Colombia', 'KM': 'Comoros', 'CG': 'Congo', 'CD': 'Congo, Democratic Republic of the', 'CK': 'Cook Islands', 'CR': 'Costa Rica', 'CI': "Côte d'Ivoire", 'HR': 'Croatia', 'CU': 'Cuba', 'CW': 'Curaçao', 'CY': 'Cyprus', 'CZ': 'Czech Republic', 'DK': 'Denmark', 'DJ': 'Djibouti', 'DM': 'Dominica', 'DO': 'Dominican Republic', 'EC': 'Ecuador', 'EG': 'Egypt', 'SV': 'El Salvador', 'GQ': 'Equatorial Guinea', 'ER': 'Eritrea', 'EE': 'Estonia', 'SZ': 'Eswatini', 'ET': 'Ethiopia', 'FK': 'Falkland Islands (Malvinas)', 'FO': 'Faroe Islands', 'FJ': 'Fiji', 'FI': 'Finland', 'FR': 'France', 'GF': 'French Guiana', 'PF': 'French Polynesia', 'TF': 'French Southern Territories', 'GA': 'Gabon', 'GM': 'Gambia', 'GE': 'Georgia', 'DE': 'Germany', 'GH': 'Ghana', 'GI': 'Gibraltar', 'GR': 'Greece', 'GL': 'Greenland', 'GD': 'Grenada', 'GP': 'Guadeloupe', 'GU': 'Guam', 'GT': 'Guatemala', 'GG': 'Guernsey', 'GN': 'Guinea', 'GW': 'Guinea-Bissau', 'GY': 'Guyana', 'HT': 'Haiti', 'HM': 'Heard Island and McDonald Islands', 'VA': 'Holy See', 'HN': 'Honduras', 'HK': 'Hong Kong', 'HU': 'Hungary', 'IS': 'Iceland', 'IN': 'India', 'ID': 'Indonesia', 'IR': 'Iran', 'IQ': 'Iraq', 'IE': 'Ireland', 'IM': 'Isle of Man', 'IL': 'Israel', 'IT': 'Italy', 'JM': 'Jamaica', 'JP': 'Japan', 'JE': 'Jersey', 'JO': 'Jordan', 'KZ': 'Kazakhstan', 'KE': 'Kenya', 'KI': 'Kiribati', 'KP': 'North Korea', 'KR': 'South Korea', 'KW': 'Kuwait', 'KG': 'Kyrgyzstan', 'LA': "Lao People's Democratic Republic", 'LV': 'Latvia', 'LB': 'Lebanon', 'LS': 'Lesotho', 'LR': 'Liberia', 'LY': 'Libya', 'LI': 'Liechtenstein', 'LT': 'Lithuania', 'LU': 'Luxembourg', 'MO': 'Macao', 'MG': 'Madagascar', 'MW': 'Malawi', 'MY': 'Malaysia', 'MV': 'Maldives', 'ML': 'Mali', 'MT': 'Malta', 'MH': 'Marshall Islands', 'MQ': 'Martinique', 'MR': 'Mauritania', 'MU': 'Mauritius', 'YT': 'Mayotte', 'MX': 'Mexico', 'FM': 'Micronesia (Federated States of)', 'MD': 'Moldova, Republic of', 'MC': 'Monaco', 'MN': 'Mongolia', 'ME': 'Montenegro', 'MS': 'Montserrat', 'MA': 'Morocco', 'MZ': 'Mozambique', 'MM': 'Myanmar', 'NA': 'Namibia', 'NR': 'Nauru', 'NP': 'Nepal', 'NL': 'Netherlands', 'NC': 'New Caledonia', 'NZ': 'New Zealand', 'NI': 'Nicaragua', 'NE': 'Niger', 'NG': 'Nigeria', 'NU': 'Niue', 'NF': 'Norfolk Island', 'MK': 'North Macedonia', 'MP': 'Northern Mariana Islands', 'NO': 'Norway', 'OM': 'Oman', 'PK': 'Pakistan', 'PW': 'Palau', 'PS': 'Palestine', 'PA': 'Panama', 'PG': 'Papua New Guinea', 'PY': 'Paraguay', 'PE': 'Peru', 'PH': 'Philippines', 'PN': 'Pitcairn', 'PL': 'Poland', 'PT': 'Portugal', 'PR': 'Puerto Rico', 'QA': 'Qatar', 'RE': 'Reunion', 'RO': 'Romania', 'RU': 'Russia', 'RW': 'Rwanda', 'BL': 'Saint Barthelemy', 'SH': 'Saint Helena, Ascension and Tristan da Cunha', 'KN': 'Saint Kitts and Nevis', 'LC': 'Saint Lucia', 'MF': 'Saint Martin (French part)', 'PM': 'Saint Pierre and Miquelon', 'VC': 'Saint Vincent and the Grenadines', 'WS': 'Samoa', 'SM': 'San Marino', 'ST': 'Sao Tome and Principe', 'SA': 'Saudi Arabia', 'SN': 'Senegal', 'RS': 'Serbia', 'SC': 'Seychelles', 'SL': 'Sierra Leone', 'SG': 'Singapore', 'SX': 'Sint Maarten (Dutch part)', 'SK': 'Slovakia', 'SI': 'Slovenia', 'SB': 'Solomon Islands', 'SO': 'Somalia', 'ZA': 'South Africa', 'GS': 'South Georgia and the South Sandwich Islands', 'SS': 'South Sudan', 'ES': 'Spain', 'LK': 'Sri Lanka', 'SD': 'Sudan', 'SR': 'Suriname', 'SJ': 'Svalbard and Jan Mayen', 'SE': 'Sweden', 'CH': 'Switzerland', 'SY': 'Syrian Arab Republic', 'TW': 'Taiwan', 'TJ': 'Tajikistan', 'TZ': 'Tanzania, United Republic of', 'TH': 'Thailand', 'TL': 'Timor-Leste', 'TG': 'Togo', 'TK': 'Tokelau', 'TO': 'Tonga', 'TT': 'Trinidad and Tobago', 'TN': 'Tunisia', 'TR': 'Turkey', 'TM': 'Turkmenistan', 'TC': 'Turks and Caicos Islands', 'TV': 'Tuvalu', 'UG': 'Uganda', 'UA': 'Ukraine', 'AE': 'United Arab Emirates', 'GB': 'UK', 'US': 'US', 'UM': 'United States Minor Outlying Islands', 'UY': 'Uruguay', 'UZ': 'Uzbekistan', 'VU': 'Vanuatu', 'VE': 'Venezuela (Bolivarian Republic of)', 'VN': 'Vietnam', 'VG': 'Virgin Islands (British)', 'VI': 'Virgin Islands (U.S.)', 'WF': 'Wallis and Futuna', 'EH': 'Western Sahara', 'YE': 'Yemen', 'ZM': 'Zambia', 'ZW': 'Zimbabwe', 'XX': 'Others'}
-
-function getCountryCode(countryName) {
-    if (isoCountries.hasOwnProperty(countryName)) {
-        return isoCountries[countryName];
-    } else {
-        return countryName;
-    }
-}
-
-function getCountry(code) {
-    if (countriesIso.hasOwnProperty(code)) {
-        return countriesIso[code];
-    } else {
-        return code;
-    }
-}
-
-function parse_map(raw_data) {
-    var res = {
-        "confirmed": [],
-        "deaths": [],
-        "recovered": []
-    };
-    for (var key in res) {
-        var data = raw_data[key]["locations"];
-        var tmp = {};
-        data.forEach(function (item) {
-            var code = item.country_code;
-            var latest = item.latest;
-            if (tmp.hasOwnProperty(code)) {
-                tmp[code] += latest;
+        function getCountryCode(countryName) {
+            if (isoCountries.hasOwnProperty(countryName)) {
+                return isoCountries[countryName];
             } else {
-                tmp[code] = latest;
+                return countryName;
             }
-
-        });
-
-        for (var elem in tmp) {
-            if (tmp[elem] == 0) {log = 0} else {log = Math.log(tmp[elem])}
-            res[key].push({"id": elem, "value": log, "realValue": tmp[elem]});
         }
-    }
-    return res
-}
 
-function parse_timeseries(raw_data) {
-    var res = {
-        "confirmed": [],
-        "deaths": [],
-        "recovered": []
-    };
-    for (var key in res) {
-        var data = raw_data[key]["locations"];
-        var tmp = {};
-        data.forEach(function (item) {
-            var country = item.country_code;
-            var history = item.history;
-            if (tmp[country]) {
-                tmp[country].push(history);
+        function getCountry(code) {
+            if (countriesIso.hasOwnProperty(code)) {
+                return countriesIso[code];
             } else {
-                tmp[country] = [history];
+                return code;
             }
+        }
 
-        });
-
-        // merge value of same countries
-        merged = {}
-        // iter over countries
-        for (var elem in tmp) {
-            var newObj = {};
-            // iter over the timeseries of a country
-            for (i in tmp[elem]) {
-                //iter over the dates
-                for (var date in tmp[elem][i]) {
-                    if (newObj.hasOwnProperty(date)) {
-                        newObj[date] = parseInt(newObj[date], 10)
-                        newObj[date] += parseInt(tmp[elem][i][date], 10)
+        function parse_map(raw_data) {
+            var res = {
+                "confirmed": [],
+                "deaths": [],
+                "recovered": []
+            };
+            for (var key in res) {
+                var data = raw_data[key]["locations"];
+                var tmp = {};
+                data.forEach(function (item) {
+                    var code = item.country_code;
+                    var latest = item.latest;
+                    if (tmp.hasOwnProperty(code)) {
+                        tmp[code] += latest;
                     } else {
-                        newObj[date] = parseInt(newObj[date], 10)
-                        newObj[date] = parseInt(tmp[elem][i][date], 10)
+                        tmp[code] = latest;
                     }
+
+                });
+
+                for (var elem in tmp) {
+                    if (tmp[elem] == 0) {log = 0} else {log = Math.log(tmp[elem])}
+                    res[key].push({"id": elem, "value": log, "realValue": tmp[elem]});
+                }
+            }
+            return res
+        }
+
+        function parse_timeseries(raw_data) {
+            var res = {
+                "confirmed": [],
+                "deaths": [],
+                "recovered": []
+            };
+            for (var key in res) {
+                var data = raw_data[key]["locations"];
+                var tmp = {};
+                data.forEach(function (item) {
+                    var country = item.country_code;
+                    var history = item.history;
+                    if (tmp[country]) {
+                        tmp[country].push(history);
+                    } else {
+                        tmp[country] = [history];
+                    }
+
+                });
+
+                // merge value of same countries
+                merged = {}
+                // iter over countries
+                for (var elem in tmp) {
+                    var newObj = {};
+                    // iter over the timeseries of a country
+                    for (i in tmp[elem]) {
+                        //iter over the dates
+                        for (var date in tmp[elem][i]) {
+                            if (newObj.hasOwnProperty(date)) {
+                                newObj[date] = parseInt(newObj[date], 10)
+                                newObj[date] += parseInt(tmp[elem][i][date], 10)
+                            } else {
+                                newObj[date] = parseInt(newObj[date], 10)
+                                newObj[date] = parseInt(tmp[elem][i][date], 10)
+                            }
+                        }
+
+                    }
+
+                    //convert to the chart format
+                    var final = []
+                    for (var date in newObj) {
+                        var parts = date.split("/");
+                        final.push({
+                            "date": new Date(parseInt("20" + parts[2], 10),
+                                parseInt(parts[0], 10) - 1,
+                                parseInt(parts[1], 10)),
+                            "value": newObj[date]
+                        })
+                    }
+                    var sortedFinal = final.sort((a, b) => b.date - a.date)
+                    merged[elem] = sortedFinal
                 }
 
+                res[key] = merged
             }
-
-            //convert to the chart format
-            var final = []
-            for (var date in newObj) {
-                var parts = date.split("/");
-                final.push({
-                    "date": new Date(parseInt("20" + parts[2], 10),
-                        parseInt(parts[0], 10) - 1,
-                        parseInt(parts[1], 10)),
-                    "value": newObj[date]
-                })
-            }
-            var sortedFinal = final.sort((a, b) => b.date - a.date)
-            merged[elem] = sortedFinal
+            return res
         }
 
-        res[key] = merged
-    }
-    return res
-}
 
 
 
+        function swap(json) {
+            var ret = {};
+            for (var key in json) {
+                ret[json[key]] = key;
+            }
+            return ret;
+        }
 
-function swap(json) {
-    var ret = {};
-    for (var key in json) {
-        ret[json[key]] = key;
-    }
-    return ret;
-}
+        colors = {
+        "confirmed": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#2980b9")},
+        "deaths": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#c0392b")},
+        "recovered": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#27ae60")}
+        }
 
-colors = {
-  "confirmed": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#2980b9")},
-  "deaths": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#c0392b")},
-  "recovered": {"min": am4core.color("#d9d9d9"), "max": am4core.color("#27ae60")}
-}
+        function setMapData(map_name) {
+            create_map(map_name)
+        }
 
-function setMapData(map_name) {
-    create_map(map_name)
-}
+        function create_map(map_id, map_name) {
+            am4core.useTheme(am4themes_animated);
+            // Create map instance
+            var chart = am4core.create(map_id, am4maps.MapChart);
+            // Set map definition
+            chart.geodata = am4geodata_worldHigh;
 
-function create_map(map_id, map_name) {
-    am4core.useTheme(am4themes_animated);
-     // Create map instance
-    var chart = am4core.create(map_id, am4maps.MapChart);
-    // Set map definition
-    chart.geodata = am4geodata_worldHigh;
+            // Set projection
+            chart.projection = new am4maps.projections.EqualEarth();
 
-    // Set projection
-    chart.projection = new am4maps.projections.EqualEarth();
+            // Create map polygon series
+            var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+            polygonSeries.exclude = ["AQ"];
 
-    // Create map polygon series
-    var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
-    polygonSeries.exclude = ["AQ"];
+            //Set min/max fill color for each area
+            polygonSeries.heatRules.push({
+            property: "fill",
+            target: polygonSeries.mapPolygons.template,
+            min: colors[map_name]["min"],
+            max: colors[map_name]["max"]
+            });
 
-    //Set min/max fill color for each area
-    polygonSeries.heatRules.push({
-      property: "fill",
-      target: polygonSeries.mapPolygons.template,
-      min: colors[map_name]["min"],
-      max: colors[map_name]["max"]
-    });
+            // Make map load polygon data (state shapes and names) from GeoJSON
+            polygonSeries.useGeodata = true;
 
-    // Make map load polygon data (state shapes and names) from GeoJSON
-    polygonSeries.useGeodata = true;
-
-    // Set heatmap values for each state
-    polygonSeries.data = mapData[map_name];
-
-
-    // Configure series tooltip
-    var polygonTemplate = polygonSeries.mapPolygons.template;
-    polygonTemplate.tooltipText = "{name}: {realValue} cases";
-    polygonTemplate.nonScalingStroke = true;
-    polygonTemplate.strokeWidth = 0.5;
-
-    // Create hover state and set alternative fill color
-    var hs = polygonTemplate.states.create("hover");
-    hs.properties.fill = colors[map_name]["max"];
+            // Set heatmap values for each state
+            polygonSeries.data = mapData[map_name];
 
 
-    return polygonSeries
+            // Configure series tooltip
+            var polygonTemplate = polygonSeries.mapPolygons.template;
+            polygonTemplate.tooltipText = "{name}: {realValue} cases";
+            polygonTemplate.nonScalingStroke = true;
+            polygonTemplate.strokeWidth = 0.5;
 
-}
-
-function create_ts(data_type, country_code){
-    var chart = am4core.create("tsdiv", am4charts.XYChart);
-
-    // Add data
-    chart.data = tsData[data_type][country_code]
-
-    // Create axes
-    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-    valueAxis.renderer.labels.template.fill = am4core.color("black");
-    dateAxis.renderer.labels.template.fill = am4core.color("black");
+            // Create hover state and set alternative fill color
+            var hs = polygonTemplate.states.create("hover");
+            hs.properties.fill = colors[map_name]["max"];
 
 
-    
-    const yAxisTitle = data_type.toString().replace(/^\w/, function (chr) {
-        return chr.toUpperCase();
-    });
-    dateAxis.title.text = "Date";
-    valueAxis.title.text = yAxisTitle;
+            return polygonSeries
 
-    // Create series
-    var series = chart.series.push(new am4charts.LineSeries());
-    series.dataFields.valueY = "value";
-    series.dataFields.dateX = "date";
-    series.tooltipText = "{date}: {value}"
-    series.tooltip.pointerOrientation = "vertical";
-    series.tooltip.background.cornerRadius = 20;
-    series.tooltip.background.fillOpacity = 0.5;
-    series.tooltip.label.padding(12,12,12,12)
-    series.strokeWidth = 3;
-    series.minBulletDistance = 15;
-    series.stroke = colors[data_type]["max"];
+        }
 
-    var bullet = series.bullets.push(new am4charts.CircleBullet());
-    bullet.circle.stroke = colors[data_type]["max"];
-    bullet.circle.fill = colors[data_type]["max"];
-    bullet.tooltipText = "{dateX} : {valueY}";   
+        function create_ts(data_type, country_code){
+            var chart = am4core.create("tsdiv", am4charts.XYChart);
 
-    return chart
-}
+            // Add data
+            chart.data = tsData[data_type][country_code]
 
-function setTsData(country, data_type){
-    var country_code = isoCountries[country]
-    create_ts(data_type, country_code)
-} 
+            // Create axes
+            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
+            valueAxis.renderer.labels.template.fill = am4core.color("black");
+            dateAxis.renderer.labels.template.fill = am4core.color("black");
 
 
-var selected_ts_radio = "confirmed"
-var selected_ts_selectPicker = "China"
 
-am4core.ready(function() {
-// Get Data from API
-$.get('http://127.0.0.1:5000/api/csse/data')
-    .done(function(response) {
-    console.log(response);
+            const yAxisTitle = data_type.toString().replace(/^\w/, function (chr) {
+                return chr.toUpperCase();
+            });
+            dateAxis.title.text = "Date";
+            valueAxis.title.text = yAxisTitle;
 
-    // Get basic stats
-    $("#confirmed_cases-stat").text(formatNumber(response.confirmed.total));
-    $("#deaths-stat").text(formatNumber(response.deaths.total));
-    $("#recovered-stat").text(formatNumber(response.recovered.total));
+            // Create series
+            var series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.dateX = "date";
+            series.tooltipText = "{date}: {value}"
+            series.tooltip.pointerOrientation = "vertical";
+            series.tooltip.background.cornerRadius = 20;
+            series.tooltip.background.fillOpacity = 0.5;
+            series.tooltip.label.padding(12,12,12,12)
+            series.strokeWidth = 3;
+            series.minBulletDistance = 15;
+            series.stroke = colors[data_type]["max"];
 
-    //create map
-    mapData = parse_map(response);
-    
-    polygonSeries1 = create_map("cases_map", "confirmed");
-    polygonSeries2 = create_map("deaths_map", "deaths");
-    polygonSeries3 = create_map("recovered_map", "recovered");
+            var bullet = series.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.stroke = colors[data_type]["max"];
+            bullet.circle.fill = colors[data_type]["max"];
+            bullet.tooltipText = "{dateX} : {valueY}";
 
-    //create ts
-    tsData = parse_timeseries(response);
-    tsChart = create_ts("confirmed", "BE")
+            return chart
+        }
 
-    $("#buttonsTs :input").change(function () {
-        selected_ts_radio = this.id; // points to the clicked input button
-        setTsData(selected_ts_selectPicker, selected_ts_radio)
+        function setTsData(country, data_type){
+            var country_code = isoCountries[country]
+            create_ts(data_type, country_code)
+        }
 
-    });
-
-    // Add Options to select for timeseries
-    var selectElement = document.getElementById('select_ts');
-
-    for (var country in tsData["confirmed"]) {
-        var option = document.createElement("option");
-        option.text = getCountry(country);
-        selectElement.add(option);
-    }
-
-    $('.selectpicker').selectpicker('val', 'Belgium');
-    $('.selectpicker').selectpicker('refresh');
-
-    $('.selectpicker').on('change', function (e) {
-        selected_ts_selectPicker = this.value
-        setTsData(selected_ts_selectPicker, selected_ts_radio)
-
-    });
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        }
 
 
-    });
-});
+        var selected_ts_radio = "confirmed"
+        var selected_ts_selectPicker = "China"
 
-function tsUpdate() {
-    var selected = '';
-    $('#Group .active').each(function () {
-        selected = $(this).attr('id');
-    });
-    setTsData(selected, "Belgium");
-}
-</script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
+        am4core.ready(function() {
+        // Get Data from API
+        $.get('http://127.0.0.1:5000/api/csse/data')
+            .done(function(response) {
+            console.log(response);
 
-</html>
+            // Get basic stats
+            $("#confirmed_cases-stat").text(formatNumber(response.confirmed.total));
+            $("#deaths-stat").text(formatNumber(response.deaths.total));
+            $("#recovered-stat").text(formatNumber(response.recovered.total));
+
+            //create map
+            mapData = parse_map(response);
+
+            polygonSeries1 = create_map("cases_map", "confirmed");
+            polygonSeries2 = create_map("deaths_map", "deaths");
+            polygonSeries3 = create_map("recovered_map", "recovered");
+
+            //create ts
+            tsData = parse_timeseries(response);
+            tsChart = create_ts("confirmed", "BE")
+
+            $("#buttonsTs :input").change(function () {
+                selected_ts_radio = this.id; // points to the clicked input button
+                setTsData(selected_ts_selectPicker, selected_ts_radio)
+
+            });
+
+            // Add Options to select for timeseries
+            var selectElement = document.getElementById('select_ts');
+
+            for (var country in tsData["confirmed"]) {
+                var option = document.createElement("option");
+                option.text = getCountry(country);
+                selectElement.add(option);
+            }
+
+            $('.selectpicker').selectpicker('val', 'Belgium');
+            $('.selectpicker').selectpicker('refresh');
+
+            $('.selectpicker').on('change', function (e) {
+                selected_ts_selectPicker = this.value
+                setTsData(selected_ts_selectPicker, selected_ts_radio)
+
+            });
+
+
+            });
+        });
+
+        function tsUpdate() {
+            var selected = '';
+            $('#Group .active').each(function () {
+                selected = $(this).attr('id');
+            });
+            setTsData(selected, "Belgium");
+        }
+    </script>
+{% endblock%}

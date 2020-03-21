@@ -80,10 +80,25 @@
                                     <span class="pcoded-mtext">Iran</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="{{ url_for('main.single_country', country='canada')}}">
+                                    <span class="pcoded-mtext">Canada</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ url_for('main.single_country', country='australia')}}">
+                                    <span class="pcoded-mtext">Australia</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ url_for('main.single_country', country='switzerland')}}">
+                                    <span class="pcoded-mtext">Switzerland</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{ url_for('main.predictions')}}">
                             <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
                             <span class="pcoded-mtext">Predictions</span>
                             <span class="pcoded-badge label label-danger">NEW</span>

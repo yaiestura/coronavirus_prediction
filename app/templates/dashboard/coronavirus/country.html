@@ -58,7 +58,68 @@
     </div>
     <div class="row">
         <div class="col-xl-6 col-md-12">
-            <div id='cases_graph' style="height:400px"></div>
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Coronavirus Cases Plot</h5>
+                </div>
+                <div class="card-block">
+                    <div id='cases_graph' style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Coronavirus Deaths Plot</h5>
+                </div>
+                <div class="card-block">
+                    <div id='deaths_graph' style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-7 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Daily Cases Plot with Approximation</h5>
+                </div>
+                <div class="card-block">
+                    <div id='daily_cases' style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Recovery and Fatality Rates</h5>
+                </div>
+                <div class="card-block">
+                    <div id='closed_cases' style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-5 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Active Cases Plot with Approximation</h5>
+                </div>
+                <div class="card-block">
+                    <div id='active_cases' style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>{{data['country']}}</b> Daily Deaths Plot with Approximation</h5>
+                </div>
+                <div class="card-block">
+                    <div id='daily_deaths' style="height:400px"></div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -113,7 +174,11 @@
                 "Spain": "ES",
                 "France": "FR",
                 "Germany": "DE",
-                "South Korea": "KR"
+                "South Korea": "KR",
+                "Canada": "CA",
+                "Australia": "AU",
+                "Switzerland": "CH"
+
             }
             var cases = "{{data['cases_now'] | int}}"
             var deaths = "{{data['deaths_now'] | int}}"
@@ -197,53 +262,369 @@
         am4core.useTheme(am4themes_animated);
         // Themes end
 
+        // Create chart instance
         var chart = am4core.create("cases_graph", am4charts.XYChart);
-        chart.paddingRight = 20;
 
-        var data = [];
-        var visits = 10;
-        var previousValue;
-        console.log("{{data['total_cases'][1][0]}}")
-        //chart.data = [
-            //{% for item in data['total_cases'] %}
-                //{ date: new Date(int('{{item[0][2]}}'), int('{{item[0][0]}}'), int('{{item[0][1]}}')),
-                 //value: int('{{item[1]}}')
-                //}
-            //{% endfor %}
-        //]
+        // Add data
+        chart.data = [
+            {% for item in data['total_cases'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
 
-        //console.log(chart.data);
+        console.log(chart.data);
 
+        // Set input format for the dates
+
+        // Create axes
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-        dateAxis.renderer.grid.template.location = 0;
-        dateAxis.renderer.axisFills.template.disabled = true;
-        dateAxis.renderer.ticks.template.disabled = true;
-
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.tooltip.disabled = true;
-        valueAxis.renderer.minWidth = 35;
-        valueAxis.renderer.axisFills.template.disabled = true;
-        valueAxis.renderer.ticks.template.disabled = true;
 
+
+        dateAxis.title.text = "Date";
+        valueAxis.title.text = "Cases";
+
+        // Create series
         var series = chart.series.push(new am4charts.LineSeries());
-        series.dataFields.dateX = "date";
         series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "[bold]{date}[/] {value} cases"
         series.strokeWidth = 2;
-        series.tooltipText = "value: {valueY}, day change: {valueY.previousChange}";
+        series.minBulletDistance = 15;
 
-        // set stroke property field
-        series.propertyFields.stroke = "color";
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
 
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+        // Make a panning cursor
         chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
 
-        var scrollbarX = new am4core.Scrollbar();
-        chart.scrollbarX = scrollbarX;
+        // Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
 
-        dateAxis.start = 0.7;
+        dateAxis.start = 0.6;
         dateAxis.keepSelection = true;
 
 
-        }); // end am4core.ready()
+    }); // end am4core.ready()
     </script>
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("deaths_graph", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in data['total_deaths'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        console.log(chart.data);
+
+        // Set input format for the dates
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+
+        dateAxis.title.text = "Date";
+        valueAxis.title.text = "Deaths";
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "[bold]{date}[/] {value} deaths"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
+
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
+
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
+
+        // Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+        dateAxis.start = 0.6;
+        dateAxis.keepSelection = true;
+
+
+    }); // end am4core.ready()
+    </script>
+     <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("active_cases", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in data['active_cases'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        console.log(chart.data);
+
+        // Set input format for the dates
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+
+        dateAxis.title.text = "Date";
+        valueAxis.title.text = "Active Cases";
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "[bold]{date}[/] {value} active cases"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
+
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
+
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
+
+        // Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+        dateAxis.start = 0.5;
+        dateAxis.keepSelection = true;
+
+
+    }); // end am4core.ready()
+    </script>
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("daily_cases", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in data['daily_cases'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        // Create axes
+
+        var dateAxis1 = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis1.renderer.grid.template.location = 0;
+        dateAxis1.renderer.minGridDistance = 40;
+
+        var valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
+
+        var series1 = chart.series.push(new am4charts.ColumnSeries());
+        series1.dataFields.valueY = "value";
+        series1.dataFields.dateX = "date";
+        series1.tooltipText = "[bold]{value}[/] cases"
+
+        // Create hourly series and related axes
+        var dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis2.renderer.grid.template.location = 0;
+        dateAxis2.renderer.minGridDistance = 40;
+        dateAxis2.renderer.labels.template.disabled = true;
+        dateAxis2.renderer.grid.template.disabled = true;
+        dateAxis2.renderer.tooltip.disabled = true;
+
+        var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis2.renderer.opposite = true;
+        valueAxis2.renderer.grid.template.disabled = true;
+        valueAxis2.renderer.labels.template.disabled = true;
+        valueAxis2.renderer.tooltip.disabled = true;
+
+        var series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.valueY = "value";
+        series2.dataFields.dateX = "date";
+        series2.data = chart.data;
+        series2.xAxis = dateAxis2;
+        series2.yAxis = valueAxis2;
+        series2.strokeWidth = 3;
+
+
+    }); // end am4core.ready()
+    </script>
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("daily_deaths", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in data['daily_deaths'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        // Create axes
+
+        var dateAxis1 = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis1.renderer.grid.template.location = 0;
+        dateAxis1.renderer.minGridDistance = 40;
+
+        var valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
+
+        var series1 = chart.series.push(new am4charts.ColumnSeries());
+        series1.dataFields.valueY = "value";
+        series1.dataFields.dateX = "date";
+        series1.tooltipText = "[bold]{value}[/] deaths"
+
+        // Create hourly series and related axes
+        var dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis2.renderer.grid.template.location = 0;
+        dateAxis2.renderer.minGridDistance = 40;
+        dateAxis2.renderer.labels.template.disabled = true;
+        dateAxis2.renderer.grid.template.disabled = true;
+        dateAxis2.renderer.tooltip.disabled = true;
+
+        var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis2.renderer.opposite = true;
+        valueAxis2.renderer.grid.template.disabled = true;
+        valueAxis2.renderer.labels.template.disabled = true;
+        valueAxis2.renderer.tooltip.disabled = true;
+
+        var series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.valueY = "value";
+        series2.dataFields.dateX = "date";
+        series2.data = chart.data;
+        series2.xAxis = dateAxis2;
+        series2.yAxis = valueAxis2;
+        series2.strokeWidth = 3;
+
+
+    }); // end am4core.ready()
+    </script>
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("closed_cases", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in data['closed_cases'] %}
+                {date: new Date({{item[0]}}), value1: '{{ item[1] }}', value2: '{{ item[2] }}' },
+            {% endfor %}
+        ]
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.minGridDistance = 50;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value1";
+        series.dataFields.dateX = "date";
+        series.strokeWidth = 2;
+        series.minBulletDistance = 10;
+        series.tooltipText = "[bold]{date.formatDate()}:[/] Death Rate: {value1}%\n Recovery Rate: {value2}%";
+        series.tooltip.pointerOrientation = "vertical";
+
+        // Create series
+        var series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.valueY = "value2";
+        series2.dataFields.dateX = "date";
+        series2.strokeWidth = 2;
+        series2.stroke = series.stroke;
+
+        // Add cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.xAxis = dateAxis;
+
+        }); // end am4core.ready()
+</script>
 {% endblock %}
 
