@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from torch import cuda
+from torch.optim import lr_scheduler
 import torch.nn.functional as F
 import imageio
 import json
@@ -28,9 +29,9 @@ class Net(torch.nn.Module):
     def __init__(self, n_feature, n_hidden, n_output):
         super(Net, self).__init__()
         self.hidden = torch.nn.Linear(n_feature, n_hidden).to(device)
-        self.hidden1 = torch.nn.Linear(n_hidden, 400).to(device)
-        self.hidden2 = torch.nn.Linear(400, 300).to(device)
-        self.hidden3 = torch.nn.Linear(300, n_hidden).to(device)  # hidden layer
+        self.hidden1 = torch.nn.Linear(n_hidden, 800).to(device)
+        self.hidden2 = torch.nn.Linear(800, 500).to(device)
+        self.hidden3 = torch.nn.Linear(500, n_hidden).to(device)  # hidden layer
         self.predict = torch.nn.Linear(n_hidden, n_output).to(device)   # output layer
 
     def forward(self, x):
@@ -51,39 +52,38 @@ def train_model(x, y, train, flag):
             net.load_state_dict(torch.load('app/models/deaths.pth', map_location=device))
         net.eval()
         return net
-    # my_images = []
-    # fig, ax = plt.subplots(figsize=(12, 7))
+    my_images = []
+    fig, ax = plt.subplots(figsize=(12, 7))
     x = torch.tensor(x).to(device).type(dtype)
-    if flag == 'deaths':
-        y = torch.tensor(y).to(device).type(dtype)
-    elif flag == 'cases':
-        y = torch.tensor(y).to(device).type(dtype).unsqueeze(1)
+    y = torch.tensor(y).to(device).type(dtype)
     loss_func = torch.nn.MSELoss()
     net = Net(n_feature=1, n_hidden=200, n_output=1)
     net.load_state_dict(torch.load('app/models/' + flag + '.pth', map_location=device))
     net.train()
     net = net.to(device)
-    optimizer = torch.optim.Adam(net.parameters(), lr=0.0002)
-    for t in range(1000):
+    optimizer = torch.optim.Adam(net.parameters(), lr=0.005)
+    scheduler = lr_scheduler.CosineAnnealingLR(optimizer, 700, eta_min=0.0005)
+    for t in range(700):
         prediction = net(x)  # input x and predict based on x
         loss = loss_func(prediction, y)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-    #     plt.cla()
-    #     ax.set_title('Regression Analysis', fontsize=35)
-    #     ax.set_xlabel('Independent variable', fontsize=24)
-    #     ax.set_ylabel('Dependent variable', fontsize=24)
-    #     ax.scatter(x.cpu().data.numpy(), y.cpu().data.numpy(), color="orange")
-    #     ax.plot(x.cpu().data.numpy(), prediction.cpu().data.numpy(), 'g-', lw=3)
-    #     ax.text(1.0, 1, 'Step = %d' % t, fontdict={'size': 24, 'color': 'red'})
-    #     ax.text(15, 1, 'Loss = %.4f' % loss.item(),
-    #             fontdict={'size': 24, 'color': 'red'})
-    #     fig.canvas.draw()  # draw the canvas, cache the renderer
-    #     image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
-    #     image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    #     my_images.append(image)
-    # imageio.mimsave('./curve_1.gif', my_images, fps=60)
+        scheduler.step()
+        plt.cla()
+        ax.set_title('Regression Analysis', fontsize=35)
+        ax.set_xlabel('Independent variable', fontsize=24)
+        ax.set_ylabel('Dependent variable', fontsize=24)
+        ax.scatter(x.cpu().data.numpy(), y.cpu().data.numpy(), color="orange")
+        ax.plot(x.cpu().data.numpy(), prediction.cpu().data.numpy(), 'g-', lw=3)
+        ax.text(1.0, 1, 'Step = %d' % t, fontdict={'size': 24, 'color': 'red'})
+        ax.text(15, 1, 'Loss = %.4f' % loss.item(),
+                fontdict={'size': 24, 'color': 'red'})
+        fig.canvas.draw()  # draw the canvas, cache the renderer
+        image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
+        image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        my_images.append(image)
+    imageio.mimsave('./curve.gif', my_images, fps=60)
     torch.save(net.state_dict(), 'app/models/' + flag + '.pth')
     return net
 
@@ -106,7 +106,9 @@ def model_handler(flag, training_set, train, days):
     y = np.asarray(training_set[1]).reshape(-1, 1).astype(np.int)
     model = train_model(x, y, train, flag)
     x1 = np.arange(len(training_set[0]) + days).reshape(-1, 1)
-    result = torch.flatten(model(torch.tensor(x1).type(dtype))).tolist()
+    x2 = torch.flatten(model(torch.tensor(x1).type(dtype))).tolist()[-days:]
+    x2 = list(map(int, x2))
+    result = y.squeeze().tolist() + x2
     return result
 
 
