@@ -102,10 +102,10 @@ def single_country(country):
     return render_template('dashboard/coronavirus/country.html', data=data, population=population_data,
                            username=current_user.username, avatar=current_user.image_file)
 
-@main.route('/maps')
+@main.route('/history')
 @login_required
-def maps():
-    return render_template('dashboard/coronavirus/maps.html', username=current_user.username, avatar=current_user.image_file,)
+def history():
+    return render_template('dashboard/coronavirus/history.html', username=current_user.username, avatar=current_user.image_file,)
 
 
 @main.route("/predictions", methods=['GET', 'POST'])
@@ -113,8 +113,15 @@ def maps():
 def predictions():
     deaths_predicted = start('deaths', 10, train=False)
     cases_predicted = start('cases', 10, train=False)
-    print(cases_predicted)
-    return render_template('dashboard/coronavirus/predictions.html', deaths=deaths_predicted, cases=cases_predicted,
+
+    stats = MainStatsDataParser()
+    stats_data = stats.get_stats()
+
+    cases = { "cases_data": list(zip(DataParser.create_date_axis_forward(cases_predicted), cases_predicted)) }
+    deaths = { "deaths_data": list(zip(DataParser.create_date_axis_forward(deaths_predicted), deaths_predicted)) }
+
+    return render_template('dashboard/coronavirus/predictions.html', deaths=deaths,
+                           cases=cases, stats=stats_data,
                            username=current_user.username, avatar=current_user.image_file,)
 
 

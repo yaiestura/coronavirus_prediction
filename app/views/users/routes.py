@@ -7,7 +7,7 @@ from app import db, bcrypt
 from app.models import User, UserProfile
 from app.views.users.forms import ( RegistrationForm, LoginForm, UpdateAccountForm,
                                     ProfileForm, RequestResetForm, ResetPasswordForm )
-from app.views.users.utils import save_picture, send_reset_email
+from app.views.users.utils import save_picture
 
 from oauthlib.oauth2 import WebApplicationClient
 

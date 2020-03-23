@@ -109,7 +109,7 @@ def model_handler(flag, training_set, train, days):
     x2 = torch.flatten(model(torch.tensor(x1).type(dtype))).tolist()[-days:]
     x2 = list(map(int, x2))
     result = y.squeeze().tolist() + x2
-    return result
+    return list(result)
 
 
 def start(in1, days, train=False):
@@ -123,4 +123,4 @@ def start(in1, days, train=False):
         b = np.flip(d_all[:, 1])
         deaths = np.concatenate(([a], [b]), axis=0)
         data = model_handler(in1, deaths, train, days)
-    return data
+    return list(data)

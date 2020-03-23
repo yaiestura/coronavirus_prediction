@@ -1,15 +1,234 @@
 {% extends "dashboard/coronavirus/layout.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-header-text"></h5>
+        <div class="col-xl-8 col-md-12">
+              <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>COVID-19</b> Cases Predictions Graph using Neural Network</h5>
                 </div>
                 <div class="card-block">
-
+                    <div id="cases_graph" style="height:588px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>COVID-19</b> Cases Predictions for 10 days</h5>
+                </div>
+                <div class="card-block">
+                    <h5 class="m-b-20"><b>{{stats['total_cases']}}</b> Cases Now</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Prediction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for case in cases['cases_data'][-10:] %}
+                                    {% if loop.first %}
+                                        <tr>
+                                            <td><b>{{case[0]|datetime}} (today)</b></td>
+                                            <td><b>{{case[1]}} cases ({{case[1]|int - stats['total_cases']|int}} left)</b></td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td>{{case[0]|datetime}}</td>
+                                            <td>{{case[1]}} cases</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl-4 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>COVID-19</b> Deaths Predictions for 10 days</h5>
+                </div>
+                <div class="card-block">
+                    <h5 class="m-b-20"><b>{{stats['total_deaths']}}</b> Deaths Now</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Prediction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for death in deaths['deaths_data'][-10:] %}
+                                    <tr>
+                                        <td>{{death[0]|datetime}}</td>
+                                        <td>{{death[1]}} deaths</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 col-md-12">
+            <div class="card">
+                <div class="text-center m-t-10">
+                    <h5><b>COVID-19</b> Deaths Predictions Graph using Neural Network</h5>
+                </div>
+                <div class="card-block">
+                    <div id="deaths_graph" style="height:588px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("cases_graph", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in cases['cases_data'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        // Set input format for the dates
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+
+        dateAxis.title.text = "Date";
+        valueAxis.title.text = "Cases";
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "[bold]{date}[/] {value} cases"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
+
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
+
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#ff0000");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+        var bulletactive = bullet.states.create("active");
+        bulletactive.properties.scale = 1.5;
+
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
+
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+
+        dateAxis.start = 0.45;
+        dateAxis.keepSelection = true;
+
+
+    }); // end am4core.ready()
+    </script>
+     <script>
+        am4core.ready(function() {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("deaths_graph", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {% for item in deaths['deaths_data'] %}
+                {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
+            {% endfor %}
+        ];
+
+        // Set input format for the dates
+
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+
+        dateAxis.title.text = "Date";
+        valueAxis.title.text = "Deaths";
+
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "[bold]{date}[/] {value} deaths"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
+
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
+
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#ff0000");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+        var bulletactive = bullet.states.create("active");
+        bulletactive.properties.scale = 1.5;
+
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
+
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+
+        dateAxis.start = 0.45;
+        dateAxis.keepSelection = true;
+
+
+    }); // end am4core.ready()
+    </script>
 {% endblock %}

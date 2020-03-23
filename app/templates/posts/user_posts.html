@@ -1,6 +1,6 @@
 {% extends "posts/layout.html" %}
 {% block content %}
-    <h1 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h1>
+    <h3 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h3>
     {% for post in posts.items %}
         <article class="media content-section">
           <div class="media-body">
@@ -8,7 +8,7 @@
               <a class="mr-2" href="{{ url_for('posts.user_posts', username=post.user.username) }}">{{ post.user.username }}</a>
               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}"><h4><b>{{ post.title }}</b></h4></a>
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>

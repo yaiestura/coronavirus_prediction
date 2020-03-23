@@ -12,9 +12,3 @@ class Config:
     DASHBOARD_VIEW = 'main.dashboard'
     REGISTER_VIEW = 'users.register'
     LOGIN_VIEW = 'users.login'
-
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = 'NONE'
-    MAIL_PASSWORD = 'NONE'

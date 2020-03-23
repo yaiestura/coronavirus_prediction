@@ -7,7 +7,8 @@
 
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,700,600" rel="stylesheet" type="text/css">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
     <!-- feather Awesome -->
@@ -15,18 +16,14 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.css')}}">
+    <title>Coronavirus Blog</title>
 
-    {% if title %}
-        <title>Flask Blog - {{ title }}</title>
-    {% else %}
-        <title>Flask Blog</title>
-    {% endif %}
 </head>
 <body>
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light navbar-default navbar-fixed-top past-main effect-main" role="navigation">
+            <nav class="navbar navbar-expand-lg navbar-light navbar-default navbar-fixed-top blog-navbar" role="navigation">
             <div class="container">
                     <a class="navbar-brand page-scroll" href="#main"><img src="{{ url_for('static', filename='pages/landing/logos/logo.png')}}" alt="adminity Logo"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +32,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             {% if current_user.is_authenticated %}
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('main.home')}}">Home</a>
                                 </li>
                                 <li class="nav-item">

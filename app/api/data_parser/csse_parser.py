@@ -4,8 +4,7 @@ from datetime import datetime
 from cachetools import cached, TTLCache
 from app.api.utils.utils import *
 
-
-BASE_URL = 'https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv';
+BASE_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv';
 
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_data(category):
@@ -14,6 +13,7 @@ def get_data(category):
 
     request = requests.get(BASE_URL % category)
     text    = request.text
+    print(text)
 
     data = list(csv.DictReader(text.splitlines()))
 

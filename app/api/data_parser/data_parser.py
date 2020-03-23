@@ -35,6 +35,14 @@ class DataParser:
         return filename
 
     @staticmethod
+    def create_date_axis_forward(dataset):
+
+        january = datetime(2020, 1, 22)
+        date_list = [int(datetime.timestamp(january + timedelta(days=x)) * 1000) for x in range(len(dataset))]
+
+        return list(date_list)
+
+    @staticmethod
     def create_date_axis(dataset):
 
         yesterday = datetime.now() - timedelta(days=1)
@@ -417,4 +425,26 @@ class SingleCountryParser(DataParser):
         }
 
 
+class MainStatsDataParser(DataParser):
+
+    def __init__(self):
+        super()
+
+    @staticmethod
+    def get_stats():
+        url = DataParser.BASE_URL
+        r = requests.get(url)
+        content = r.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+
+        cases_data = []
+
+        statistics = soup.select('.maincounter-number')
+
+        return {
+            'total_cases': statistics[0].text.strip().replace(',', ''),
+            'total_deaths': statistics[1].text.strip().replace(',', ''),
+            'total_recovered': statistics[2].text.strip().replace(',', '')
+        }
 
