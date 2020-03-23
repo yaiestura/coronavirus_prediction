@@ -592,7 +592,6 @@ body {
 }
 
 .services-content h1 {
-
 	font-size: 24px;
 	color: #111111;
 	font-weight: 600;
@@ -670,6 +669,19 @@ body {
 
 /* ----- Service Section Styling Ends ----- */
 
+.languages-content {
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
+
+.languages-content h1 {
+	font-size: 24px;
+	color: #111111;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1.4;
+	margin-bottom: 10px;
+}
 
 /* -----------------------------------------------
 ----------- Flex Features Styling Starts ---------
@@ -912,6 +924,15 @@ body {
 	padding-top: 100px;
 	padding-bottom: 100px;
 	background: #F3F3F3;
+}
+
+.feature_huge h1{
+	font-size: 24px;
+	color: #111111;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1.4;
+	margin-bottom: 10px;
 }
 
 .feature_huge img {
