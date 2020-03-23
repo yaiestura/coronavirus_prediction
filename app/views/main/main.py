@@ -113,14 +113,17 @@ def model_handler(flag, training_set, train, days):
 
 
 def start(in1, days, train=False):
-    data = []
+    data1 = []
     if in1 == 'cases':
         cases = UpdatesDataParser().get_updates()['cases_plot']
-        data = model_handler(in1, cases, train, days)
+        a = cases[0][1:]
+        b = cases[1][1:]
+        cases = np.concatenate(([a], [b]), axis=0)
+        data1 = model_handler(in1, cases, train, days)
     elif in1 == 'deaths':
         d_all = np.asarray(DeathsDataParser().get_deaths()['total_deaths'])[:, :2]
         a = np.flip(d_all[:, 0])
         b = np.flip(d_all[:, 1])
         deaths = np.concatenate(([a], [b]), axis=0)
-        data = model_handler(in1, deaths, train, days)
-    return list(data)
+        data1 = model_handler(in1, deaths, train, days)
+    return list(data1)
