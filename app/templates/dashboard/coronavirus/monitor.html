@@ -132,7 +132,6 @@
                 $(this).toggleClass('active');
                 var id = $(this).attr('id');
                 var country = polygonSeries.getPolygonById(id);
-                console.log(country);
                 chart.zoomToMapObject(country);
                 setInterval(function() {
                     country.isActive = true;
@@ -140,7 +139,6 @@
                 $(this).data('oldData', country);
             }).change(function() {
                 var oldData = $(this).data('oldData');
-                console.log(oldData);
                 setTimeout(function() {
                     country.isActive = false
                 }, 10);
@@ -163,8 +161,6 @@
                 {date: new Date({{item[0]}}), value: '{{ item[1] }}' },
             {% endfor %}
         ];
-
-        console.log(chart.data);
 
         // Set input format for the dates
 

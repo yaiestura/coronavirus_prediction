@@ -65,7 +65,7 @@
                 <div class="navbar-wrapper">
                     <div class="navbar-logo">
                         <a href="{{ url_for('main.home')}}">
-                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
+                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo_covid.png')}}" alt="Theme-Logo">
                         </a>
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
@@ -146,7 +146,7 @@
                                         </li>
                                         <li class="">
                                             <a href="{{ url_for('main.history')}}">
-                                                <span class="pcoded-mtext">Maps</span>
+                                                <span class="pcoded-mtext">History (JHU CSSE)</span>
                                             </a>
                                         </li>
                                         <li class="pcoded-hasmenu">
@@ -234,6 +234,13 @@
                                             <a href="{{ url_for('main.news')}}">
                                                 <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
                                                 <span class="pcoded-mtext">News</span>
+                                                <span class="pcoded-badge label label-danger">NEW</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ url_for('main.download_report')}}">
+                                                <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                                                <span class="pcoded-mtext">Download Report</span>
                                                 <span class="pcoded-badge label label-danger">NEW</span>
                                             </a>
                                         </li>

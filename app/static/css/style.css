@@ -330,7 +330,7 @@ a {
 a:focus,
 a:hover {
   text-decoration: none;
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 h6 {
@@ -7913,7 +7913,7 @@ table tbody .border-bottom-info td {
 }
 
 .main-menu .main-menu-content .more-details a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .main-menu .main-menu-content .more-details a i {
@@ -14292,7 +14292,7 @@ body.menu-bottom #collapse-menu {
 
 .checkbox-fade .cr .cr-icon,
 .checkbox-zoom .cr .cr-icon {
-  color: #01a9ac;
+  color: #fd7a6b;
   font-size: 0.8em;
   left: 0;
   line-height: 0;
@@ -14356,14 +14356,14 @@ body.menu-bottom #collapse-menu {
 .checkbox-fade.zoom-primary .cr,
 .checkbox-zoom.fade-in-primary .cr,
 .checkbox-zoom.zoom-primary .cr {
-  border: 2px solid #01a9ac;
+  border: 2px solid #fd7a6b;
 }
 
 .checkbox-fade.fade-in-primary .cr .cr-icon,
 .checkbox-fade.zoom-primary .cr .cr-icon,
 .checkbox-zoom.fade-in-primary .cr .cr-icon,
 .checkbox-zoom.zoom-primary .cr .cr-icon {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .checkbox-fade.fade-in-warning .cr,
@@ -20923,12 +20923,12 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 }
 
 .social-msg a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .social-msg a:hover span,
 .social-msg a:hover i {
-  color: #01a9ac !important;
+  color: #fd7a6b !important;
 }
 
 .view-info .social-label,
@@ -24957,14 +24957,14 @@ body.dark .md-tabs .nav-item a {
 body.dark .md-tabs .nav-item a.active,
 body.dark .md-tabs .nav-item a:focus,
 body.dark .md-tabs .nav-item a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .pcoded[layout-type="dark"] .md-tabs .nav-item a.active:focus,
 .pcoded[layout-type="dark"] .md-tabs .nav-item a.active:hover,
 body.dark .md-tabs .nav-item a.active:focus,
 body.dark .md-tabs .nav-item a.active:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .pcoded[layout-type="dark"] .nav-tabs,
@@ -25634,7 +25634,7 @@ a {
 a:focus,
 a:hover {
   text-decoration: none;
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 h6 {
@@ -33217,7 +33217,7 @@ table tbody .border-bottom-info td {
 }
 
 .main-menu .main-menu-content .more-details a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .main-menu .main-menu-content .more-details a i {
@@ -37794,8 +37794,8 @@ body.menu-bottom #collapse-menu {
 .btn-primary,
 .sweet-alert button.confirm,
 .wizard > .actions a {
-  background-color: #01a9ac;
-  border-color: #01a9ac;
+  background-color: #fd7a6b;
+  border-color: #fd7a6b;
   color: #fff;
   cursor: pointer;
   -webkit-transition: all ease-in 0.3s;
@@ -38405,7 +38405,7 @@ body.menu-bottom #collapse-menu {
 
 .dropdown-primary .dropdown-menu a:hover,
 .dropdown-split-primary .dropdown-menu a:hover {
-  background-color: #01a9ac;
+  background-color: #fd7a6b;
   color: #fff;
 }
 
@@ -39648,14 +39648,14 @@ body.menu-bottom #collapse-menu {
 .checkbox-fade.zoom-primary .cr,
 .checkbox-zoom.fade-in-primary .cr,
 .checkbox-zoom.zoom-primary .cr {
-  border: 2px solid #01a9ac;
+  border: 2px solid #fd7a6b;
 }
 
 .checkbox-fade.fade-in-primary .cr .cr-icon,
 .checkbox-fade.zoom-primary .cr .cr-icon,
 .checkbox-zoom.fade-in-primary .cr .cr-icon,
 .checkbox-zoom.zoom-primary .cr .cr-icon {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .checkbox-fade.fade-in-warning .cr,
@@ -41134,8 +41134,8 @@ div.DTS div.dataTables_length {
 .footable .pagination > .active > span,
 .footable .pagination > .active > span:focus,
 .footable .pagination > .active > span:hover {
-  background-color: #01a9ac;
-  border-color: #01a9ac;
+  background-color: #fd7a6b;
+  border-color: #fd7a6b;
 }
 
 .footable .pagination > li > a,
@@ -46215,12 +46215,12 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 }
 
 .social-msg a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .social-msg a:hover span,
 .social-msg a:hover i {
-  color: #01a9ac !important;
+  color: #fd7a6b !important;
 }
 
 .view-info .social-label,
@@ -50249,14 +50249,14 @@ body.dark .md-tabs .nav-item a {
 body.dark .md-tabs .nav-item a.active,
 body.dark .md-tabs .nav-item a:focus,
 body.dark .md-tabs .nav-item a:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .pcoded[layout-type="dark"] .md-tabs .nav-item a.active:focus,
 .pcoded[layout-type="dark"] .md-tabs .nav-item a.active:hover,
 body.dark .md-tabs .nav-item a.active:focus,
 body.dark .md-tabs .nav-item a.active:hover {
-  color: #01a9ac;
+  color: #fd7a6b;
 }
 
 .pcoded[layout-type="dark"] .nav-tabs,

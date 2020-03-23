@@ -13,7 +13,6 @@ def get_data(category):
 
     request = requests.get(BASE_URL % category)
     text    = request.text
-    print(text)
 
     data = list(csv.DictReader(text.splitlines()))
 

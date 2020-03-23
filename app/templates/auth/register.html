@@ -2,38 +2,24 @@
 <html lang="en">
 
 <head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
-    <!-- Meta -->
+    <title>Register Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="#">
-    <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
-    <meta name="author" content="#">
-    <!-- Favicon icon -->
+
     <link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico')}}" type="image/x-icon">
-    <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
-    <!-- Required Fremwork -->
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/css/bootstrap.min.css')}}">
-    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/sweetalert/css/sweetalert.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/themify-icons/themify-icons.css')}}">
-    <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/icofont/css/icofont.css')}}">
-    <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icon/feather/css/feather.css')}}">
-    <!-- Style.css -->
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
 </head>
 
 <body>
-    <!-- Pre-loader start -->
     <div class="theme-loader">
         <div class="ball-scale">
             <div class='contain'>
@@ -70,7 +56,6 @@
             </div>
         </div>
     </div>
-    <!-- Pre-loader end -->
     <div id="pcoded" class="pcoded load-height">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
@@ -78,7 +63,7 @@
                 <div class="navbar-wrapper">
                     <div class="navbar-logo" logo-theme="theme1">
                         <a href="{{ url_for('main.home') }}">
-                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo.png')}}" alt="Theme-Logo">
+                            <img class="img-fluid" src="{{ url_for('static', filename='images/logo_covid.png')}}" alt="Theme-Logo">
                         </a>
                     </div>
                     <div class="navbar-container container-fluid">
@@ -93,13 +78,10 @@
                 </div>
             </nav>
         </div>
-        <!-- Main-body start -->
         <section class="login-block with-header">
-            <!-- Container-fluid starts -->
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12">
-                        <!-- Authentication card start -->
                         <form class="md-float-material form-material m-t-40 m-b-40" method="POST" action="">
                             {{ form.csrf_token }}
                             {{ form.hidden_tag() }}
@@ -185,7 +167,27 @@
                                                 <label>
                                                     <input type="checkbox" value="">
                                                     <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                                    <span class="text-inverse">I read and accept <a href="#">Terms &amp; Conditions.</a></span>
+                                                    <span class="text-inverse">I read and accept <a data-toggle="modal" data-target="#large-Modal">Terms &amp; Conditions.</a></span>
+                                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Terms &amp; Conditions.</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h5>Terms of Service</h5>
+                                                                    <p>By accessing the application "Coronavirus App", you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Accept</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </label>
                                             </div>
                                         </div>
@@ -208,23 +210,24 @@
         </div>
     </div>
 
-<!-- Required Jquery -->
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/popper.js/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
-<!-- jquery slimscroll js -->
+
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
-<!-- modernizr js -->
+
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/modernizr/js/css-scrollbars.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bower_components/sweetalert/js/sweetalert.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/modal.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/modalEffects.js')}}"></script>
 
-<!-- i18next.min.js -->
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/i18next/js/i18next.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery-i18next/js/jquery-i18next.min.js')}}"></script>
-<!-- Custom js -->
+
 <script type="text/javascript" src="{{ url_for('static', filename='js/script.js')}}"></script>
 
 </body>

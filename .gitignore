@@ -2,15 +2,20 @@ venv/
 .vscode/
 
 #app/site.db
+
 app/views/__pycache__
 app/views/main/__pycache__
 app/views/posts/__pycache__
 app/views/errors/__pycache__
 app/views/users/__pycache__
+
 app/__pycache__
+app/utils/__pycache__
 app/api/__pycache__
 app/api/data_parser/__pycache__
 app/api/utils/__pycache__
+
 migrations/__pycache__
 migrations/versions/__pycache__
 
+app/userdata/

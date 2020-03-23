@@ -37,7 +37,7 @@ class DataParser:
     @staticmethod
     def create_date_axis_forward(dataset):
 
-        january = datetime(2020, 1, 22)
+        january = datetime(2020, 1, 23)
         date_list = [int(datetime.timestamp(january + timedelta(days=x)) * 1000) for x in range(len(dataset))]
 
         return list(date_list)
@@ -263,8 +263,6 @@ class NewsDataParser(DataParser):
         soup = BeautifulSoup(content, 'html.parser')
 
         news = []
-
-        print(soup.find_all('div', {'class': 'news_post'}))
 
         for item in soup.find_all('div', {'class': 'news_post'}):
             news.append([item.text.replace('[source]', "").strip(), item.find_next('a')['href']])

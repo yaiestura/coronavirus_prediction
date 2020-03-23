@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Documentation | Coronavirus App</title>
+    <link rel="icon" href="{{ url_for('static', filename='pages/landing/logos/favicon.ico')}}" type="image/png" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,700,600" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/fonts/font-awesome-4.3.0/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/stroke.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/animate.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/prettyPhoto.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/js/syntax-highlighter/styles/shCore.css')}}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/js/syntax-highlighter/styles/shThemeRDark.css')}}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='pages/docs/css/custom.css')}}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <section id="top" class="section docs-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="big-title text-center">
+                            <h1>Coronavirus App Documentation</h1>
+                            <a href="{{url_for('main.home')}}">Go back, to Homepage</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </section>
+            <div class="row">
+                <div class="col-md-3">
+                    <nav class="docs-sidebar" data-spy="affix" data-offset-top="300" data-offset-bottom="200" role="navigation">
+                        <ul class="nav">
+                            <li><a href="#line1">API Documentation</a></li>
+                            <li><a href="#line2">Files & Sources</a></li>
+                            <li><a href="#line3">Version History (Changelog)</a></li>
+                        </ul>
+                    </nav >
+                </div>
+                <div class="col-md-9">
+                    <section class="welcome">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Getting Started<hr></h2>
+                                <div class="row">
+                                    <div class="col-md-12 full">
+                                        <div class="intro1">
+                                            <ul>
+                                                <li><strong>Application Name: </strong>Flask Web Application: COVID-19 Live Dashboard with Predictions</li>
+                                                <li><strong>Application Version:</strong> v.0.1.0</li>
+                                                <li><strong>Authors: </strong> <a href="https://github.com/yaiestura" target="_blank">Paul Tsetov, Vladislav Ustimov</a></li>
+                                                <li><strong>Support: </strong> <a href="https://github.com/yaiestura" target="_blank">https://github.com/yaiestura</a></li>
+                                                <li><strong>License: </strong> <a href="https://github.com/yaiestura/coronavirus_prediction/blob/master/LICENCE.md" target="_blank">MIT Licence</a></li>
+                                            </ul>
+                                        </div>
+                                        <hr>
+                                        <div>
+                                            <h4>Installation process</h4>
+                                            <p>You will need the following in order to install our Application to your PC / Server</p>
+                                            <ol>
+                                                <li>Use git clone <a href="https://github.com/yaiestura/coronavirus_prediction.git" target="_blank"></a>https://github.com/yaiestura/coronavirus_prediction.git to clone this repository to your computer</li>
+                                                <li>Install pip3 on your system if not already installed by executing: <pre>sudo apt-get install python3-pip</pre></li>
+                                                <li>Create a virtual environment by the name of venv:<pre>virtualenv venv</pre></li>
+                                                <li>Activate your virtualenv by: <pre>source venv/bin/activate</pre></li>
+                                                <li>Execute a command to install the required packages</li><pre>pip3 install -r requirements.txt</pre>
+                                                <li>Open a terminal and enter</li><pre>python3 run.py</pre>
+                                                <li>Finally, go to localhost:5000 to display the start page of application</li>
+                                                <li>Or you can just run a bash script:</li><pre>sudo bash deploy.sh</pre>
+
+                                            </ol>
+                                            <div class="intro2 clearfix">
+                                                <p><i class="fa fa-exclamation-triangle"></i> Be careful while editing the application code. If not edited properly, the design layout and architecture may break completely.
+                                                    <br> No support is provided for faulty customization.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="line1" class="section">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Getting Started with API<a href="#top">#Back to top</a><hr></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Flask API Routes:</h4>
+                                <p>1. JHU CSSE - Johns Hopkins University COVID-19 Data</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/csse/data</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                    "confirmed": {
+                                        "last_updated": "Mon, 23 Mar 2020 22:14:27 GMT",
+                                        "locations": [
+                                        {
+                                            "coordinates": {
+                                            "lat": "15",
+                                            "long": "101"
+                                            },
+                                            "country": "Thailand",
+                                            "country_code": "TH",
+                                            "history": {
+                                            "1/22/20": "2",
+                                            "1/23/20": "3",
+                                            "1/24/20": "5",
+                                            "1/25/20": "7",
+                                            "1/26/20": "8",
+                                            "1/27/20": "8",
+                                            "1/28/20": "14",
+                                            "1/29/20": "14",
+                                            "1/30/20": "14",
+                                            "1/31/20": "19",
+                                            "2/1/20": "19",
+                                            "2/10/20": "32",
+                                            "2/11/20": "33",
+                                            "2/12/20": "33",
+                                            "2/13/20": "33",
+                                            "2/14/20": "33",
+                                            "2/15/20": "33",
+                                            "2/16/20": "34",
+                                            "2/17/20": "35",
+                                            "2/18/20": "35",
+                                            "2/19/20": "35",
+                                            "2/2/20": "19",
+                                            "2/20/20": "35",
+                                            "2/21/20": "35",
+                                            "2/22/20": "35",
+                                            "2/23/20": "35",
+                                            "2/24/20": "35",
+                                            "2/25/20": "37",
+                                            "2/26/20": "40",
+                                            "2/27/20": "40",
+                                            "2/28/20": "41",
+                                            "2/29/20": "42",
+                                            "2/3/20": "19",
+                                            "2/4/20": "25",
+                                            "2/5/20": "25",
+                                            "2/6/20": "25",
+                                            "2/7/20": "25",
+                                            "2/8/20": "32",
+                                            "2/9/20": "32",
+                                            "3/1/20": "42",
+                                            "3/10/20": "53",
+                                            "3/11/20": "59",
+                                            "3/12/20": "70",
+                                            "3/13/20": "75",
+                                            "3/14/20": "82",
+                                            "3/15/20": "114",
+                                            "3/16/20": "147",
+                                            "3/17/20": "177",
+                                            "3/18/20": "212",
+                                            "3/19/20": "272",
+                                            "3/2/20": "43",
+                                            "3/20/20": "322",
+                                            "3/21/20": "411",
+                                            "3/22/20": "599",
+                                            "3/3/20": "43",
+                                            "3/4/20": "43",
+                                            "3/5/20": "47",
+                                            "3/6/20": "48",
+                                            "3/7/20": "50",
+                                            "3/8/20": "50",
+                                            "3/9/20": "50"
+                                            },
+                                            "latest": 599,
+                                            "province": ""
+                                        },
+                                </pre>
+                                <p>2. Coronavirus Deaths Data</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/deaths</pre>
+                                <pre class="brush: bash;">
+                                    "total_deaths": [
+                                        [
+                                        "Mar. 23",
+                                        "16473",
+                                        "1832",
+                                        "11%"
+                                        ],
+                                        [
+                                        "Mar. 22",
+                                        "14641",
+                                        "1628",
+                                        "13%"
+                                        ],
+                                        [
+                                        "Mar. 21",
+                                        "13013",
+                                        "1626",
+                                        "14%"
+                                        ],
+                                        [
+                                        "Mar. 20",
+                                        "11387",
+                                        "1356",
+                                        "14%"
+                                        ],
+                                    ]
+                                </pre>
+                                <p>3. Minimal Coronavirus Cases and Deaths API by Country</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/countries_min</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                    "countries_affected": 195,
+                                    "countries_min_data": [
+                                        [
+                                        "China",
+                                        "81093",
+                                        "3270",
+                                        "Asia"
+                                        ],
+                                        [
+                                        "Italy",
+                                        "63927",
+                                        "6077",
+                                        "Europe"
+                                        ],
+                                        [
+                                        "United States",
+                                        "42163",
+                                        "512",
+                                        "North America"
+                                        ]
+                                    }
+                                </pre>
+                                <p>4. Advanced Coronavirus Cases and Deaths API by Country</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/countries_adv</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                    "countries_adv_data": [
+                                        [
+                                        "China",
+                                        "81093",
+                                        "",
+                                        "3270",
+                                        "",
+                                        "72703",
+                                        "5120",
+                                        "1749",
+                                        "56"
+                                        ],
+                                        [
+                                        "Italy",
+                                        "63927",
+                                        "+4789",
+                                        "6077",
+                                        "+601",
+                                        "7432",
+                                        "50418",
+                                        "3204",
+                                        "1057"
+                                        ],
+                                    ]}
+                                </pre>
+                                <p>5. Comprehensive COVID-19 API (all the updates)</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/updates</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                        "active_cases": "260318",
+                                        "active_cases_plot": [
+                                            [
+                                            "Jan22",
+                                            "Jan23",
+                                            "Jan24",
+                                            "Jan25"
+                                            ]
+                                        ]
+                                    }
+                                </pre>
+                                <p>6. All Coronavirus News with sources API</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/news</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                        "last_updated": "Last updated: March 23, 2020, 22:31 GMT",
+                                        "news": [
+                                            [
+                                            "UK: Prime Minister Boris Johnson has announced that the country will go into a complete lockdown: Britons will be allowed to leave home only if essential",
+                                            "https://www.reuters.com/article/health-coronavirus-johnson-lockdown/britain-imposes-lockdown-to-combat-spread-of-coronavirus-idUSS8N28M0IV"
+                                            ],
+                                            [
+                                            "128 new cases in South Africa. President Cyril Ramaphosa announced that a national lockdown for 21 days would be implemented from midnight on Thursday",
+                                            "https://www.news24.com/SouthAfrica/News/coronavirus-all-the-latest-news-about-covid-19-in-south-africa-and-the-world-20200312"
+                                            ],
+                                            [
+                                            "1321 new cases and 22 new deaths in Switzerland",
+                                            "/coronavirus/country/switzerland/"
+                                            ]
+                                        ]
+                                    }
+                                </pre>
+                                <p>7. Coronavirus Demographics(Age, Sex, Disease) Statistics API</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/demographics</pre>
+                                <pre class="brush: bash;">
+                                {
+                                    "death_rate_by_age": [
+                                        [
+                                        "80+",
+                                        "14.8%"
+                                        ],
+                                        [
+                                        "70-79",
+                                        "8.0%"
+                                        ],
+                                        [
+                                        "60-69",
+                                        "3.6%"
+                                        ]
+                                    ]
+                                }
+                                </pre>
+                                <p>8. Coronavirus Cases API</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/cases</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                        "cases_data": [
+                                            [
+                                                1579732335555,
+                                                580
+                                            ],
+                                            [
+                                                1579818735555,
+                                                845
+                                            ],
+                                            [
+                                                1579905135555,
+                                                1317
+                                            ],
+                                        ]
+                                    }
+                                </pre>
+                                <p>9. Coronavirus Tests Performed by Country API</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/tests</pre>
+                                <pre class="brush: bash;">
+                                    {
+                                        "tests_data": [
+                                        [
+                                            "Bahrain",
+                                            "8354",
+                                            "4910",
+                                            "1701575",
+                                            "OFFICIAL"
+                                            ],
+                                            [
+                                            "South Korea",
+                                            "210144",
+                                            "4099",
+                                            "51269185",
+                                            "OFFICIAL"
+                                            ],
+                                            [
+                                            "Hong Kong",
+                                            "16000",
+                                            "2134",
+                                            "7496981",
+                                            "Estimated"
+                                            ],
+                                            [
+                                            "Italy",
+                                            "60761",
+                                            "1005",
+                                            "60461826",
+                                            "OFFICIAL"
+                                            ]
+                                        ]
+                                    }
+                                </pre>
+                                <p>10. Coronavirus Country Data API (for example, Italy)</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/countries/country></pre>
+                                <pre class="brush: bash;">
+                                    {
+                                        "active_cases": []
+                                        "cases_now": "63927",
+                                        "cases_world": "378144",
+                                        "deaths_now": "6077",
+                                        "deaths_world": "16488",
+                                        "flag": "https://www.worldometers.info/img/flags/small/tn_it-flag.gif",
+                                        "last_updated": "Last updated: March 23, 2020, 22:25 GMT",
+                                        "recovered_now": "7432",
+                                        "total_cases": []
+                                    }
+                                </pre>
+                                <p>11. Route used to Train the Neural Network Cases Model</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/predict/cases</pre>
+                                <p>12. Route used to Train the Neural Network Cases Model</p>
+                                <pre class="brush: bash;">$ curl localhost:5000/api/predict/deaths</pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="line2" class="section">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Used Libraries<a href="#top">#Back to top</a><hr></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Included SASS & CSS3 Stylesheets</strong>
+                                <p>These are the primary CSS files used for general front-end styling. Use these to customize your own application style.</p>
+                                <ul>
+                                    <li>1. Style.sass - Primary stylesheet</li>
+                                    <li>2. Bootstrap.css - Bootstrap stylesheet</li>
+                                    <li>3. Owl-carousel.css - OWL Carousel</li>
+                                    <li>4. Fontawesome.css - FontAwesome Font Icons stylesheet</li>
+                                    <li>5. Datatables.net-bs4 - Bootstrap Data Tables stylesheet</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Included JavaScript</strong>
+                                <p>These are various Javascript libraries included and used in Our Application:</p>
+                                <ul>
+                                    <li>1. Bootstrap.js - Bootstrap JavaScript</li>
+                                    <li>2. Jquery.js - Base JavaScript</li>
+                                    <li>3. Owl-carousel.js - Lightbox JavaScript</li>
+                                    <li>4. Amcharts.js - JavaScript Interactive Maps</li>
+                                    <li>5. Wow.js - CSS3 animation JavaScript</li>
+                                    <li>6. Jquery.slimscroll.js</li>
+                                    <li>7. CSS Scrollbars.js</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="line3" class="section">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Version History (Changelog) <a href="#top">#Back to top</a><hr></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>You can find the version history (changelog.txt) file on <strong>//github.com/yaiestura/coronavirus_prediction</strong>or you can check changelog on the page right here.</p>
+                                <hr>
+                                <h4>Changelog</h4>
+                                <pre class="brush: html">
+                                    fixed bug with unnecessary date
+                                    @DocMorg
+                                    DocMorg committed 6 hours ago
+
+                                    Merge remote-tracking branch 'origin/master'
+                                    @DocMorg
+                                    DocMorg committed 6 hours ago
+
+                                    picture
+                                    @DocMorg
+                                    DocMorg committed 6 hours ago
+
+                                    predictions page
+                                    @yaiestura
+                                    yaiestura committed 6 hours ago
+
+                                    Commits on Mar 22, 2020
+
+                                        added cases model
+                                        @DocMorg
+                                        DocMorg committed 2 days ago
+
+                                    updated training the net, parameters and result
+                                    @DocMorg
+                                    DocMorg committed 2 days ago
+
+                                    Commits on Mar 21, 2020
+
+                                        v 0.1.0
+                                        @yaiestura
+                                        yaiestura committed 2 days ago
+
+                                    Commits on Mar 19, 2020
+
+                                        merged landing, new version
+                                        @yaiestura
+                                        yaiestura committed 4 days ago
+
+                                    Merge branch 'master' of https://github.com/yaiestura/coronavirus_pre…
+                                    @yaiestura
+                                    yaiestura committed 4 days ago
+
+                                    several changes, layout, news, country
+                                    @yaiestura
+                                    yaiestura committed 4 days ago
+
+                                    Commits on Mar 18, 2020
+
+                                        PEP8 in run.py
+
+                                    @DocMorg
+                                    DocMorg committed 5 days ago
+
+                                    Commits on Mar 17, 2020
+
+                                        blog, countries
+                                        @yaiestura
+                                        yaiestura committed 6 days ago
+
+                                    Commits on Mar 12, 2020
+
+                                        merged two versions
+                                        @yaiestura
+                                        yaiestura committed 11 days ago
+
+                                    several changes
+                                    @yaiestura
+                                    yaiestura committed 11 days ago
+
+                                    Commits on Mar 9, 2020
+
+                                        registered in db
+                                        @DocMorg
+                                        DocMorg committed 14 days ago
+
+                                    commented bottom part of table.
+                                    @DocMorg
+                                    DocMorg committed 14 days ago
+
+                                    major updates, maps, dtable
+                                    @yaiestura
+                                    yaiestura committed 15 days ago
+
+                                    Commits on Mar 8, 2020
+
+                                        google auth, profile, several changes
+                                        @yaiestura
+                                        yaiestura committed 16 days ago
+
+                                    Commits on Mar 7, 2020
+
+                                        rebuilt app tree
+                                        @yaiestura
+                                        yaiestura committed 16 days ago
+
+                                    Trained deaths model
+                                    @DocMorg
+                                    DocMorg committed 16 days ago
+
+                                    devices fix
+                                    @DocMorg
+                                    DocMorg committed 17 days ago
+
+                                    very small fix
+                                    @DocMorg
+                                    DocMorg committed 17 days ago
+
+                                    PEP8
+                                    @DocMorg
+                                    DocMorg committed 17 days ago
+
+                                    added news.html
+                                    @yaiestura
+                                    yaiestura committed 17 days ago
+
+                                    merged new models, new dashboard
+                                    @yaiestura
+                                    yaiestura committed 17 days ago
+
+                                    updated dashboard, amcharts
+                                    @yaiestura
+                                    yaiestura committed 17 days ago
+
+                                    Commits on Mar 6, 2020
+
+                                        made net for deaths
+
+                                    @vladcybervest
+                                    vladcybervest committed 17 days ago
+
+                                    Merge remote-tracking branch 'origin/master'
+                                    @vladcybervest
+                                    vladcybervest committed 17 days ago
+
+                                    small commit for neur part
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    dashboard changes, cuda, custom 404
+                                    @yaiestura
+                                    yaiestura committed 17 days ago
+
+                                    Commits on Mar 5, 2020
+
+                                        upd
+                                        @vladcybervest
+                                        vladcybervest committed 18 days ago
+
+                                    fixed imports
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    added main for cases model
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    updated dashboard, error handlers
+                                    @yaiestura
+                                    yaiestura committed 18 days ago
+
+                                    dashboard data, error handlers
+                                    @yaiestura
+                                    yaiestura committed 18 days ago
+
+                                    fixed paths & closed tags
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    PEP8 fixes
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    added new user (me xD)
+                                    @vladcybervest
+                                    vladcybervest committed 18 days ago
+
+                                    Data API v.0.2.0
+                                    @yaiestura
+                                    yaiestura committed 19 days ago
+
+                                    Commits on Mar 3, 2020
+
+                                        Updated API for data parsing
+                                        @yaiestura
+                                        yaiestura committed 20 days ago
+
+                                    Started writing API
+                                    @yaiestura
+                                    yaiestura committed 20 days ago
+
+                                    Commits on Mar 1, 2020
+
+                                        Merge branch 'master'
+
+                                    @yaiestura
+                                    yaiestura committed 22 days ago
+
+                                    Updated README.md
+                                    @yaiestura
+                                    yaiestura committed 23 days ago
+
+                                    site.db
+                                    @yaiestura
+                                    yaiestura committed 23 days ago
+
+                                    Initial commit to heroku
+                                    @yaiestura
+                                    yaiestura committed 23 days ago
+
+                                    Initial commit, app skeleton
+                                    @yaiestura
+                                    yaiestura committed 23 days ago
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+                    <footer>
+                        <div class="container">
+                            <div class="footer-text">
+                                <p>Copyright © 2019 Coronavirus Prediction App. All Rights Reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='pages/docs/js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/retina.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/jquery.fitvids.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/wow.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/jquery.prettyPhoto.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/custom.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/syntax-highlighter/scripts/shCore.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/syntax-highlighter/scripts/shBrushXml.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/syntax-highlighter/scripts/shBrushCss.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/syntax-highlighter/scripts/shBrushJScript.js')}}"></script>
+    <script src="{{url_for('static', filename='pages/docs/js/syntax-highlighter/scripts/shBrushBash.js')}}"></script>
+</body>
+</html>

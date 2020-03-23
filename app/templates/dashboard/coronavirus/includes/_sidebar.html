@@ -111,6 +111,13 @@
                             <span class="pcoded-badge label label-danger">NEW</span>
                         </a>
                     </li>
+                    <li class="">
+                        <a href="{{ url_for('main.download_report')}}">
+                            <span class="pcoded-micon"><i class="feather icon-cpu"></i></span>
+                            <span class="pcoded-mtext">Download Report</span>
+                            <span class="pcoded-badge label label-danger">NEW</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -139,7 +146,7 @@
         <div class="pcoded-navigatio-lavel">Miscellaneous</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="#" target="_blank">
+                <a href="{{url_for('main.docs')}}" target="_blank">
                     <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
                     <span class="pcoded-mtext">Documentation</span>
                 </a>

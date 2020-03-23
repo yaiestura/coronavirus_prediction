@@ -4,27 +4,23 @@
 <head>
     <meta charset="utf-8">
     <title>Coronavirus Prediction App</title>
-    <!-- Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon icon -->
+
     <link rel="icon" href="{{ url_for('static', filename='pages/landing/logos/favicon.ico')}}" type="image/png" sizes="16x16">
-    <!-- Bootstrap -->
+
     <link href="{{ url_for('static', filename='pages/landing/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" media="all">
-    <!-- Font -->
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,700,600" rel="stylesheet" type="text/css">
-    <!-- Animate CSS -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/animate.css')}}">
-    <!-- Owl Carousel -->
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/owl.theme.css')}}">
-    <!-- Magnific Popup -->
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/magnific-popup.css')}}">
-    <!-- Full Page Animation -->
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/animsition.min.css')}}">
-    <!-- Ionic Icons -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/ionicons.min.css')}}">
-    <!-- Main Style css -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='pages/landing/css/style.css')}}" media="all">
 </head>
 
@@ -33,7 +29,7 @@
         <div class="container">
              <nav class="navbar navbar-expand-lg navbar-light navbar-default navbar-fixed-top" role="navigation">
                 <div class="container">
-                    <a class="navbar-brand page-scroll" href="#main"><img src="{{ url_for('static', filename='pages/landing/logos/logo.png')}}" alt="adminity Logo"></a>
+                    <a class="navbar-brand page-scroll" href="#main"><img src="{{ url_for('static', filename='pages/landing/logos/logo_covid.png')}}" alt="adminity Logo"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -47,14 +43,14 @@
                                     <a class="nav-link" href="{{ url_for('posts.all_posts')}}">Blog</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('main.about')}}">About</a>
+                                    <a class="nav-link" href="{{ url_for('main.docs')}}">Docs</a>
                                 </li>
                             {% else %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('main.home')}}">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('main.about')}}">About</a>
+                                    <a class="nav-link" href="{{ url_for('main.docs')}}">Docs</a>
                                 </li>
                             {% endif %}
                         </ul>
@@ -91,7 +87,6 @@
             </nav>
         </div>
         <div class="main" id="main">
-            <!-- Main Section-->
             <div class="hero-section app-hero">
                 <div class="container">
                     <div class="hero-content app-hero-content text-center">
@@ -99,7 +94,7 @@
                             <div class="col-md-10">
                                 <h1 class="wow fadeInUp" data-wow-delay="0s">Coronavirus Prediction Web Application</h1>
                                 <p class="wow fadeInUp" data-wow-delay="0.2s">
-                                     All the information comes here
+                                    Coronavirus disease (COVID-19) Latest Information
                                 </p>
                                 <a class="btn btn-info btn-action mr-2" data-wow-delay="0.2s" href="{{ url_for('main.dashboard')}}">Dashboard</a>
                                 <a class="btn btn-info btn-action" data-wow-delay="0.2s" href="#pricing">Solutions</a>
@@ -119,7 +114,7 @@
                     <div class="row justify-content-md-center">
                         <div class="col-md-8">
                             <div class="services-content">
-                                <h1 class="wow fadeInUp" data-wow-delay="0s">We offer following feautures to our users</h1>
+                                <h1 class="wow fadeInUp" data-wow-delay="0s">We offer following feautures to all of our users</h1>
                             </div>
                         </div>
                         <div class="col-md-12 text-center">
@@ -174,14 +169,12 @@
                         </div>
                         <div class="f-right wow fadeInUp" data-wow-delay="0.2s">
                             <div class="right-content">
-                                <h2>High performance and flexible code</h2>
-                                <p>
-                                    Guru Able is full flexible solution for your entire project development. You can easily maintain all of its module/components.
-                                </p>
+                                <h2>24/7 Live COVID-19 Cases on World map</h2>
+                                <p>Live Monitor in our application provides you with the latest updates of COVID-19 infections all over the world</p>
                                 <ul>
-                                    <li><i class="ion-android-checkbox-outline"></i>Neat n clean code structure.</li>
-                                    <li><i class="ion-android-checkbox-outline"></i>Flexible module structure</li>
-                                    <li><i class="ion-android-checkbox-outline"></i>Copy / Paste and Ready to use</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>Data avaliable from more than 180+ countries</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>Interactive World Map</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>Only latest data provided, instantly on your monitor</li>
                                 </ul>
                                 <button class="btn btn-primary btn-action btn-fill">Learn More</button>
                             </div>
@@ -251,14 +244,14 @@
                     <div class="flex-split">
                         <div class="f-right">
                             <div class="right-content wow fadeInUp" data-wow-delay="0.2s">
-                                <h2>Included Software Dependencies</h2>
+                                <h2>Future Coronavirus Cases and Deaths Predictions (up to 10 days)</h2>
                                 <p>
-                                    Bower - Grunt - Sass Dependencies for easy project flow management.
+                                    User-friendly Pytorch Library predicts COVID-19 cases using complex Neural Network
                                 </p>
                                 <ul>
-                                    <li><i class="ion-android-checkbox-outline"></i>Grunt - No need to update plugins manually</li>
-                                    <li><i class="ion-android-checkbox-outline"></i>Grunt - Less work you have to performance</li>
-                                    <li><i class="ion-android-checkbox-outline"></i>Sass - Most Powerful CSS extension language</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>Every day weighs recalculation, to improve accuracy</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>Up to 10 days of COVID-19 prediction</li>
+                                    <li><i class="ion-android-checkbox-outline"></i>High maintenance and peromance of a model</li>
                                 </ul>
                                 <button class="btn btn-primary btn-action btn-fill">Learn More</button>
                             </div>
@@ -278,10 +271,10 @@
                             <div class="testimonials owl-carousel owl-theme">
                                 <div class="testimonial-single"><img class="img-circle" src="{{ url_for('static', filename='pages/landing/images/testimonial2.jpg')}}" alt="Client Testimonoal">
                                     <div class="testimonial-text wow fadeInUp" data-wow-delay="0.2s">
-                                        <p>Totally flexible admin template. Easy to use and easy to manage all the elements in entire theme. <br class="hidden-xs"> Great support team behind this product. Low turnaround time with exact support which i needed.
+                                        <p>Totally avaliable prices, and even free version is totally awesome. Easy to use and easy to manage all the data, 5+ for the PDF reports avaliable. <br class="hidden-xs"> Great support team behind this product. Low turnaround time with exact support which i needed.
                                         </p>
-                                        <h3>Code Quality</h3>
-                                        <h3> - amit1134 [Buyer - NZ]</h3>
+                                        <h3>Low Pricing</h3>
+                                        <h3> - Dimitrios Keralis [Customer - Australia]</h3>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
@@ -291,11 +284,10 @@
                                 </div>
                                 <div class="testimonial-single"><img class="img-circle" src="{{ url_for('static', filename='pages/landing/images/testimonial1.jpg')}}" alt="Client Testimonoal">
                                     <div class="testimonial-text">
-                                        <p>The main reason for the Rating for Able pro admin template is that its is awesome template with tons of ready to use features.<br class="hidden-xs"> - Top quality - Regular updates - PHP version - Clean n Neat code
-                                            - Saves lots of developing time
+                                        <p>The main reason for the purchase was fast and extended API with support of more than 180+ countries.
                                         </p>
-                                        <h3>Flexibility</h3>
-                                        <h3>- vishalmg [Buyer -India]</h3>
+                                        <h3>Extended API</h3>
+                                        <h3>- Victoria Yang [Customer - USA]</h3>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
@@ -305,9 +297,9 @@
                                 </div>
                                 <div class="testimonial-single"><img class="img-circle" src="{{ url_for('static', filename='pages/landing/images/testimonial3.jpg')}}" alt="Client Testimonoal">
                                     <div class="testimonial-text">
-                                        <p>5 stars are for the excellent support, that is brilliant! The design is very cool and the quality of code is excellent. <br class="hidden-xs">Compliments!</p>
-                                        <h3>Code Quality</h3>
-                                        <h3>- ab69aho [Buyer -Italy]</h3>
+                                        <p>5 stars are for the excellent infographics and statistics, that is brilliant! The design is very cool and the quality of product is awesome. <br class="hidden-xs">Compliments!</p>
+                                        <h3>Infographics</h3>
+                                        <h3>- Maria Efremova [Customer - Russia]</h3>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
@@ -316,10 +308,11 @@
                                     </div>
                                 </div>
                                 <div class="testimonial-single"><img class="img-circle" src="{{ url_for('static', filename='pages/landing/images/testimonial2.jpg')}}" alt="Client Testimonoal">
-                                    <div class="testimonial-text">
-                                        <p>The product is high end and high-end specialized assistance in solving problems. <br class="hidden-xs">I would highly recommend.</p>
-                                        <h3>Customer Support</h3>
-                                        <h3>- donpavulon [Buyer -US]</h3>
+                                    <div class="testimonial-text wow fadeInUp" data-wow-delay="0.2s">
+                                        <p>Totally avaliable prices, and even free version is totally awesome. Easy to use and easy to manage all the data, 5+ for the PDF reports avaliable. <br class="hidden-xs"> Great support team behind this product. Low turnaround time with exact support which i needed.
+                                        </p>
+                                        <h3>Low Pricing</h3>
+                                        <h3> - Dimitrios Keralis [Customer - Australia]</h3>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
                                         <i class="ion ion-star"></i>
@@ -332,12 +325,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Feature Image Big -->
             <div class="feature_huge text-center">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">New product notification subscription</h1>
+                            <h1 class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">New awesome COVID-19 Dashboard panel avaliable</h1>
                             <img class="img-fluid wow fadeInUp" data-wow-delay="0.1s" src="{{ url_for('static', filename='pages/landing/images/big_feature.png')}}" alt="" style="max-width:100%">
                         </div>
                         <div class="col-md-12 feature_list">
@@ -368,7 +360,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Counter Section -->
             <div class="counter-section">
                 <div class="container">
                     <div class="row text-center">
@@ -419,9 +410,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Counter Section Ends -->
             <div class="features-section">
-                <!-- Feature section with flex layout -->
                 <div class="f-left">
                     <div class="left-content wow fadeInLeft" data-wow-delay="0s">
                         <h2 class="wow fadeInLeft" data-wow-delay="0.1s">For our users and all humanity</h2>
@@ -434,7 +423,6 @@
                 <div class="f-right">
                 </div>
             </div>
-            <!-- Pricing Section -->
             <div class="pricing-section no-color text-center" id="pricing">
                 <div class="container">
                     <div class="row">
@@ -455,7 +443,7 @@
                                                     <span>Free</span>
                                                 </div>
                                             </div>
-                                            <div class="generic_price_tag clearfix">	
+                                            <div class="generic_price_tag clearfix">
                                                 <span class="price">
                                                     <span class="sign">$</span>
                                                     <span class="currency">0</span>
@@ -487,10 +475,10 @@
                                                     <span>Standart</span>
                                                 </div>
                                             </div>
-                                            <div class="generic_price_tag clearfix">	
+                                            <div class="generic_price_tag clearfix">
                                                 <span class="price">
                                                     <span class="sign">$</span>
-                                                    <span class="currency">4</span>
+                                                    <span class="currency">2</span>
                                                     <span class="cent">.99</span>
                                                     <span class="month">/MON</span>
                                                 </span>
@@ -509,7 +497,7 @@
                                         <div class="generic_price_btn clearfix">
                                             <a class="" href="">Get Plan</a>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="generic_content clearfix wow fadeInUp" data-wow-delay="0.4s">
@@ -520,10 +508,10 @@
                                                     <span>Premium</span>
                                                 </div>
                                             </div>
-                                            <div class="generic_price_tag clearfix">	
+                                            <div class="generic_price_tag clearfix">
                                                 <span class="price">
                                                     <span class="sign">$</span>
-                                                    <span class="currency">9</span>
+                                                    <span class="currency">4</span>
                                                     <span class="cent">.99</span>
                                                     <span class="month">/MON</span>
                                                 </span>
@@ -545,11 +533,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>	
+                        </div>
                     </div>
                 </div>
-            </div>             
-            <!-- Client Section -->
+            </div>
             <div class="client-section">
                 <div class="container text-center">
                     <div class="clients owl-carousel owl-theme">
@@ -566,15 +553,14 @@
                             <img src="{{ url_for('static', filename='pages/landing/logos/logo4.png')}}" alt="">
                         </div>
                         <div class="single">
-                            <img src="{{ url_for('static', filename='pages/landing/logos/logo6.png')}}" alt="">
+                            <img src="{{ url_for('static', filename='pages/landing/logos/logo5.png')}}" alt="">
                         </div>
                         <div class="single">
-                            <img src="{{ url_for('static', filename='pages/landing/logos/logo7.png')}}" alt="">
+                            <img src="{{ url_for('static', filename='pages/landing/logos/logo6.png')}}" alt="">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Subscribe Form -->
             <div class="cta-sub text-center no-color">
                 <div class="container">
                     <h1 class="wow fadeInUp" data-wow-delay="0s">New product notification subscription</h1>
@@ -590,17 +576,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer Section -->
             <div class="footer">
                 <div class="container">
                     <div class="col-md-12 text-center">
-                        <img src="{{ url_for('static', filename='pages/landing/logos/logo.png')}}" alt="Adminty Logo">
-                        <ul class="footer-menu">
-                            <li><a href="http://demo.com">Site</a></li>
-                            <li><a href="#">Support</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Privacy</a></li>
-                        </ul>
                         <div class="footer-text">
                             <p>
                                 Copyright © 2019 Coronavirus Prediction App. All Rights Reserved.
@@ -609,17 +587,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Scroll To Top -->
             <a id="back-top" class="back-to-top page-scroll" href="#main">
                 <i class="ion-ios-arrow-thin-up"></i>
             </a>
-            <!-- Scroll To Top Ends-->
         </div>
-        <!-- Main Section -->
     </div>
-    <!-- Wrapper-->
-
-    <!-- Jquery and Js Plugins -->
     <script type="text/javascript" src="{{ url_for('static', filename='pages/landing/js/jquery-2.1.1.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='pages/landing/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='pages/landing/js/plugins.js')}}"></script>

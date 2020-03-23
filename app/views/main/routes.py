@@ -1,11 +1,14 @@
-from flask import render_template, request, Blueprint, jsonify
+from flask import render_template, request, Blueprint, jsonify, send_file, current_app
 from flask_login import login_required, current_user
 
 from app.views.main.main import *
 
 from app.views.users.routes import users
 
+from app.utils.generate_report import generate_report
+
 import requests
+import os
 
 main = Blueprint('main', __name__)
 
@@ -125,9 +128,37 @@ def predictions():
                            username=current_user.username, avatar=current_user.image_file,)
 
 
-@main.route("/about", methods=['GET', 'POST'])
-def about():
-    return render_template('about.html', title='About')
+@main.route("/documentation", methods=['GET', 'POST'])
+def docs():
+    return render_template('docs.html', title='Docs')
+
+
+@main.route('/download_report')
+def download_report():
+
+    directory = os.path.join(
+        os.path.dirname(current_app.instance_path), f'app/userdata/{current_user.username}/reports'
+    )
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    stats = MainStatsDataParser()
+    stats_data = stats.get_stats()
+    demographics = DemographicsDataParser()
+    demographics_data = demographics.get_demographics()
+    countries = CountriesAdvDataParser()
+    countries_data = countries.get_countries()
+
+    data = {
+        "countries": countries_data,
+        "statistics": stats_data,
+        "demographics": demographics_data
+    }
+
+    url = generate_report(current_user.username, data)
+
+    return send_file(url, as_attachment=False, cache_timeout=0)
 
 
 @main.route("/api/predict/deaths", methods=['GET', 'POST'])

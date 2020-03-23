@@ -255,7 +255,6 @@
         // Get Data from API
         $.get('http://127.0.0.1:5000/api/csse/data')
             .done(function(response) {
-            console.log(response);
 
             // Get basic stats
             $("#confirmed_cases-stat").text(formatNumber(response.confirmed.total));
