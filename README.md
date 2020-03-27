@@ -8,6 +8,26 @@ Currently in Progress, working on Dashboard
 
 Currently deployed on Heroku: [Coronavirus Flask App](https://coronavirus-prediction-hse.herokuapp.com/)
 
+## Neural Network
+![Training Loss Curve](curve.gif)
+
+```
+class Net(torch.nn.Module):
+    def __init__(self, n_feature, n_hidden, n_output):
+        super(Net, self).__init__()
+        self.hidden = torch.nn.Linear(n_feature, n_hidden).to(device)
+        self.hidden1 = torch.nn.Linear(n_hidden, 800).to(device)
+        self.hidden2 = torch.nn.Linear(800, 500).to(device)
+        self.hidden3 = torch.nn.Linear(500, n_hidden).to(device)  # hidden layer
+        self.predict = torch.nn.Linear(n_hidden, n_output).to(device)   # output layer
+```
+
+Route to train and update weighs on Cases model: `/api/predict/cases`
+
+Route to train and update weighs on Deaths model: `/api/predict/deaths`
+
+Models located in folder: app/models
+
 ## Instructions to Setup :
 
 * Clone this repository.
